@@ -18,6 +18,7 @@
 #include <sstream>
 #include <stack>
 #include <map>
+#include <string>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -31,7 +32,6 @@ private:
 protected:
     sf::RectangleShape shape;
     float speed;
-    
     
 public:
     Entity();

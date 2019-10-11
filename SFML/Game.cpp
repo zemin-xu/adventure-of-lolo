@@ -32,15 +32,28 @@ void Game::InitWindow()
     this->window->setVerticalSyncEnabled(vertical_sync_enabled);
 }
 
+void    Game::InitKeys()
+{
+    this->supportedKeys["Escape"] = sf::Keyboard::Key::Escape;
+    this->supportedKeys["A"] = sf::Keyboard::Key::A;
+    this->supportedKeys["D"] = sf::Keyboard::Key::D;
+    this->supportedKeys["W"] = sf::Keyboard::Key::W;
+    this->supportedKeys["S"] = sf::Keyboard::Key::S;
+   
+    std::cout << this->supportedKeys.at("A") << "\n";
+}
+
 void    Game::InitStates()
 {
-    this->states.push(new GameState(this->window));
+    this->states.push(new GameState(this->window, &this->supportedKeys));
 }
 
 Game::Game()
 {
     this->InitWindow();
+    this->InitKeys();
     this->InitStates();
+    
 }
 Game::~Game()
 {

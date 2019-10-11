@@ -21,9 +21,11 @@ private:
     
     std::stack<State*> states;
     
-    void InitWindow();
-    void InitStates();
+    std::map<std::string, int> supportedKeys;
     
+    void InitWindow();
+    void InitKeys();
+    void InitStates();
 public:
     Game();
     virtual ~Game();
@@ -36,4 +38,5 @@ public:
     void Render();
     void Run();
 };
+
 #endif /* Game_hpp */
