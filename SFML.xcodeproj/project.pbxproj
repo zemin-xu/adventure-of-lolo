@@ -16,6 +16,7 @@
 		7D95927F234F13BA000D086B /* SFML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D959279234F13BA000D086B /* SFML.framework */; };
 		7D959280234F13BA000D086B /* sfml-window.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D95927A234F13BA000D086B /* sfml-window.framework */; };
 		7D959281234F13BA000D086B /* sfml-graphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D95927B234F13BA000D086B /* sfml-graphics.framework */; };
+		7DC2A53F2350A78400AB5051 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DC2A53D2350A78400AB5051 /* Button.cpp */; };
 		7DC2BFB4234F758F003145E7 /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DC2BFB2234F758F003145E7 /* Entity.cpp */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,8 @@
 		7D959279234F13BA000D086B /* SFML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SFML.framework; path = SFML/Frameworks/SFML.framework; sourceTree = "<group>"; };
 		7D95927A234F13BA000D086B /* sfml-window.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-window.framework"; path = "SFML/Frameworks/sfml-window.framework"; sourceTree = "<group>"; };
 		7D95927B234F13BA000D086B /* sfml-graphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-graphics.framework"; path = "SFML/Frameworks/sfml-graphics.framework"; sourceTree = "<group>"; };
+		7DC2A53D2350A78400AB5051 /* Button.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
+		7DC2A53E2350A78400AB5051 /* Button.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Button.hpp; sourceTree = "<group>"; };
 		7DC2BFB2234F758F003145E7 /* Entity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Entity.cpp; sourceTree = "<group>"; };
 		7DC2BFB3234F758F003145E7 /* Entity.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Entity.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -87,6 +90,8 @@
 		7D95926D234F1351000D086B /* SFML */ = {
 			isa = PBXGroup;
 			children = (
+				7DC2A53D2350A78400AB5051 /* Button.cpp */,
+				7DC2A53E2350A78400AB5051 /* Button.hpp */,
 				7DC2BFB2234F758F003145E7 /* Entity.cpp */,
 				7DC2BFB3234F758F003145E7 /* Entity.hpp */,
 				7D7CE19A234F3851001DFACA /* State.cpp */,
@@ -168,6 +173,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DC2A53F2350A78400AB5051 /* Button.cpp in Sources */,
 				7DC2BFB4234F758F003145E7 /* Entity.cpp in Sources */,
 				7D95926F234F1351000D086B /* main.cpp in Sources */,
 				7D7CE199234F2E60001DFACA /* Game.cpp in Sources */,

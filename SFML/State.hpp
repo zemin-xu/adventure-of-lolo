@@ -10,10 +10,12 @@
 #define State_hpp
 
 #include "Entity.hpp"
+#include "Button.hpp"
 
 class State
 {
 private:
+    
 protected:
     
     sf::RenderWindow* window;
@@ -21,6 +23,11 @@ protected:
     std::map<std::string, int> keybinds;
     
     bool quit;
+    
+    sf::Vector2i mousePosScreen;
+    sf::Vector2i mousePosWindow;
+    sf::Vector2f mousePosView;
+    
     
     // resources
     std::vector<sf::Texture> textures;
@@ -36,7 +43,7 @@ public:
     const bool& GetQuit() const;
     virtual void CheckForQuit();
     virtual void EndState() = 0;
-    
+    virtual void UpdateMousePositions();
     virtual void UpdateInput(const float& dt) = 0;
     virtual void Update(const float& dt) = 0;
     virtual void Render(sf::RenderTarget* target = NULL) = 0;
@@ -57,6 +64,29 @@ public:
     void UpdateInput(const float& dt);
     void Update(const float &dt);
     void Render(sf::RenderTarget* target);
+};
+
+class MainMenuState : public State
+{
+    
+    sf::RectangleShape background;
+    sf::Font font;
+    
+    Button* gamestate_btn;
+    
+    void InitFonts();
+    void InitKeybinds();
+    
+    public:
+    MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
+    virtual ~MainMenuState();
+    
+    void EndState();
+    
+    void UpdateInput(const float& dt);
+    void Update(const float &dt);
+    void Render(sf::RenderTarget* target);
+
 };
 
 #endif /* State_hpp */
