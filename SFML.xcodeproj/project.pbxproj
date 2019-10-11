@@ -91,9 +91,9 @@
 				7DC2BFB3234F758F003145E7 /* Entity.hpp */,
 				7D7CE19A234F3851001DFACA /* State.cpp */,
 				7D7CE19B234F3851001DFACA /* State.hpp */,
-				7D95926E234F1351000D086B /* main.cpp */,
 				7D7CE197234F2E60001DFACA /* Game.cpp */,
 				7D7CE198234F2E60001DFACA /* Game.hpp */,
+				7D95926E234F1351000D086B /* main.cpp */,
 			);
 			path = SFML;
 			sourceTree = "<group>";

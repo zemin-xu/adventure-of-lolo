@@ -34,15 +34,22 @@ void Game::InitWindow()
 
 void    Game::InitKeys()
 {
-    this->supportedKeys["Escape"] = sf::Keyboard::Key::Escape;
-    this->supportedKeys["A"] = sf::Keyboard::Key::A;
-    this->supportedKeys["D"] = sf::Keyboard::Key::D;
-    this->supportedKeys["W"] = sf::Keyboard::Key::W;
-    this->supportedKeys["S"] = sf::Keyboard::Key::S;
-   
-    std::cout << this->supportedKeys.at("A") << "\n";
+    std::ifstream ifs("Sources/supported_keys.init");
+    
+    if (ifs.is_open())
+    {
+        std::string key = "";
+          int key_value = 0;
+          
+          while (ifs >> key >> key_value)
+          {
+              this->supportedKeys[key] = key_value;
+          }
+    }
+    ifs.close();
 }
 
+// create a gamestate 
 void    Game::InitStates()
 {
     this->states.push(new GameState(this->window, &this->supportedKeys));
@@ -73,7 +80,7 @@ void Game::EndApplication()
     std::cout << "\n !!!Ending Application!!! \n";
 }
 
-/* update the 'deltaTime' with the time it takes to update and render one frame */
+// update the 'deltaTime' with the time it takes to update and render one frame 
 void Game::UpdateDeltaTime()
 {
     this->deltaTime = this ->deltaTimeClock.restart().asSeconds();
@@ -88,6 +95,8 @@ void Game::UpdateSFMLEvents()
     }
 }
 
+// update the SFML event controller
+// update the nearest state's update functions
 void Game::Update()
 {
     this->UpdateSFMLEvents();
@@ -111,6 +120,7 @@ void Game::Update()
         
 }
 
+// execute nearest state's render functions
 void Game::Render()
 {
     this->window->clear();
