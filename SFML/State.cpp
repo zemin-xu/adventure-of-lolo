@@ -189,4 +189,3 @@ void MainMenuState::Render(sf::RenderTarget* target)
     target->draw(this->background);
     this->gamestate_btn->Render(target);
 }
-

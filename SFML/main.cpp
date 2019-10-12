@@ -5,37 +5,86 @@
 //  Created by ZEMIN on 10/10/2019.
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
+#include <SFML/Graphics.hpp>
+#include "Animation.hpp"
+#include <iostream>
+#include <stdio.h>
 
+
+int main()
+{
+    sf::RenderWindow window(sf::VideoMode(512,512), "SFML GAME", sf::Style::Close | sf::Style::Resize);
+    sf::RectangleShape background(sf::Vector2f(window.getSize().x,window.getSize().y));
+    sf::RectangleShape player(sf::Vector2f(100.0f, 100.0f));
+    sf::Texture playerTexture;
+    
+    background.setFillColor(sf::Color::Black);
+    playerTexture.loadFromFile("Sources/player.png");
+    
+  
+    player.setTexture(&playerTexture);
+    
+    Animation animation(&playerTexture, sf::Vector2u(3,9), 0.3f);
+    
+    float deltaTime = 0.0f;
+    sf::Clock clock;
+    
+    sf::Vector2u textureSize = playerTexture.getSize();
+    textureSize.x /= 3;
+    textureSize.y /= 4;
+    player.setTextureRect(sf::IntRect(textureSize.x * 2, textureSize.y * 1, textureSize.x, textureSize.y));
+    
+    while(window.isOpen())
+    {
+        deltaTime = clock.restart().asSeconds();
+        
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            switch (event.type)
+            {
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+                case sf::Event::Resized:
+                    std::cout << event.size.width << " " <<  event.size.height << std::endl;
+                    break;
+                case sf::Event::TextEntered:
+                    if(event.text.unicode < 128)
+                        printf("%c", event.text.unicode);
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        animation.Update(0, deltaTime,false);
+        player.setTextureRect((animation.uvRect));
+        
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+            player.move(-0.1f, 0.0f);
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+            player.move(0.1f, 0.0f);
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+            player.move(0.0f, -0.1f);
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+            player.move(0.0f, 0.1f);
+        
+        window.clear(sf::Color(150,150,150));
+        window.draw(player);
+        window.display();
+    }
+}
+
+
+/*
 #include "Game.hpp"
-
-int     main()
+ int     main()
 {
     Game game;
     game.Run();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+*/
 
 
 
