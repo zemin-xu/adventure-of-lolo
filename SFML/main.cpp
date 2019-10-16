@@ -5,10 +5,19 @@
 //  Created by ZEMIN on 10/10/2019.
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include <vector>
 
+#include "GameController.hpp"
+
+
+int main()
+{
+    GameController gameController;
+    gameController.Run();
+    
+    return (0);
+}
+
+/*
 using namespace std;
 bool Collision(vector<sf::RectangleShape> obstacles, sf::RectangleShape player, float player_speed, int direction);
 
@@ -292,3 +301,4 @@ bool Collision(vector<sf::RectangleShape> obstacles, sf::RectangleShape player, 
     }
     return (true);
 }
+*/
