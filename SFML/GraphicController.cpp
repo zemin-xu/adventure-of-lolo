@@ -48,9 +48,9 @@ void GraphicController::ReadTextureFile()
         return ;
 }
 
-void GraphicController::Update()
+void GraphicController::Update(const float deltaTime)
 {
-    player.Update();
+    player.Update(deltaTime);
 }
 
 

@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7D7CE199234F2E60001DFACA /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D7CE197234F2E60001DFACA /* Game.cpp */; };
-		7D7CE19C234F3851001DFACA /* State.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D7CE19A234F3851001DFACA /* State.cpp */; };
 		7D95926F234F1351000D086B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D95926E234F1351000D086B /* main.cpp */; };
 		7D95927C234F13BA000D086B /* sfml-audio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D959276234F13BA000D086B /* sfml-audio.framework */; };
 		7D95927D234F13BA000D086B /* sfml-network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D959277234F13BA000D086B /* sfml-network.framework */; };
@@ -16,9 +14,6 @@
 		7D95927F234F13BA000D086B /* SFML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D959279234F13BA000D086B /* SFML.framework */; };
 		7D959280234F13BA000D086B /* sfml-window.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D95927A234F13BA000D086B /* sfml-window.framework */; };
 		7D959281234F13BA000D086B /* sfml-graphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D95927B234F13BA000D086B /* sfml-graphics.framework */; };
-		7DC2A53F2350A78400AB5051 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DC2A53D2350A78400AB5051 /* Button.cpp */; };
-		7DC2A5422350C89700AB5051 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DC2A5402350C89700AB5051 /* Animation.cpp */; };
-		7DC2BFB4234F758F003145E7 /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DC2BFB2234F758F003145E7 /* Entity.cpp */; };
 		7DEB55042354B83B00E31817 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DEB55022354B83B00E31817 /* GameController.cpp */; };
 		7DEB55072354D2AB00E31817 /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DEB55052354D2AB00E31817 /* Element.cpp */; };
 		7DEB550A2355B8FB00E31817 /* GraphicController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DEB55082355B8FB00E31817 /* GraphicController.cpp */; };
@@ -38,10 +33,6 @@
 
 /* Begin PBXFileReference section */
 		7D7CE196234F1FF6001DFACA /* Sources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sources; path = "../../Library/Developer/Xcode/DerivedData/SFML-gkhixyaerdmvukcmvwznaenekqtn/Build/Products/Debug/Sources"; sourceTree = "<group>"; };
-		7D7CE197234F2E60001DFACA /* Game.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
-		7D7CE198234F2E60001DFACA /* Game.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Game.hpp; sourceTree = "<group>"; };
-		7D7CE19A234F3851001DFACA /* State.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = State.cpp; sourceTree = "<group>"; };
-		7D7CE19B234F3851001DFACA /* State.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = State.hpp; sourceTree = "<group>"; };
 		7D95926B234F1351000D086B /* SFML */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SFML; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D95926E234F1351000D086B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		7D959276234F13BA000D086B /* sfml-audio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-audio.framework"; path = "SFML/Frameworks/sfml-audio.framework"; sourceTree = "<group>"; };
@@ -50,12 +41,6 @@
 		7D959279234F13BA000D086B /* SFML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SFML.framework; path = SFML/Frameworks/SFML.framework; sourceTree = "<group>"; };
 		7D95927A234F13BA000D086B /* sfml-window.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-window.framework"; path = "SFML/Frameworks/sfml-window.framework"; sourceTree = "<group>"; };
 		7D95927B234F13BA000D086B /* sfml-graphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-graphics.framework"; path = "SFML/Frameworks/sfml-graphics.framework"; sourceTree = "<group>"; };
-		7DC2A53D2350A78400AB5051 /* Button.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
-		7DC2A53E2350A78400AB5051 /* Button.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Button.hpp; sourceTree = "<group>"; };
-		7DC2A5402350C89700AB5051 /* Animation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
-		7DC2A5412350C89700AB5051 /* Animation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Animation.hpp; sourceTree = "<group>"; };
-		7DC2BFB2234F758F003145E7 /* Entity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Entity.cpp; sourceTree = "<group>"; };
-		7DC2BFB3234F758F003145E7 /* Entity.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Entity.hpp; sourceTree = "<group>"; };
 		7DEB55022354B83B00E31817 /* GameController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameController.cpp; sourceTree = "<group>"; };
 		7DEB55032354B83B00E31817 /* GameController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameController.hpp; sourceTree = "<group>"; };
 		7DEB55052354D2AB00E31817 /* Element.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Element.cpp; sourceTree = "<group>"; };
@@ -102,16 +87,6 @@
 		7D95926D234F1351000D086B /* SFML */ = {
 			isa = PBXGroup;
 			children = (
-				7DC2A5402350C89700AB5051 /* Animation.cpp */,
-				7DC2A5412350C89700AB5051 /* Animation.hpp */,
-				7DC2A53D2350A78400AB5051 /* Button.cpp */,
-				7DC2A53E2350A78400AB5051 /* Button.hpp */,
-				7D7CE19A234F3851001DFACA /* State.cpp */,
-				7D7CE19B234F3851001DFACA /* State.hpp */,
-				7D7CE197234F2E60001DFACA /* Game.cpp */,
-				7D7CE198234F2E60001DFACA /* Game.hpp */,
-				7DC2BFB2234F758F003145E7 /* Entity.cpp */,
-				7DC2BFB3234F758F003145E7 /* Entity.hpp */,
 				7DEB55052354D2AB00E31817 /* Element.cpp */,
 				7DEB55062354D2AB00E31817 /* Element.hpp */,
 				7DEB55022354B83B00E31817 /* GameController.cpp */,
@@ -193,15 +168,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7DC2A53F2350A78400AB5051 /* Button.cpp in Sources */,
-				7DC2BFB4234F758F003145E7 /* Entity.cpp in Sources */,
 				7DEB55042354B83B00E31817 /* GameController.cpp in Sources */,
 				7DEB550A2355B8FB00E31817 /* GraphicController.cpp in Sources */,
-				7DC2A5422350C89700AB5051 /* Animation.cpp in Sources */,
 				7D95926F234F1351000D086B /* main.cpp in Sources */,
-				7D7CE199234F2E60001DFACA /* Game.cpp in Sources */,
 				7DEB55072354D2AB00E31817 /* Element.cpp in Sources */,
-				7D7CE19C234F3851001DFACA /* State.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

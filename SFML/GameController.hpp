@@ -37,8 +37,10 @@ private:
     
     sf::RenderWindow window;
     sf::Clock deltaTimeClock;
+    sf::Clock renderClock;
     sf::Event event;
     float deltaTime;
+    float renderTime;
     
     GraphicController graphicController;
     InputController inputController;
@@ -47,15 +49,15 @@ private:
 public:
     
 
-    static const int LENGTH = 1024;
-    static const int HEIGHT = 768;
+    static const int LENGTH = 768;
+    static const int HEIGHT = 512;
     
     
     GameController();
     
     void EndApplication();
     
-    void UpdateDeltaTime();
+    void UpdateTime();
     void UpdateSFMLEvents();
     void Update();
     void Render();

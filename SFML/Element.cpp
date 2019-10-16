@@ -63,7 +63,7 @@ Player::Player()
 
 Player::Player(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody) : Creature(x, y, length, height, texture, numHorizontal, numVertical, _isRigidbody)
 {
-    speed = 0.005f;
+    speed = 100.0f;
     dirHorizontal = 1;
     dirVertical = 1;
     canMove = false;
@@ -80,10 +80,10 @@ void Player::Collision(Element other)
     
 }
 
-void Player::Move()
+void Player::Move(const float deltaTime)
 {
     if (canMove)
-        shape.move(speed * dirHorizontal, speed * dirVertical);
+        shape.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
 }
 
 // the corresponding changement because of the changement of state of player
@@ -240,11 +240,11 @@ void Player::UpdateState()
      
 }
 
-void Player::Update()
+void Player::Update(const float deltaTime)
 {
     UpdateVariable();
     
-    Move();
+    Move(deltaTime);
     
 }
 

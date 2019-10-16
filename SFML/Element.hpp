@@ -46,7 +46,7 @@ protected:
 public:
     Creature();
     Creature(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody);
-    virtual void Move() = 0;
+    virtual void Move(const float deltaTime) = 0;
     virtual void Collision(Element other) = 0;
     void Damage(Creature &other, int damage);
     
@@ -69,12 +69,12 @@ public:
     Player(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool isRigidbody);
     
     virtual void Collision(Element other);
-    virtual void Move();
+    virtual void Move(const float deltaTime);
     
     void UpdateVariable();
     void UpdateAnimation();
     void UpdateState();
-    void Update();
+    void Update(const float deltaTime);
     
     
     

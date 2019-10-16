@@ -41,7 +41,7 @@ public:
     GraphicController();
     
     void ReadTextureFile();
-    void Update();
+    void Update(const float deltaTime);
     void Render(sf::RenderWindow &window);
 };
 

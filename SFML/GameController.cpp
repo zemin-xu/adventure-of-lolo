@@ -22,15 +22,15 @@ void GameController::EndApplication()
 }
 
 // update the 'deltaTime' with the time it takes to update and render one frame
-void GameController::UpdateDeltaTime()
+void GameController::UpdateTime()
 {
-    deltaTime = deltaTimeClock.getElapsedTime().asSeconds();
-    if (deltaTime > 0.16f)
+    deltaTime = deltaTimeClock.restart().asSeconds();
+    
+    renderTime = renderClock.getElapsedTime().asSeconds();
+    if (renderTime > 0.12f)
     {
-        deltaTime = deltaTimeClock.restart().asSeconds();
-        
+        renderTime = renderClock.restart().asSeconds();
         Render();
-        
     }
         
 }
@@ -48,9 +48,10 @@ void GameController::Update()
 {
     UpdateSFMLEvents();
     inputController.UpdateInput(graphicController.player);
-    graphicController.Update();
     
-    UpdateDeltaTime();
+    graphicController.Update(deltaTime);
+    
+    UpdateTime();
     
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
     {
