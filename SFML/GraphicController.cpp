@@ -53,16 +53,18 @@ void GraphicController::Update()
     player.Update();
 }
 
+
 void GraphicController::Render(sf::RenderWindow &window)
 {
     for (int i = 0; i < elements.size(); i++)
     {
-        
-        //elements[i].shape.move(-1,-1);
         elements[i].Render(window);
     }
-    //player.shape.move(-2,-2);
+    player.UpdateAnimation();
+    player.UpdateState();
     player.Render(window);
+    
+    
 }
 
 InputController::InputController()
@@ -73,10 +75,7 @@ InputController::InputController()
 void InputController::UpdateInput(Player &player)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-    {
-        cout << "press W" << endl;
         player.state = Player::Backward_M;
-    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
         player.state = Player::Forward_M;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))

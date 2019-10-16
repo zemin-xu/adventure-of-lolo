@@ -25,7 +25,7 @@ void GameController::EndApplication()
 void GameController::UpdateDeltaTime()
 {
     deltaTime = deltaTimeClock.getElapsedTime().asSeconds();
-    if (deltaTime > 0.1f)
+    if (deltaTime > 0.16f)
     {
         deltaTime = deltaTimeClock.restart().asSeconds();
         

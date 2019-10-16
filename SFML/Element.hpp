@@ -22,6 +22,12 @@ protected:
     sf::IntRect spritePos;
     bool isRigidbody;
     
+    
+    int animNumHorizontal;
+    int animNumVertical;
+    float animUnitLength;
+    float animUnitHeight;
+    
 public:
     sf::RectangleShape shape;
     Element();
@@ -35,6 +41,7 @@ class Creature : public Element
 protected:
     int life;
     bool isAlive;
+
     
 public:
     Creature();
@@ -52,7 +59,6 @@ public:
     
 protected:
     
-    
     int dirHorizontal;
     int dirVertical;
     bool canMove;
@@ -64,6 +70,10 @@ public:
     
     virtual void Collision(Element other);
     virtual void Move();
+    
+    void UpdateVariable();
+    void UpdateAnimation();
+    void UpdateState();
     void Update();
     
     
