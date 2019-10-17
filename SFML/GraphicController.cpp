@@ -48,8 +48,6 @@ GraphicController::GraphicController()
                 movables.push_back(movableUnit);
             }
             
-            
-            
             // enemy
             if(map.level[i][j] == 5)
             {
@@ -87,8 +85,10 @@ void GraphicController::Update(const float deltaTime)
 }
 
 
+
 void GraphicController::Render(sf::RenderWindow &window)
 {
+
     for (int i = 0; i < background.size(); i++)
     {
         background[i].Render(window);
@@ -103,16 +103,20 @@ void GraphicController::Render(sf::RenderWindow &window)
         {
             collectables[i].Render(window);
         }
-            
     }
     for (int i = 0; i < movables.size(); i++)
     {
         movables[i].Render(window);
     }
    
-
     player.Render(window);
     
+    // collision detect, from one to another,
+    // from the active to the passive
+    // when the active move, detect around,
+    
+    // player -> movable -> obs
+
     
 }
 

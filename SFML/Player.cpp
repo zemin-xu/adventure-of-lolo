@@ -25,9 +25,12 @@ Player::Player(int x, int y, int length, int height, sf::Texture *texture, int n
     shape.setOutlineColor(sf::Color::Black);
 }
 
+
+/*
 void Player::DetectCollision(Map map, vector<Collectable> &collectables, vector<Movable> &movables, const float deltaTime)
 {
-    Creature::DetectCollision(map);
+    
+    Creature::DetectObsCollision(map);
     
     if (canMove)
     {
@@ -84,6 +87,13 @@ void Player::DetectCollision(Map map, vector<Collectable> &collectables, vector<
         
     }
 }
+ 
+ */
+
+void Player::ScanAround(Element &e)
+{
+    
+}
 
 void Player::Collision(vector<Collectable> &collectables)
 {
@@ -99,17 +109,23 @@ void Player::Collision(vector<Collectable> &collectables)
     }
 }
 
-void Player::Collision(vector<Movable> &movables, const float deltaTime)
+void Player::Collision(Map map, vector<Movable> &movables, const float deltaTime)
 {
     for (int i = 0; i < movables.size(); i++)
     {
-        if (movables[i].x1 < x2 && movables[i].x2 > x1 &&
-            movables[i].y1 < y2 && movables[i].y2 > y1)
-        {
-            movables[i].shape.move(speed * dirHorizontal * deltaTime * 1.5f, speed * dirVertical * deltaTime * 1.5f);
-            
         
-            
+        if (movables[i].x1 < x2 - 6.0f && movables[i].x2 > x1 + 6.0f &&
+            movables[i].y1 < y2 - 6.0f && movables[i].y2 > y1 + 6.0f)
+        {
+            canMove = false;
+            movables[i].SetCurrentDir(state - 3);
+            movables[i].DetectObsCollision(map);
+            if (movables[i].GetCurrentDir() != 0)
+            {
+                movables[i].shape.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+                movables[i].UpdatePosition();
+                movables[i].SetCurrentDir(0);
+            }
         }
     }
 }
@@ -236,7 +252,9 @@ void Player::Update(const float deltaTime, Map map, vector<Collectable> &collect
 {
     UpdateVariable();
     
-    DetectCollision(map, collectables, movables, deltaTime);
+    DetectObsCollision(map);
+    
+    Collision(map, movables, deltaTime);
     
     Move(deltaTime);
     

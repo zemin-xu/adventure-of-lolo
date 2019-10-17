@@ -21,7 +21,7 @@ Creature::Creature(int x, int y, int length, int height, sf::Texture *texture,  
 }
 
 // detect if there is obstacle
-void Creature::DetectCollision(Map map)
+void Creature::DetectObsCollision(Map map)
 {
     if (canMove)
     {

@@ -26,11 +26,14 @@ public:
     Player();
     Player(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool isRigidbody);
 
-    void DetectCollision(Map map, vector<Collectable> &collectables, vector<Movable> &movables, const float deltaTime);
+    //void DetectCollision(Map map, vector<Collectable> &collectables, vector<Movable> &movables, const float deltaTime);
+    
+    
+    void ScanAround(Element &e);
     
     // reaction when meeting a collision
     void Collision(vector<Collectable> &collectables);
-    void Collision(vector<Movable> &movables, const float deltaTime);
+    void Collision(Map map, vector<Movable> &movables, const float deltaTime);
     
     virtual void Move(const float deltaTime);
     
