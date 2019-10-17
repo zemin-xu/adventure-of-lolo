@@ -14,6 +14,7 @@
 #include <iostream>
 #include "Map.hpp"
 
+
 using namespace std;
 class Element
 {
@@ -31,18 +32,34 @@ protected:
     static const int LENGTH_UNIT = 48;
     static const int HEIGHT_UNIT = 48;
     
+    
+    
+public:
     float x1;
     float y1;
     float x2;
     float y2;
     
-public:
     sf::RectangleShape shape;
     Element();
     Element(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody);
 
     void UpdatePosition();
     virtual void Render(sf::RenderWindow &window);
+    
+};
+
+class Collectable: public Element
+{
+protected:
+    int value;
+    bool isActive;
+    
+public:
+    Collectable(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody);
+    bool GetIsActive();
+    void SetIsActive(bool _isActive);
+    int  GetValue();
     
 };
 
@@ -53,16 +70,13 @@ protected:
     bool isAlive;
     bool canMove;
     
-    
-
-    
 public:
     enum State{Forward,Backward,Leftward,Rightward, Forward_M, Backward_M,Leftward_M, Rightward_M} state;
     
     Creature();
     Creature(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody);
     virtual void Move(const float deltaTime) = 0;
-    void DetectCollision(Map map);
+    virtual void DetectCollision(Map map);
     void Damage(Creature &other, int damage);
     
 };
@@ -77,18 +91,24 @@ protected:
     int dirHorizontal;
     int dirVertical;
     
-
 public:
     float speed;
     Player();
     Player(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool isRigidbody);
 
+    void DetectCollision(Map map, vector<Collectable> &collectables);
+    
+    void Collision(vector<Collectable> &collectables);
+    
     virtual void Move(const float deltaTime);
+    
+    
+    void GetCollectable(Collectable &c);
     
     void UpdateVariable();
     void UpdateAnimation();
     void UpdateState();
-    void Update(const float deltaTime, Map map);
+    void Update(const float deltaTime, Map map, vector<Collectable> &collectables);
     void Render(sf::RenderWindow &window);
 
 };

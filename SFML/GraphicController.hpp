@@ -41,6 +41,7 @@ public:
     
     vector<Element> background;
     vector<Element> obstacles;
+    vector<Collectable> collectables;
     Player player;
     
     GraphicController();

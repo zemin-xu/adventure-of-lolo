@@ -44,6 +44,50 @@ void Element::Render(sf::RenderWindow &window)
     window.draw(shape);
 }
 
+
+
+
+
+
+
+
+
+
+
+Collectable::Collectable(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody) : Element(x, y, length, height, texture, numHorizontal, numVertical, _isRigidbody)
+{
+    value = 10;
+    isActive = true;
+}
+
+bool Collectable::GetIsActive()
+{
+    return (isActive);
+}
+
+void Collectable::SetIsActive(bool _isActive)
+{
+    isActive = _isActive;
+}
+
+int  Collectable::GetValue()
+{
+    return (value);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Creature::Creature()
 {
     
@@ -54,60 +98,26 @@ Creature::Creature(int x, int y, int length, int height, sf::Texture *texture,  
     life = 100;
     isAlive = true;
     state = Forward;
-    
 }
 
-
-void Creature::Damage(Creature &other, int damage)
-{
-    other.life -= damage;
-    if (other.life <= 0)
-        other.isAlive = false;
-}
-
-Player::Player()
-{
-    
-}
-
-Player::Player(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody) : Creature(x, y, length, height, texture, numHorizontal, numVertical, _isRigidbody)
-{
-    speed = 100.0f;
-    dirHorizontal = 1;
-    dirVertical = 1;
-    canMove = false;
-    
-    
-    shape.setOutlineThickness(2.0f);
-    shape.setOutlineColor(sf::Color::Black);
-    
-    
-    cout << x1 << endl;
-    cout << x2 << endl;
-    cout << y1 << endl;
-    cout << y2 << endl;
-}
-
+// detect if there is obstacle
 void Creature::DetectCollision(Map map)
 {
     if (canMove)
     {
-        // the 4.0f here is a defaut value to avoid intersect situation
+        // the 6.0f here is a defaut value to avoid intersect situation
         if (state == Forward_M)
         {
-            //cout << "y2 : " << y2 << endl;
-            //cout << "y2 place : " << (int)(y2/HEIGHT_UNIT) << endl;
-            //cout << " x1 place : " <<(int)(x1/LENGTH_UNIT) << endl;
-            //cout << " x2 place : " <<(int)(x2/LENGTH_UNIT) << endl;
-            
+            // meet obstacle
             if ((((int)(y2/HEIGHT_UNIT) + 1) <= 12) &&
-            ((y2 - ((int)(y2/HEIGHT_UNIT) + 1) * HEIGHT_UNIT) <= 0) &&
-            (map.level[(int)(y2/HEIGHT_UNIT)][(int)((x1 + 6.0f)/LENGTH_UNIT)] != 1) &&
-            (map.level[(int)(y2/HEIGHT_UNIT)][(int)((x2 - 6.0f)/LENGTH_UNIT)] != 1))
-                canMove = true;
+                ((y2 - ((int)(y2/HEIGHT_UNIT) + 1) * HEIGHT_UNIT) <= 0) &&
+                (map.level[(int)(y2/HEIGHT_UNIT)][(int)((x1 + 6.0f)/LENGTH_UNIT)] != 1) &&
+                (map.level[(int)(y2/HEIGHT_UNIT)][(int)((x2 - 6.0f)/LENGTH_UNIT)] != 1))
+               canMove = true;
             else
                 canMove = false;
         }
+        
         else if (state == Backward_M)
         {
             if ((((int)(y1/HEIGHT_UNIT) + 1) > 0) &&
@@ -141,15 +151,108 @@ void Creature::DetectCollision(Map map)
     }
 }
 
-void Player::Move(const float deltaTime)
+void Creature::Damage(Creature &other, int damage)
+{
+    other.life -= damage;
+    if (other.life <= 0)
+        other.isAlive = false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Player::Player()
 {
     
+}
+
+Player::Player(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody) : Creature(x, y, length, height, texture, numHorizontal, numVertical, _isRigidbody)
+{
+    speed = 100.0f;
+    dirHorizontal = 1;
+    dirVertical = 1;
+    canMove = false;
+    
+    shape.setOutlineThickness(2.0f);
+    shape.setOutlineColor(sf::Color::Black);
+}
+
+
+
+void Player::DetectCollision(Map map, vector<Collectable> &collectables)
+{
+    Creature::DetectCollision(map);
+    
+    if (canMove)
+    {
+        if (state == Forward_M)
+        {
+            // meet obstacle
+            if ((map.level[(int)(y2/HEIGHT_UNIT)][(int)((x1 + 6.0f)/LENGTH_UNIT)] == 2) ||
+                (map.level[(int)(y2/HEIGHT_UNIT)][(int)((x2 - 6.0f)/LENGTH_UNIT)] == 2))
+                Collision(collectables);
+        }
+        else if (state == Backward_M)
+        {
+            if ((map.level[(int)(y1/HEIGHT_UNIT)][(int)((x1 + 6.0f)/LENGTH_UNIT)] == 2) ||
+                (map.level[(int)(y1/HEIGHT_UNIT)][(int)((x2 - 6.0f)/LENGTH_UNIT)] == 2))
+                Collision(collectables);
+        }
+        else if (state == Leftward_M)
+        {
+            if ((map.level[(int)((y1 + 6.0f)/HEIGHT_UNIT)][(int)(x1/LENGTH_UNIT)] == 2) ||
+               (map.level[(int)((y2 - 6.0f)/HEIGHT_UNIT)][(int)(x1/LENGTH_UNIT)] == 2))
+                Collision(collectables);
+        }
+        else if (state == Rightward_M)
+        {
+            if ((map.level[(int)((y1 + 6.0f)/HEIGHT_UNIT)][(int)(x2/LENGTH_UNIT)] == 2) ||
+            (map.level[(int)((y2 - 6.0f)/HEIGHT_UNIT)][(int)(x2/LENGTH_UNIT)] == 2))
+                Collision(collectables);
+        }
+        
+    }
+}
+
+void Player::Collision(vector<Collectable> &collectables)
+{
+    for (int i = 0; i < collectables.size(); i++)
+    {
+        if (collectables[i].x1 < x2 && collectables[i].x2 > x1 &&
+            collectables[i].y1 < y2 && collectables[i].y2 > y1)
+        {
+            // add value
+            life += collectables[i].GetValue();
+            collectables.erase(collectables.begin() + i);
+        }
+            
+    }
+}
+
+void Player::Move(const float deltaTime)
+{
     if (canMove)
     {
         shape.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
         UpdatePosition();
     }
-        
+}
+
+void Player::GetCollectable(Collectable &c)
+{
+    c.SetIsActive(false);
 }
 
 // the corresponding changement because of the changement of state of player
@@ -306,11 +409,11 @@ void Player::UpdateState()
      
 }
 
-void Player::Update(const float deltaTime, Map map)
+void Player::Update(const float deltaTime, Map map, vector<Collectable> &collectables)
 {
     UpdateVariable();
     
-    DetectCollision(map);
+    DetectCollision(map, collectables);
     
     Move(deltaTime);
     
