@@ -36,10 +36,28 @@ GraphicController::GraphicController()
             }
             
             // player
-            if(map.level[i][j] == 4)
+            if(map.level[i][j] == 3)
             {
                 player = Player(j * LENGTH_UNIT,i * LENGTH_UNIT,LENGTH_UNIT, HEIGHT_UNIT, &texturePlayer, ANIM_PLAYER_NUM_HORIZONTAL, ANIM_PLAYER_NUM_VERTICAL, true);
             }
+            
+            // movable
+            if(map.level[i][j] == 4)
+            {
+                Movable movableUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureMovable ,1,1, true);
+                movables.push_back(movableUnit);
+            }
+            
+            
+            
+            // enemy
+            if(map.level[i][j] == 5)
+            {
+                Enemy enemyUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureEnemy ,1,1, true);
+                enemies.push_back(enemyUnit);
+            }
+            
+            
         }
     }
    
@@ -59,11 +77,13 @@ void GraphicController::ReadTextureFile()
         return ;
     if (!textureCollectable.loadFromFile("Sources/coin.png"))
         return ;
+    if (!textureMovable.loadFromFile("Sources/obstacle.png"))
+    return ;
 }
 
 void GraphicController::Update(const float deltaTime)
 {
-    player.Update(deltaTime, map, collectables);
+    player.Update(deltaTime, map, collectables, movables);
 }
 
 
@@ -85,6 +105,11 @@ void GraphicController::Render(sf::RenderWindow &window)
         }
             
     }
+    for (int i = 0; i < movables.size(); i++)
+    {
+        movables[i].Render(window);
+    }
+   
 
     player.Render(window);
     

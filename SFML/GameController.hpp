@@ -27,6 +27,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Element.hpp"
+#include "Player.hpp"
 #include "GraphicController.hpp"
 
 using namespace std;

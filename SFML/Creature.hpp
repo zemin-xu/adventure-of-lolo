@@ -1,0 +1,41 @@
+//
+//  Creature.hpp
+//  SFML
+//
+//  Created by ZEMIN on 17/10/2019.
+//  Copyright © 2019 ZEMIN. All rights reserved.
+//
+
+#ifndef Creature_hpp
+#define Creature_hpp
+
+#include "Element.hpp"
+
+
+class Creature : public Element
+{
+protected:
+    int life;
+    bool isAlive;
+    bool canMove;
+    
+    
+    int dirHorizontal;
+    int dirVertical;
+    float speed;
+    
+public:
+    enum State{Forward,Backward,Leftward,Rightward, Forward_M, Backward_M,Leftward_M, Rightward_M} state;
+    
+    Creature();
+    Creature(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody);
+    virtual void Move(const float deltaTime) = 0;
+    virtual void DetectCollision(Map map);
+    
+    void Damage(Creature &other, int damage);
+    void UpdateVariable();
+    
+};
+
+
+#endif /* Creature_hpp */

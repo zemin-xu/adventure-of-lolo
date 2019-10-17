@@ -12,7 +12,11 @@
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "Element.hpp"
+
+#include "Movable.hpp"
+#include "Collectable.hpp"
+#include "Enemy.hpp"
+#include "Player.hpp"
 #include "Map.hpp"
 
 
@@ -30,6 +34,7 @@ public:
     sf::Texture textureBG;
     sf::Texture textureObstacle;
     sf::Texture textureCollectable;
+    sf::Texture textureMovable;
     
     static const int LENGTH_UNIT = 48;
     static const int HEIGHT_UNIT = 48;
@@ -42,6 +47,8 @@ public:
     vector<Element> background;
     vector<Element> obstacles;
     vector<Collectable> collectables;
+    vector<Movable> movables;
+    vector<Enemy> enemies;
     Player player;
     
     GraphicController();
