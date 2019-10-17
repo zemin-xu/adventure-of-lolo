@@ -27,6 +27,7 @@ Element::Element(int x, int y, int length, int height, sf::Texture *texture, int
     shape.setTexture(texture);
     isRigidbody = _isRigidbody;
     UpdatePosition();
+    
 }
 
 void Element::UpdatePosition()
@@ -79,6 +80,12 @@ Player::Player(int x, int y, int length, int height, sf::Texture *texture, int n
     
     shape.setOutlineThickness(2.0f);
     shape.setOutlineColor(sf::Color::Black);
+    
+    
+    cout << x1 << endl;
+    cout << x2 << endl;
+    cout << y1 << endl;
+    cout << y2 << endl;
 }
 
 void Creature::DetectCollision(Map map)
@@ -88,15 +95,15 @@ void Creature::DetectCollision(Map map)
         // the 4.0f here is a defaut value to avoid intersect situation
         if (state == Forward_M)
         {
-            cout << "y2 : " << y2 << endl;
-            cout << "y2 place : " << (int)(y2/HEIGHT_UNIT) << endl;
-            cout << " x1 place : " <<(int)(x1/LENGTH_UNIT) << endl;
-            cout << " x2 place : " <<(int)(x2/LENGTH_UNIT) << endl;
+            //cout << "y2 : " << y2 << endl;
+            //cout << "y2 place : " << (int)(y2/HEIGHT_UNIT) << endl;
+            //cout << " x1 place : " <<(int)(x1/LENGTH_UNIT) << endl;
+            //cout << " x2 place : " <<(int)(x2/LENGTH_UNIT) << endl;
             
             if ((((int)(y2/HEIGHT_UNIT) + 1) <= 12) &&
-            ((y2 - ((int)(y2/HEIGHT_UNIT) + 1) * HEIGHT_UNIT) < 0) &&
-            (map.level[(int)(y2/HEIGHT_UNIT)][(int)((x1 + 4.0f)/LENGTH_UNIT)] != 1) &&
-            (map.level[(int)(y2/HEIGHT_UNIT)][(int)((x2 - 4.0f)/LENGTH_UNIT)] != 1))
+            ((y2 - ((int)(y2/HEIGHT_UNIT) + 1) * HEIGHT_UNIT) <= 0) &&
+            (map.level[(int)(y2/HEIGHT_UNIT)][(int)((x1 + 6.0f)/LENGTH_UNIT)] != 1) &&
+            (map.level[(int)(y2/HEIGHT_UNIT)][(int)((x2 - 6.0f)/LENGTH_UNIT)] != 1))
                 canMove = true;
             else
                 canMove = false;
@@ -104,9 +111,9 @@ void Creature::DetectCollision(Map map)
         else if (state == Backward_M)
         {
             if ((((int)(y1/HEIGHT_UNIT) + 1) > 0) &&
-                ((y1 - (int)(y1/HEIGHT_UNIT) * HEIGHT_UNIT) > 0) &&
-                (map.level[(int)(y1/HEIGHT_UNIT)][(int)((x1 + 4.0f)/LENGTH_UNIT)] != 1) &&
-                (map.level[(int)(y1/HEIGHT_UNIT)][(int)((x2 - 4.0f)/LENGTH_UNIT)] != 1))
+                ((y1 - (int)(y1/HEIGHT_UNIT) * HEIGHT_UNIT) >= 0) &&
+                (map.level[(int)(y1/HEIGHT_UNIT)][(int)((x1 + 6.0f)/LENGTH_UNIT)] != 1) &&
+                (map.level[(int)(y1/HEIGHT_UNIT)][(int)((x2 - 6.0f)/LENGTH_UNIT)] != 1))
                 canMove = true;
             else
                 canMove = false;
@@ -114,9 +121,9 @@ void Creature::DetectCollision(Map map)
         else if (state == Leftward_M)
         {
             if ((((int)(x1/LENGTH_UNIT) + 1) > 0) &&
-                ((x1 - (int)(x1/LENGTH_UNIT) * LENGTH_UNIT) > 0) &&
-                (map.level[(int)((y1 + 4.0f)/HEIGHT_UNIT)][(int)(x1/LENGTH_UNIT)] != 1) &&
-                (map.level[(int)((y2 - 4.0f)/HEIGHT_UNIT)][(int)(x1/LENGTH_UNIT)] != 1))
+                ((x1 - (int)(x1/LENGTH_UNIT) * LENGTH_UNIT) >= 0) &&
+                (map.level[(int)((y1 + 6.0f)/HEIGHT_UNIT)][(int)(x1/LENGTH_UNIT)] != 1) &&
+                (map.level[(int)((y2 - 6.0f)/HEIGHT_UNIT)][(int)(x1/LENGTH_UNIT)] != 1))
                 canMove = true;
             else
                 canMove = false;
@@ -124,9 +131,9 @@ void Creature::DetectCollision(Map map)
         else if (state == Rightward_M)
         {
             if ((((int)(x2/LENGTH_UNIT) + 1) <= 16) &&
-                ((x2 - ((int)(x2/LENGTH_UNIT) + 1) * LENGTH_UNIT) < 0) &&
-                (map.level[(int)((y1 + 4.0f)/HEIGHT_UNIT)][(int)(x2/LENGTH_UNIT)] != 1) &&
-                (map.level[(int)((y2 - 4.0f)/HEIGHT_UNIT)][(int)(x2/LENGTH_UNIT)] != 1))
+                ((x2 - ((int)(x2/LENGTH_UNIT) + 1) * LENGTH_UNIT) <= 0) &&
+                (map.level[(int)((y1 + 6.0f)/HEIGHT_UNIT)][(int)(x2/LENGTH_UNIT)] != 1) &&
+                (map.level[(int)((y2 - 6.0f)/HEIGHT_UNIT)][(int)(x2/LENGTH_UNIT)] != 1))
                 canMove = true;
             else
                 canMove = false;
