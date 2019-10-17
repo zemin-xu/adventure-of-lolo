@@ -13,6 +13,9 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Element.hpp"
+#include "Map.hpp"
+
+
 
 using namespace std;
 
@@ -28,14 +31,16 @@ public:
     sf::Texture textureObstacle;
     sf::Texture textureCollectable;
     
-    static const int LENGTH_UNIT = 64;
-    static const int HEIGHT_UNIT = 64;
+    static const int LENGTH_UNIT = 48;
+    static const int HEIGHT_UNIT = 48;
     
     static const int ANIM_PLAYER_NUM_HORIZONTAL = 10;
     static const int ANIM_PLAYER_NUM_VERTICAL = 8;
     
-    vector<Element> elements;
+    Map map;
     
+    vector<Element> background;
+    vector<Element> obstacles;
     Player player;
     
     GraphicController();

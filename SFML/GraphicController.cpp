@@ -7,30 +7,37 @@
 //
 
 #include "GraphicController.hpp"
-#include "GameController.hpp"
+
 
 GraphicController::GraphicController() 
 {
     ReadTextureFile();
-    for (int i = 0 ; i < GameController::LENGTH / LENGTH_UNIT; i++)
+    // length and height of program here
+    for (int i = 0; i < 12; i++)
     {
-        for (int j = 0 ; j < GameController::HEIGHT/HEIGHT_UNIT; j++)
+        for (int j = 0; j < 16; j++)
         {
-            // create background
-            Element backgroundUnit(i * LENGTH_UNIT, j * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureBG, 1, 1, false);
-            elements.push_back(backgroundUnit);
+            // background
+            Element backgroundUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureBG, 1, 1, false);
+            background.push_back(backgroundUnit);
             
-            // create obstacle
-            if((i == 0 || i == 3 || i == GameController::LENGTH / LENGTH_UNIT - 1 || j == 0 || j == 3 || j == GameController::HEIGHT/HEIGHT_UNIT - 1))
+            // obstacles
+            if(map.level[i][j] == 1)
             {
-                Element obstacleUnit(i * LENGTH_UNIT, j * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureObstacle,1,1, true);
-               
-                elements.push_back(obstacleUnit);
+                Element obstacleUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureObstacle,1,1, true);
+                obstacles.push_back(obstacleUnit);
+            }
+            
+            // obstacles
+            if(map.level[i][j] == 2)
+            {
+                player = Player(j * LENGTH_UNIT,i * LENGTH_UNIT,LENGTH_UNIT, HEIGHT_UNIT, &texturePlayer, ANIM_PLAYER_NUM_HORIZONTAL, ANIM_PLAYER_NUM_VERTICAL, true);
+                
             }
         }
     }
-    player = Player(0,0,LENGTH_UNIT, HEIGHT_UNIT, &texturePlayer, ANIM_PLAYER_NUM_HORIZONTAL, ANIM_PLAYER_NUM_VERTICAL, true);
-    //elements.push_back(player);
+   
+    
     
 }
 
@@ -50,18 +57,21 @@ void GraphicController::ReadTextureFile()
 
 void GraphicController::Update(const float deltaTime)
 {
-    player.Update(deltaTime);
+    player.Update(deltaTime, map);
 }
 
 
 void GraphicController::Render(sf::RenderWindow &window)
 {
-    for (int i = 0; i < elements.size(); i++)
+    for (int i = 0; i < background.size(); i++)
     {
-        elements[i].Render(window);
+        background[i].Render(window);
     }
-    player.UpdateAnimation();
-    player.UpdateState();
+    for (int i = 0; i < obstacles.size(); i++)
+    {
+        obstacles[i].Render(window);
+    }
+
     player.Render(window);
     
     
@@ -75,11 +85,11 @@ InputController::InputController()
 void InputController::UpdateInput(Player &player)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-        player.state = Player::Backward_M;
+        player.state = Creature::Backward_M;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-        player.state = Player::Forward_M;
+        player.state = Creature::Forward_M;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-        player.state = Player::Leftward_M;
+        player.state = Creature::Leftward_M;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-        player.state = Player::Rightward_M;
+        player.state = Creature::Rightward_M;
 }

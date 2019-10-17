@@ -12,6 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <iostream>
+#include "Map.hpp"
 
 using namespace std;
 class Element
@@ -22,18 +23,27 @@ protected:
     sf::IntRect spritePos;
     bool isRigidbody;
     
-    
     int animNumHorizontal;
     int animNumVertical;
     float animUnitLength;
     float animUnitHeight;
+    
+    static const int LENGTH_UNIT = 48;
+    static const int HEIGHT_UNIT = 48;
+    
+    float x1;
+    float y1;
+    float x2;
+    float y2;
     
 public:
     sf::RectangleShape shape;
     Element();
     Element(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody);
 
+    void UpdatePosition();
     virtual void Render(sf::RenderWindow &window);
+    
 };
 
 class Creature : public Element
@@ -41,13 +51,18 @@ class Creature : public Element
 protected:
     int life;
     bool isAlive;
+    bool canMove;
+    
+    
 
     
 public:
+    enum State{Forward,Backward,Leftward,Rightward, Forward_M, Backward_M,Leftward_M, Rightward_M} state;
+    
     Creature();
     Creature(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody);
     virtual void Move(const float deltaTime) = 0;
-    virtual void Collision(Element other) = 0;
+    void DetectCollision(Map map);
     void Damage(Creature &other, int damage);
     
 };
@@ -55,29 +70,27 @@ public:
 class Player : public Creature
 {
 public:
-    enum State{Forward,Backward,Leftward,Rightward, Forward_M, Backward_M,Leftward_M, Rightward_M} state;
+    
     
 protected:
     
     int dirHorizontal;
     int dirVertical;
-    bool canMove;
+    
 
 public:
     float speed;
     Player();
     Player(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool isRigidbody);
-    
-    virtual void Collision(Element other);
+
     virtual void Move(const float deltaTime);
     
     void UpdateVariable();
     void UpdateAnimation();
     void UpdateState();
-    void Update(const float deltaTime);
-    
-    
-    
+    void Update(const float deltaTime, Map map);
+    void Render(sf::RenderWindow &window);
+
 };
 
 #endif /* Element_hpp */
