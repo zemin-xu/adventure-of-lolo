@@ -8,6 +8,11 @@
 
 #include "Collectable.hpp"
 
+Collectable::Collectable()
+{
+    
+}
+
 Collectable::Collectable(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody) : Element(x, y, length, height, texture, numHorizontal, numVertical, _isRigidbody)
 {
     value = 10;

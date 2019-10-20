@@ -32,7 +32,13 @@ public:
     sf::Texture texturePlayer;
     sf::Texture textureEnemy;
     sf::Texture textureBG;
-    sf::Texture textureObstacle;
+    sf::Texture textureClosedKeyBox;
+    
+    sf::Texture textureOuterWall;
+    sf::Texture textureClosedDoor;
+    sf::Texture textureObstacle1;
+    sf::Texture textureObstacle2;
+    
     sf::Texture textureCollectable;
     sf::Texture textureMovable;
     sf::Texture textureUI;
@@ -42,6 +48,9 @@ public:
     
     static const int ANIM_PLAYER_NUM_HORIZONTAL = 10;
     static const int ANIM_PLAYER_NUM_VERTICAL = 8;
+    
+    static const int ANIM_ENEMY1_NUM_HORIZONTAL = 4;
+    static const int ANIM_ENEMY1_NUM_VERTICAL = 4;
     
     Map map;
     
@@ -56,6 +65,8 @@ public:
     vector<Movable> movables;
     vector<Enemy> enemies;
     Player player;
+    Element keyBox;
+    Element door;
     Element uiLife;
     Element uiWeapon;
     

@@ -20,8 +20,6 @@ Enemy::Enemy(int x, int y, int length, int height, sf::Texture *texture, int num
     dirVertical = 1;
     canMove = false;
     
-    shape.setOutlineThickness(2.0f);
-    shape.setOutlineColor(sf::Color::Black);
 }
 
 void Enemy::Move(const float deltaTime)

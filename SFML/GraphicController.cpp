@@ -41,21 +41,32 @@ GraphicController::GraphicController()
             }
             
             // obstacles
-            if(map.level[i][j] == 2)
+            if(map.level[i][j] / 10 == 2)
             {
-                Element obstacleUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureObstacle,1,1, true);
+                Element obstacleUnit;
+                if (map.level[i][j] == 22)
+                    obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureOuterWall,1,1, true);
+                else if (map.level[i][j] == 24)
+                obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureClosedDoor,1,1, true);
+                else if (map.level[i][j] == 21)
+                    obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureObstacle1,1,1, true);
+                else if (map.level[i][j] == 23)
+                    obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureObstacle2,1,1, true);
                 obstacles.push_back(obstacleUnit);
             }
             
+            
             // collectable
-            if(map.level[i][j] == 3)
+            if (map.level[i][j] / 10 == 3)
             {
-                Collectable collectableUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureCollectable ,1,1, false);
+                Collectable collectableUnit;
+                if (map.level[i][j] == 31)
+                    collectableUnit = Collectable(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureCollectable ,1,1, false);
                 collectables.push_back(collectableUnit);
             }
             
             // movable
-            if(map.level[i][j] == 4)
+            if(map.level[i][j] == 41)
             {
                 Movable movableUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureMovable ,1,1, true);
                 movables.push_back(movableUnit);
@@ -64,17 +75,25 @@ GraphicController::GraphicController()
             // enemy
             if(map.level[i][j] == 5)
             {
-                Enemy enemyUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureEnemy ,1,1, true);
+                Enemy enemyUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureEnemy ,ANIM_ENEMY1_NUM_HORIZONTAL, ANIM_ENEMY1_NUM_VERTICAL, true);
                 enemies.push_back(enemyUnit);
             }
             
-            player = Player(8 * LENGTH_UNIT,6 * LENGTH_UNIT,LENGTH_UNIT, HEIGHT_UNIT, &texturePlayer, ANIM_PLAYER_NUM_HORIZONTAL, ANIM_PLAYER_NUM_VERTICAL, true);
-            
-            uiLife = Element(14.0f * LENGTH_UNIT, 4 * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureUI, 1,1, true);
-            uiWeapon = Element(14.0f * LENGTH_UNIT, 5.5f * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureUI, 1,1, true);
-            
+            if(map.level[i][j] == 13)
+            {
+            keyBox = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureClosedKeyBox, 1, 1, false);
+            }
+            if(map.level[i][j] == 24)
+            {
+            door = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureClosedDoor, 1, 1, false);
+            }
         }
     }
+    
+    player = Player(8 * LENGTH_UNIT,6 * LENGTH_UNIT,LENGTH_UNIT, HEIGHT_UNIT, &texturePlayer, ANIM_PLAYER_NUM_HORIZONTAL, ANIM_PLAYER_NUM_VERTICAL, true);
+    
+    uiLife = Element(14.0f * LENGTH_UNIT, 4 * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureUI, 1,1, true);
+    uiWeapon = Element(14.0f * LENGTH_UNIT, 5.5f * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureUI, 1,1, true);
    
     
     
@@ -87,18 +106,26 @@ void GraphicController::ReadTextureFile()
     
     if (!texturePlayer.loadFromFile("Sources/player.png"))
         return ;
-    if (!textureEnemy.loadFromFile("Sources/player.png"))
+    if (!textureEnemy.loadFromFile("Sources/enemy.png"))
         return ;
     if (!textureBG.loadFromFile("Sources/sable.jpg"))
         return ;
-    if (!textureObstacle.loadFromFile("Sources/obstacle.png"))
+    if (!textureClosedKeyBox.loadFromFile("Sources/closed_key_box.png"))
+    return ;
+    if (!textureOuterWall.loadFromFile("Sources/outer_wall.jpg"))
+        return ;
+    if (!textureClosedDoor.loadFromFile("Sources/closed_door.png"))
+    return ;
+    if (!textureObstacle1.loadFromFile("Sources/obstacle1.png"))
+        return ;
+    if (!textureObstacle2.loadFromFile("Sources/obstacle2.png"))
         return ;
     if (!textureCollectable.loadFromFile("Sources/coin.png"))
         return ;
-    if (!textureMovable.loadFromFile("Sources/obstacle.png"))
-    return ;
+    if (!textureMovable.loadFromFile("Sources/movable.png"))
+        return ;
     if (!textureUI.loadFromFile("Sources/coin.png"))
-    return ;
+        return ;
 }
 
 void GraphicController::Update(const float deltaTime)
@@ -134,11 +161,21 @@ void GraphicController::Render(sf::RenderWindow &window)
     {
         movables[i].Render(window);
     }
+    
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        enemies[i].Render(window);
+    }
    
-    player.Render(window);
+    
+    keyBox.Render(window);
+    door.Render(window);
     
     uiLife.Render(window);
     uiWeapon.Render(window);
+    
+    player.Render(window);
+    
     
     window.draw(title);
     window.draw(textLife);

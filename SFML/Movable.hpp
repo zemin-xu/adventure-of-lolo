@@ -22,6 +22,7 @@ private:
     int currentDir;
     
 public:
+    Movable();
     Movable(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody);
     int GetCurrentDir();
     void SetCurrentDir(int _currentDir);
