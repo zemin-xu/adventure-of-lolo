@@ -23,9 +23,11 @@ private:
     
 public:
     Movable(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody);
-    void DetectObsCollision(Map map);
     int GetCurrentDir();
     void SetCurrentDir(int _currentDir);
+    
+    void DetectObsCollision(Map map);
+    
 };
 
 #endif /* Movable_hpp */

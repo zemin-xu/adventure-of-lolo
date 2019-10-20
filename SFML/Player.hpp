@@ -20,11 +20,14 @@ public:
     
     
 protected:
+    int weaponPoint;
     
 public:
     
     Player();
     Player(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool isRigidbody);
+    
+    int GetWeaponPoint() {return (weaponPoint); }
 
     //void DetectCollision(Map map, vector<Collectable> &collectables, vector<Movable> &movables, const float deltaTime);
     

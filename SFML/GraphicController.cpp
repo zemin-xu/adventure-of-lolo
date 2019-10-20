@@ -13,32 +13,45 @@ GraphicController::GraphicController()
 {
     ReadTextureFile();
     // length and height of program here
+    
+    /* text init */
+    title.setFont(font);
+    title.setString("LOLO");
+    title.setCharacterSize(24);
+    title.setPosition(14.2f * LENGTH_UNIT, 4 * HEIGHT_UNIT);
+    
+    textLife.setFont(font);
+    textLife.setCharacterSize(24);
+    textLife.setPosition(14.2f * LENGTH_UNIT, 5 * HEIGHT_UNIT);
+
+    textWeapon.setFont(font);
+    textWeapon.setCharacterSize(24);
+    textWeapon.setPosition(14.2f * LENGTH_UNIT, 6 * HEIGHT_UNIT);
+    
+    
     for (int i = 0; i < 12; i++)
     {
         for (int j = 0; j < 16; j++)
         {
             // background
-            Element backgroundUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureBG, 1, 1, false);
-            background.push_back(backgroundUnit);
+            if(j >= 1 && j < 14)
+            {
+                Element backgroundUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureBG, 1, 1, false);
+                background.push_back(backgroundUnit);
+            }
             
             // obstacles
-            if(map.level[i][j] == 1)
+            if(map.level[i][j] == 2)
             {
                 Element obstacleUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureObstacle,1,1, true);
                 obstacles.push_back(obstacleUnit);
             }
             
             // collectable
-            if(map.level[i][j] == 2)
+            if(map.level[i][j] == 3)
             {
                 Collectable collectableUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureCollectable ,1,1, false);
                 collectables.push_back(collectableUnit);
-            }
-            
-            // player
-            if(map.level[i][j] == 3)
-            {
-                player = Player(j * LENGTH_UNIT,i * LENGTH_UNIT,LENGTH_UNIT, HEIGHT_UNIT, &texturePlayer, ANIM_PLAYER_NUM_HORIZONTAL, ANIM_PLAYER_NUM_VERTICAL, true);
             }
             
             // movable
@@ -55,6 +68,7 @@ GraphicController::GraphicController()
                 enemies.push_back(enemyUnit);
             }
             
+            player = Player(8 * LENGTH_UNIT,6 * LENGTH_UNIT,LENGTH_UNIT, HEIGHT_UNIT, &texturePlayer, ANIM_PLAYER_NUM_HORIZONTAL, ANIM_PLAYER_NUM_VERTICAL, true);
             
         }
     }
@@ -65,6 +79,9 @@ GraphicController::GraphicController()
 
 void GraphicController::ReadTextureFile()
 {
+    if (!font.loadFromFile("Sources/karma_future.ttf"))
+    return ;
+    
     if (!texturePlayer.loadFromFile("Sources/player.png"))
         return ;
     if (!textureEnemy.loadFromFile("Sources/player.png"))
@@ -82,6 +99,10 @@ void GraphicController::ReadTextureFile()
 void GraphicController::Update(const float deltaTime)
 {
     player.Update(deltaTime, map, collectables, movables);
+    
+    /* text update, will be placed in a condition when they change */
+    textLife.setString(to_string(player.GetLifePoint()));
+    textWeapon.setString(to_string(player.GetWeaponPoint()));
 }
 
 
@@ -111,11 +132,9 @@ void GraphicController::Render(sf::RenderWindow &window)
    
     player.Render(window);
     
-    // collision detect, from one to another,
-    // from the active to the passive
-    // when the active move, detect around,
-    
-    // player -> movable -> obs
+    window.draw(title);
+    window.draw(textLife);
+    window.draw(textWeapon);
 
     
 }

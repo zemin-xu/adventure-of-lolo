@@ -15,7 +15,7 @@ Creature::Creature()
 
 Creature::Creature(int x, int y, int length, int height, sf::Texture *texture,  int numHorizontal, int numVertical, bool _isRigidbody) : Element(x, y, length, height, texture, numHorizontal, numVertical, _isRigidbody)
 {
-    life = 100;
+    lifePoint = 5;
     isAlive = true;
     state = Forward;
 }
@@ -31,8 +31,8 @@ void Creature::DetectObsCollision(Map map)
             // meet obstacle
             if ((((int)(y2/HEIGHT_UNIT) + 1) <= 12) &&
                 ((y2 - ((int)(y2/HEIGHT_UNIT) + 1) * HEIGHT_UNIT) <= 0) &&
-                (map.level[(int)(y2/HEIGHT_UNIT)][(int)((x1 + 6.0f)/LENGTH_UNIT)] != 1) &&
-                (map.level[(int)(y2/HEIGHT_UNIT)][(int)((x2 - 6.0f)/LENGTH_UNIT)] != 1))
+                (map.level[(int)(y2/HEIGHT_UNIT)][(int)((x1 + 6.0f)/LENGTH_UNIT)] != 2) &&
+                (map.level[(int)(y2/HEIGHT_UNIT)][(int)((x2 - 6.0f)/LENGTH_UNIT)] != 2))
                canMove = true;
             else
                 canMove = false;
@@ -42,28 +42,28 @@ void Creature::DetectObsCollision(Map map)
         {
             if ((((int)(y1/HEIGHT_UNIT) + 1) > 0) &&
                 ((y1 - (int)(y1/HEIGHT_UNIT) * HEIGHT_UNIT) >= 0) &&
-                (map.level[(int)(y1/HEIGHT_UNIT)][(int)((x1 + 6.0f)/LENGTH_UNIT)] != 1) &&
-                (map.level[(int)(y1/HEIGHT_UNIT)][(int)((x2 - 6.0f)/LENGTH_UNIT)] != 1))
+                (map.level[(int)(y1/HEIGHT_UNIT)][(int)((x1 + 6.0f)/LENGTH_UNIT)] != 2) &&
+                (map.level[(int)(y1/HEIGHT_UNIT)][(int)((x2 - 6.0f)/LENGTH_UNIT)] != 2))
                 canMove = true;
             else
                 canMove = false;
         }
         else if (state == Leftward_M)
         {
-            if ((((int)(x1/LENGTH_UNIT) + 1) > 0) &&
+            if ((((int)(x1/LENGTH_UNIT) + 1) > 1) &&
                 ((x1 - (int)(x1/LENGTH_UNIT) * LENGTH_UNIT) >= 0) &&
-                (map.level[(int)((y1 + 6.0f)/HEIGHT_UNIT)][(int)(x1/LENGTH_UNIT)] != 1) &&
-                (map.level[(int)((y2 - 6.0f)/HEIGHT_UNIT)][(int)(x1/LENGTH_UNIT)] != 1))
+                (map.level[(int)((y1 + 6.0f)/HEIGHT_UNIT)][(int)(x1/LENGTH_UNIT)] != 2) &&
+                (map.level[(int)((y2 - 6.0f)/HEIGHT_UNIT)][(int)(x1/LENGTH_UNIT)] != 2))
                 canMove = true;
             else
                 canMove = false;
         }
         else if (state == Rightward_M)
         {
-            if ((((int)(x2/LENGTH_UNIT) + 1) <= 16) &&
+            if ((((int)(x2/LENGTH_UNIT) + 1) <= 14) &&
                 ((x2 - ((int)(x2/LENGTH_UNIT) + 1) * LENGTH_UNIT) <= 0) &&
-                (map.level[(int)((y1 + 6.0f)/HEIGHT_UNIT)][(int)(x2/LENGTH_UNIT)] != 1) &&
-                (map.level[(int)((y2 - 6.0f)/HEIGHT_UNIT)][(int)(x2/LENGTH_UNIT)] != 1))
+                (map.level[(int)((y1 + 6.0f)/HEIGHT_UNIT)][(int)(x2/LENGTH_UNIT)] != 2) &&
+                (map.level[(int)((y2 - 6.0f)/HEIGHT_UNIT)][(int)(x2/LENGTH_UNIT)] != 2))
                 canMove = true;
             else
                 canMove = false;
@@ -73,8 +73,8 @@ void Creature::DetectObsCollision(Map map)
 
 void Creature::Damage(Creature &other, int damage)
 {
-    other.life -= damage;
-    if (other.life <= 0)
+    other.lifePoint -= damage;
+    if (other.lifePoint <= 0)
         other.isAlive = false;
 }
 

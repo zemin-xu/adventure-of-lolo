@@ -15,7 +15,7 @@
 class Creature : public Element
 {
 protected:
-    int life;
+    int lifePoint;
     bool isAlive;
     bool canMove;
     
@@ -29,6 +29,9 @@ public:
     
     Creature();
     Creature(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody);
+    
+    int GetLifePoint() {return (lifePoint); }
+    
     virtual void Move(const float deltaTime) = 0;
     virtual void DetectObsCollision(Map map);
     

@@ -19,6 +19,7 @@ Player::Player(int x, int y, int length, int height, sf::Texture *texture, int n
     speed = 100.0f;
     dirHorizontal = 1;
     dirVertical = 1;
+    weaponPoint = 3;
     canMove = false;
     
     shape.setOutlineThickness(2.0f);
@@ -102,8 +103,8 @@ void Player::Collision(vector<Collectable> &collectables)
         if (collectables[i].x1 < x2 && collectables[i].x2 > x1 &&
             collectables[i].y1 < y2 && collectables[i].y2 > y1)
         {
-            // add value
-            life += collectables[i].GetValue();
+            
+            
             collectables.erase(collectables.begin() + i);
         }
     }
@@ -255,6 +256,8 @@ void Player::Update(const float deltaTime, Map map, vector<Collectable> &collect
     DetectObsCollision(map);
     
     Collision(map, movables, deltaTime);
+    
+    Collision(collectables);
     
     Move(deltaTime);
     

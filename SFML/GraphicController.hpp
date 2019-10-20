@@ -44,6 +44,11 @@ public:
     
     Map map;
     
+    sf::Font font;
+    sf::Text title;
+    sf::Text textLife;
+    sf::Text textWeapon;
+    
     vector<Element> background;
     vector<Element> obstacles;
     vector<Collectable> collectables;
