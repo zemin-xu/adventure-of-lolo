@@ -18,15 +18,15 @@ GraphicController::GraphicController()
     title.setFont(font);
     title.setString("LOLO");
     title.setCharacterSize(24);
-    title.setPosition(14.2f * LENGTH_UNIT, 4 * HEIGHT_UNIT);
+    title.setPosition(14.2f * LENGTH_UNIT, 2 * HEIGHT_UNIT);
     
     textLife.setFont(font);
     textLife.setCharacterSize(24);
-    textLife.setPosition(14.2f * LENGTH_UNIT, 5 * HEIGHT_UNIT);
+    textLife.setPosition(15.2f * LENGTH_UNIT, 4.0f * HEIGHT_UNIT);
 
     textWeapon.setFont(font);
     textWeapon.setCharacterSize(24);
-    textWeapon.setPosition(14.2f * LENGTH_UNIT, 6 * HEIGHT_UNIT);
+    textWeapon.setPosition(15.2f * LENGTH_UNIT, 5.5f * HEIGHT_UNIT);
     
     
     for (int i = 0; i < 12; i++)
@@ -70,6 +70,9 @@ GraphicController::GraphicController()
             
             player = Player(8 * LENGTH_UNIT,6 * LENGTH_UNIT,LENGTH_UNIT, HEIGHT_UNIT, &texturePlayer, ANIM_PLAYER_NUM_HORIZONTAL, ANIM_PLAYER_NUM_VERTICAL, true);
             
+            uiLife = Element(14.0f * LENGTH_UNIT, 4 * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureUI, 1,1, true);
+            uiWeapon = Element(14.0f * LENGTH_UNIT, 5.5f * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureUI, 1,1, true);
+            
         }
     }
    
@@ -93,6 +96,8 @@ void GraphicController::ReadTextureFile()
     if (!textureCollectable.loadFromFile("Sources/coin.png"))
         return ;
     if (!textureMovable.loadFromFile("Sources/obstacle.png"))
+    return ;
+    if (!textureUI.loadFromFile("Sources/coin.png"))
     return ;
 }
 
@@ -131,6 +136,9 @@ void GraphicController::Render(sf::RenderWindow &window)
     }
    
     player.Render(window);
+    
+    uiLife.Render(window);
+    uiWeapon.Render(window);
     
     window.draw(title);
     window.draw(textLife);

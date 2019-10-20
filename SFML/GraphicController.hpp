@@ -35,6 +35,7 @@ public:
     sf::Texture textureObstacle;
     sf::Texture textureCollectable;
     sf::Texture textureMovable;
+    sf::Texture textureUI;
     
     static const int LENGTH_UNIT = 48;
     static const int HEIGHT_UNIT = 48;
@@ -55,6 +56,8 @@ public:
     vector<Movable> movables;
     vector<Enemy> enemies;
     Player player;
+    Element uiLife;
+    Element uiWeapon;
     
     GraphicController();
     
