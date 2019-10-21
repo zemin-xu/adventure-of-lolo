@@ -176,7 +176,6 @@ void GraphicController::Render(sf::RenderWindow &window)
     
     player.Render(window);
     
-    
     window.draw(title);
     window.draw(textLife);
     window.draw(textWeapon);

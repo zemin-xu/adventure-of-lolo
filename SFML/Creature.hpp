@@ -35,6 +35,10 @@ public:
     virtual void Move(const float deltaTime) = 0;
     virtual void DetectObsCollision(Map map);
     
+    void UpdateIdleAnimation(int forwardAnimRow, int forwardAnimCol, int backwardAnimRow, int backwardAnimCol, int leftwardAnimRow, int leftwardAnimCol, int rightwardAnimRow, int rightwardAnimCol);
+    
+    void UpdateMoveAnimation(int forwardAnimRow, int forwardAnimCol, int backwardAnimRow, int backwardAnimCol, int leftwardAnimRow, int leftwardAnimCol, int rightwardAnimRow, int rightwardAnimCol);
+    
     void Damage(Creature &other, int damage);
     void UpdateVariable();
     

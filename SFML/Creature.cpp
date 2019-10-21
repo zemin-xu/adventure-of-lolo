@@ -119,3 +119,91 @@ void Creature::UpdateVariable()
             break;
     }
 }
+
+void Creature::UpdateMoveAnimation(int forwardAnimRow, int forwardAnimCol, int backwardAnimRow, int backwardAnimCol, int leftwardAnimRow, int leftwardAnimCol, int rightwardAnimRow, int rightwardAnimCol)
+{
+    switch (state) {
+        case Forward_M:
+        {
+            spritePos.top = animUnitHeight * (forwardAnimRow - 1);
+            if (spritePos.left < animUnitLength * (forwardAnimCol - 1))
+                spritePos.left += animUnitLength;
+            else
+                spritePos.left = 0;
+        }
+            break;
+        case Backward_M:
+        {
+            spritePos.top = animUnitHeight * (backwardAnimRow - 1);
+            if (spritePos.left < animUnitLength * (backwardAnimCol - 1))
+                spritePos.left += animUnitLength;
+            else
+                spritePos.left = 0;
+        }
+            break;
+        case Leftward_M:
+        {
+            spritePos.top = animUnitHeight * (leftwardAnimRow - 1);
+            if (spritePos.left < animUnitLength * (leftwardAnimCol - 1))
+                spritePos.left += animUnitLength;
+            else
+                spritePos.left = 0;
+        }
+            break;
+        case Rightward_M:
+        {
+            spritePos.top = animUnitHeight * (rightwardAnimRow - 1);
+            if (spritePos.left < animUnitLength * (rightwardAnimCol - 1))
+                spritePos.left += animUnitLength;
+            else
+                spritePos.left = 0;
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+void Creature::UpdateIdleAnimation(int forwardAnimRow, int forwardAnimCol, int backwardAnimRow, int backwardAnimCol, int leftwardAnimRow, int leftwardAnimCol, int rightwardAnimRow, int rightwardAnimCol)
+{
+    switch (state) {
+        case Forward:
+        {
+            spritePos.top = animUnitHeight * (forwardAnimRow - 1);
+            if (spritePos.left < animUnitLength * (forwardAnimCol - 1))
+                spritePos.left += animUnitLength;
+            else
+                spritePos.left = 0;
+        }
+            break;
+        case Backward:
+        {
+            spritePos.top = animUnitHeight * (backwardAnimRow - 1);
+            if (spritePos.left < animUnitLength * (backwardAnimCol - 1))
+                spritePos.left += animUnitLength;
+            else
+                spritePos.left = 0;
+        }
+            break;
+        case Leftward:
+        {
+            spritePos.top = animUnitHeight * (leftwardAnimRow - 1);
+            if (spritePos.left < animUnitLength * (leftwardAnimCol - 1))
+                spritePos.left += animUnitLength;
+            else
+                spritePos.left = 0;
+        }
+            break;
+        case Rightward:
+        {
+            spritePos.top = animUnitHeight * (rightwardAnimRow - 1);
+            if (spritePos.left < animUnitLength * (rightwardAnimCol - 1))
+                spritePos.left += animUnitLength;
+            else
+                spritePos.left = 0;
+        }
+            break;
+        default:
+            break;
+    }
+}

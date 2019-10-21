@@ -26,7 +26,6 @@ Player::Player(int x, int y, int length, int height, sf::Texture *texture, int n
     shape.setOutlineColor(sf::Color::Black);
 }
 
-
 /*
 void Player::DetectCollision(Map map, vector<Collectable> &collectables, vector<Movable> &movables, const float deltaTime)
 {
@@ -140,85 +139,6 @@ void Player::Move(const float deltaTime)
     }
 }
 
-
-void Player::UpdateAnimation()
-{
-    switch (state) {
-        case Forward:
-        {
-            spritePos.top = animUnitHeight * 0;
-            if (spritePos.left < animUnitLength * 2)
-                spritePos.left += animUnitLength;
-            else
-                spritePos.left = 0;
-        }
-            break;
-        case Backward:
-        {
-            spritePos.top = animUnitHeight * 2;
-            if (spritePos.left < animUnitLength * 0)
-                spritePos.left += animUnitLength;
-            else
-                spritePos.left = 0;
-        }
-            break;
-        case Leftward:
-        {
-            spritePos.top = animUnitHeight * 1;
-            if (spritePos.left < animUnitLength * 2)
-                spritePos.left += animUnitLength;
-            else
-                spritePos.left = 0;
-        }
-            break;
-        case Rightward:
-        {
-            spritePos.top = animUnitHeight * 3;
-            if (spritePos.left < animUnitLength * 2)
-                spritePos.left += animUnitLength;
-            else
-                spritePos.left = 0;
-        }
-            break;
-        case Forward_M:
-        {
-            spritePos.top = animUnitHeight * 4;
-            if (spritePos.left < animUnitLength * 9)
-                spritePos.left += animUnitLength;
-            else
-                spritePos.left = 0;
-        }
-            break;
-        case Backward_M:
-        {
-            spritePos.top = animUnitHeight * 6;
-            if (spritePos.left < animUnitLength * 9)
-                spritePos.left += animUnitLength;
-            else
-                spritePos.left = 0;
-        }
-            break;
-        case Leftward_M:
-        {
-            spritePos.top = animUnitHeight * 5;
-            if (spritePos.left < animUnitLength * 9)
-                spritePos.left += animUnitLength;
-            else
-                spritePos.left = 0;
-        }
-            break;
-        case Rightward_M:
-        {
-            spritePos.top = animUnitHeight * 7;
-            if (spritePos.left < animUnitLength * 9)
-                spritePos.left += animUnitLength;
-            else
-                spritePos.left = 0;
-        }
-            break;
-    }
-}
-
 void Player::UpdateState()
 {
     
@@ -266,7 +186,8 @@ void Player::Update(const float deltaTime, Map map, vector<Collectable> &collect
 // the functions in render will be update each frame of about 0.1s
 void Player::Render(sf::RenderWindow &window)
 {
-    UpdateAnimation();
+    UpdateIdleAnimation(1, 3, 3, 3, 2, 3, 4, 3);
+    UpdateMoveAnimation(5, 10, 7, 10, 6, 10, 8, 10);
     
     Element::Render(window);
     
