@@ -13,7 +13,7 @@ Element::Element()
     
 }
 
-Element::Element(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody)
+Element::Element(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind)
 {
     animNumVertical = numHorizontal;
     animNumVertical = numVertical;
@@ -21,21 +21,30 @@ Element::Element(int x, int y, int length, int height, sf::Texture *texture, int
     animUnitLength = (texture->getSize().x) / numHorizontal;
     animUnitHeight = (texture->getSize().y) / numVertical;
     
+    
     shape.setSize(sf::Vector2f(length, height));
-    shape.setPosition(x, y);
+    real.setSize(sf::Vector2f(length * FACTOR, height * FACTOR));
+    
+    shape.setOrigin(length / 2, height / 2);
+    real.setOrigin(length * FACTOR / 2, length * FACTOR / 2);
+    
+    shape.setPosition(x + length / 2, y + length / 2);
+    real.setPosition(x + length / 2, y + length / 2);
+    
     spritePos = sf::IntRect(0,0, animUnitLength, animUnitHeight);
     shape.setTexture(texture);
-    isRigidbody = _isRigidbody;
+    kind = _kind;
     UpdatePosition();
     
 }
 
+
+
 void Element::UpdatePosition()
 {
-    x1 = shape.getPosition().x;
-    y1 = shape.getPosition().y;
-    x2 = x1 + LENGTH_UNIT;
-    y2 = y1 + HEIGHT_UNIT;
+    centerX = real.getPosition().x;
+    centerY = real.getPosition().y;
+    shape.setPosition(centerX, centerY);
 }
 
 void Element::Render(sf::RenderWindow &window)
@@ -44,4 +53,8 @@ void Element::Render(sf::RenderWindow &window)
     window.draw(shape);
 }
 
+int Element::GetObjectType()
+{
+    return (kind);
+}
 

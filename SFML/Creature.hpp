@@ -10,6 +10,7 @@
 #define Creature_hpp
 
 #include "Element.hpp"
+#include "Movable.hpp"
 
 
 class Creature : public Element
@@ -19,7 +20,6 @@ protected:
     bool isAlive;
     bool canMove;
     
-    
     int dirHorizontal;
     int dirVertical;
     float speed;
@@ -28,12 +28,22 @@ public:
     enum State{Forward,Backward,Leftward,Rightward, Forward_M, Backward_M,Leftward_M, Rightward_M} state;
     
     Creature();
-    Creature(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody);
+    Creature(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
+    
+     
     
     int GetLifePoint() {return (lifePoint); }
     
     virtual void Move(const float deltaTime) = 0;
-    virtual void DetectObsCollision(Map map);
+    
+    void ScanAround(vector<Element> &obstacles, vector<Movable> &movables, const float deltaTime);
+    
+    void DetectCollision(Element *other, const float deltaTIme);
+    //virtual void DetectObsCollision(Map map);
+    
+    void CollisionObstacle(Element *other);
+    
+    void CollisionMovable(Movable *movable, const float deltaTime);
     
     void UpdateIdleAnimation(int forwardAnimRow, int forwardAnimCol, int backwardAnimRow, int backwardAnimCol, int leftwardAnimRow, int leftwardAnimCol, int rightwardAnimRow, int rightwardAnimCol);
     

@@ -18,7 +18,7 @@ protected:
     
 public:
     Collectable();
-    Collectable(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody);
+    Collectable(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
     bool GetIsActive();
     void SetIsActive(bool _isActive);
     int  GetValue();

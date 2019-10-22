@@ -26,75 +26,8 @@ Player::Player(int x, int y, int length, int height, sf::Texture *texture, int n
     shape.setOutlineColor(sf::Color::Black);
 }
 
+
 /*
-void Player::DetectCollision(Map map, vector<Collectable> &collectables, vector<Movable> &movables, const float deltaTime)
-{
-    
-    Creature::DetectObsCollision(map);
-    
-    if (canMove)
-    {
-        if (state == Forward_M)
-        {
-            // meet obstacle
-            int a = map.level[(int)(y2/HEIGHT_UNIT)][(int)((x1 + 6.0f)/LENGTH_UNIT)];
-            int b = map.level[(int)(y2/HEIGHT_UNIT)][(int)((x2 - 6.0f)/LENGTH_UNIT)];
-            if (a == 2 || b == 2)
-                Collision(collectables);
-            if (a == 4 || b == 4)
-            {
-                cout << "moveable" << endl;
-                Collision(movables, deltaTime);
-            }
-                
-        }
-        else if (state == Backward_M)
-        {
-            int a = map.level[(int)(y1/HEIGHT_UNIT)][(int)((x1 + 6.0f)/LENGTH_UNIT)];
-            int b = map.level[(int)(y1/HEIGHT_UNIT)][(int)((x2 - 6.0f)/LENGTH_UNIT)];
-            if (a == 2 || b == 2)
-                Collision(collectables);
-            if (a == 4 || b == 4)
-            {
-                cout << "moveable" << endl;
-                Collision(movables, deltaTime);
-            }
-        }
-        else if (state == Leftward_M)
-        {
-            int a = map.level[(int)((y1 + 6.0f)/HEIGHT_UNIT)][(int)(x1/LENGTH_UNIT)];
-            int b = map.level[(int)((y2 - 6.0f)/HEIGHT_UNIT)][(int)(x1/LENGTH_UNIT)];
-            if (a == 2 || b == 2)
-                Collision(collectables);
-            if (a == 4 || b == 4)
-            {
-                cout << "moveable" << endl;
-                Collision(movables, deltaTime);
-            }
-        }
-        else if (state == Rightward_M)
-        {
-            int a = map.level[(int)((y1 + 6.0f)/HEIGHT_UNIT)][(int)(x2/LENGTH_UNIT)];
-            int b = map.level[(int)((y2 - 6.0f)/HEIGHT_UNIT)][(int)(x2/LENGTH_UNIT)];
-            if (a == 2 || b == 2)
-                Collision(collectables);
-            if (a == 4 || b == 4)
-            {
-                cout << "moveable" << endl;
-                Collision(movables, deltaTime);
-            }
-        }
-        
-    }
-}
- 
- */
-
-void Player::ScanAround(Element &e)
-{
-    
-}
-
 void Player::Collision(vector<Collectable> &collectables)
 {
     for (int i = 0; i < collectables.size(); i++)
@@ -102,8 +35,6 @@ void Player::Collision(vector<Collectable> &collectables)
         if (collectables[i].x1 < x2 && collectables[i].x2 > x1 &&
             collectables[i].y1 < y2 && collectables[i].y2 > y1)
         {
-            
-            
             collectables.erase(collectables.begin() + i);
         }
     }
@@ -113,15 +44,53 @@ void Player::Collision(Map map, vector<Movable> &movables, const float deltaTime
 {
     for (int i = 0; i < movables.size(); i++)
     {
-        
-        if (movables[i].x1 < x2 - 6.0f && movables[i].x2 > x1 + 6.0f &&
-            movables[i].y1 < y2 - 6.0f && movables[i].y2 > y1 + 6.0f)
+        if (state == Forward_M)
         {
-            canMove = false;
-            movables[i].SetCurrentDir(state - 3);
-            movables[i].DetectObsCollision(map);
-            if (movables[i].GetCurrentDir() != 0)
+            if (movables[i].x1 < x2 && movables[i].x2 > x1 &&
+                movables[i].y1 < y2 + TRY_DISTANCE && movables[i].y2 > y1)
             {
+                canMove = false;
+                movables[i].SetCurrentDir(state - 3);
+                movables[i].DetectObsCollision(map);
+                movables[i].shape.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+                movables[i].UpdatePosition();
+                movables[i].SetCurrentDir(0);
+            }
+        }
+        else if (state == Backward_M)
+        {
+            if (movables[i].x1 < x2 && movables[i].x2 > x1 &&
+                movables[i].y1 < y2 && movables[i].y2 > y1 - TRY_DISTANCE)
+            {
+                canMove = false;
+                movables[i].SetCurrentDir(state - 3);
+                movables[i].DetectObsCollision(map);
+                movables[i].shape.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+                movables[i].UpdatePosition();
+                movables[i].SetCurrentDir(0);
+            }
+        }
+        else if (state == Leftward_M)
+        {
+            if (movables[i].x1 < x2 && movables[i].x2 > x1 - TRY_DISTANCE &&
+                movables[i].y1 < y2 && movables[i].y2 > y1)
+            {
+                canMove = false;
+                movables[i].SetCurrentDir(state - 3);
+                movables[i].DetectObsCollision(map);
+                movables[i].shape.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+                movables[i].UpdatePosition();
+                movables[i].SetCurrentDir(0);
+            }
+        }
+        else if (state == Rightward_M)
+        {
+            if (movables[i].x1 < x2 + TRY_DISTANCE && movables[i].x2 > x1 &&
+                movables[i].y1 < y2 && movables[i].y2 > y1)
+            {
+                canMove = false;
+                movables[i].SetCurrentDir(state - 3);
+                movables[i].DetectObsCollision(map);
                 movables[i].shape.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
                 movables[i].UpdatePosition();
                 movables[i].SetCurrentDir(0);
@@ -129,12 +98,23 @@ void Player::Collision(Map map, vector<Movable> &movables, const float deltaTime
         }
     }
 }
+*/
 
+/*
+   {
+          
+          
+          if (movables[i].GetCurrentDir() != 0)
+          {
+              
+          }
+      }
+*/
 void Player::Move(const float deltaTime)
 {
     if (canMove)
     {
-        shape.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+        real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
         UpdatePosition();
     }
 }
@@ -169,24 +149,31 @@ void Player::UpdateState()
     }
 }
 
-void Player::Update(const float deltaTime, Map map, vector<Collectable> &collectables, vector<Movable> &movables)
+void Player::Update(const float deltaTime, Map map, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables)
 {
     UpdateVariable();
     
-    DetectObsCollision(map);
-    
-    Collision(map, movables, deltaTime);
-    
-    Collision(collectables);
+    ScanAround(obstacles, movables, deltaTime);
     
     Move(deltaTime);
-    
+    /*
+    if (canMove)
+        DetectObsCollision(map);
+    if (canMove)
+        Collision(map, movables, deltaTime);
+    if (canMove)
+        Move(deltaTime);
+        
+        // Collision(collectables);
+        
+     */
+
 }
 
 // the functions in render will be update each frame of about 0.1s
 void Player::Render(sf::RenderWindow &window)
 {
-    UpdateIdleAnimation(1, 3, 3, 3, 2, 3, 4, 3);
+    UpdateIdleAnimation(1, 3, 3, 1, 2, 3, 4, 3);
     UpdateMoveAnimation(5, 10, 7, 10, 6, 10, 8, 10);
     
     Element::Render(window);

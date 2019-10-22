@@ -32,20 +32,27 @@ protected:
     static const int LENGTH_UNIT = 48;
     static const int HEIGHT_UNIT = 48;
     
+    constexpr static const float FACTOR = 0.8f;
+    
+    static const int TRY_DISTANCE = 2;
+    
     
     
 public:
-    float x1;
-    float y1;
-    float x2;
-    float y2;
+    float centerX;
+    float centerY;
+    
+    int kind;
     
     sf::RectangleShape shape;
+    sf::RectangleShape real;
+    
     Element();
-    Element(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody);
+    Element(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
 
     void UpdatePosition();
     virtual void Render(sf::RenderWindow &window);
+    int GetObjectType();
     
 };
 

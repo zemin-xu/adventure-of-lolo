@@ -13,57 +13,170 @@ Creature::Creature()
     
 }
 
-Creature::Creature(int x, int y, int length, int height, sf::Texture *texture,  int numHorizontal, int numVertical, bool _isRigidbody) : Element(x, y, length, height, texture, numHorizontal, numVertical, _isRigidbody)
+Creature::Creature(int x, int y, int length, int height, sf::Texture *texture,  int numHorizontal, int numVertical, int _kind) : Element(x, y, length, height, texture, numHorizontal, numVertical, _kind)
 {
     lifePoint = 5;
     isAlive = true;
     state = Forward;
 }
 
-// detect if there is obstacle
-void Creature::DetectObsCollision(Map map)
+void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables, const float deltaTime)
 {
-    if (canMove)
+    for (int i = 0; i < obstacles.size(); i++)
     {
-        // the 16.0f here is a defaut value to avoid intersect situation
-        // there is a little bug : when player push rightward an movable, it will get himself in
-        if (state == Forward_M)
-        {
-            // meet obstacle
-            int a = map.level[(int)(y2/HEIGHT_UNIT)][(int)((x1 + 16.0f)/LENGTH_UNIT)];
-            int b = map.level[(int)(y2/HEIGHT_UNIT)][(int)((x2 - 16.0f)/LENGTH_UNIT)];
-            if ((a / 10) != 2 && ( b / 10) != 2)
-               canMove = true;
-            else
-                canMove = false;
-        }
+        DetectCollision(&obstacles[i], deltaTime);
+    }
+    for (int i = 0; i < movables.size(); i++)
+    {
+        DetectCollision(&movables[i], deltaTime);
         
-        else if (state == Backward_M)
+    }
+}
+
+void Creature::DetectCollision(Element *other, const float deltaTime)
+{
+    // use the shape's bounding to detect
+    if ((other->centerX - LENGTH_UNIT / 2) < (centerX + LENGTH_UNIT / 2) &&
+        (other->centerX + LENGTH_UNIT / 2) > (centerX - LENGTH_UNIT / 2) &&
+        (other->centerY - HEIGHT_UNIT / 2) < (centerY + HEIGHT_UNIT / 2) &&
+        (other->centerY + HEIGHT_UNIT / 2) > (centerY - HEIGHT_UNIT / 2))
+    {
+        int type = other->GetObjectType();
+        
+        if (type / 10 == 2)
         {
-            int a =map.level[(int)(y1/HEIGHT_UNIT)][(int)((x1 + 16.0f)/LENGTH_UNIT)];
-            int b =map.level[(int)(y1/HEIGHT_UNIT)][(int)((x2 - 16.0f)/LENGTH_UNIT)];
-            if ((a / 10) != 2 && ( b / 10) != 2)
-                canMove = true;
-            else
-                canMove = false;
+            
+            CollisionObstacle(other);
+            
         }
-        else if (state == Leftward_M)
+        if (type / 10 == 4)
         {
-            int a =map.level[(int)((y1 + 16.0f)/HEIGHT_UNIT)][(int)(x1/LENGTH_UNIT)];
-            int b =map.level[(int)((y2 - 16.0f)/HEIGHT_UNIT)][(int)(x1/LENGTH_UNIT)];
-            if ((a / 10) != 2 && ( b / 10) != 2)
-                canMove = true;
-            else
-                canMove = false;
+            
+            CollisionMovable((Movable *)other, deltaTime);
+            
         }
-        else if (state == Rightward_M)
+    }
+}
+
+void Creature::CollisionMovable(Movable *other, const float deltaTime)
+{
+    cout << speed << endl;
+    if (state == Forward_M)
+    {
+        if (((centerY + HEIGHT_UNIT / 2) > (other->centerY - HEIGHT_UNIT / 2)) &&
+            ((centerX - LENGTH_UNIT * FACTOR / 2) < (other->centerX + LENGTH_UNIT * FACTOR / 2)) &&
+            ((centerX + LENGTH_UNIT * FACTOR / 2) > (other->centerX - LENGTH_UNIT * FACTOR / 2)) &&
+            (centerY < other->centerY))
         {
-            int a =map.level[(int)((y1 + 16.0f)/HEIGHT_UNIT)][(int)(x2/LENGTH_UNIT)];
-            int b = map.level[(int)((y2 - 16.0f)/HEIGHT_UNIT)][(int)(x2/LENGTH_UNIT)];
-            if ((a / 10) != 2 && ( b / 10) != 2)
-                canMove = true;
-            else
-                canMove = false;
+            canMove = false;
+            
+            other->SetCurrentDir(state - 3);
+            //movables[i].DetectObsCollision(map);
+            other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+            other->UpdatePosition();
+            cout << other->centerX << " " << other->centerY << endl;
+            other->SetCurrentDir(0);
+            
+            
+        }
+    }
+    else if (state == Backward_M)
+    {
+        if (((centerY - HEIGHT_UNIT / 2) < (other->centerY + HEIGHT_UNIT / 2)) &&
+            ((centerX - LENGTH_UNIT * FACTOR / 2) < (other->centerX + LENGTH_UNIT * FACTOR / 2)) &&
+            ((centerX + LENGTH_UNIT * FACTOR / 2) > (other->centerX - LENGTH_UNIT * FACTOR / 2)) &&
+            (centerY > other->centerY))
+        {
+            canMove = false;
+            other->SetCurrentDir(state - 3);
+            //movables[i].DetectObsCollision(map);
+            other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+            other->UpdatePosition();
+            cout << other->centerX << " " << other->centerY << endl;
+            other->SetCurrentDir(0);
+            
+        }
+    }
+    else if (state == Leftward_M)
+    {
+        if (((centerX - LENGTH_UNIT / 2) < (other->centerX + LENGTH_UNIT / 2)) &&
+            ((centerY - HEIGHT_UNIT * FACTOR / 2) < (other->centerY + HEIGHT_UNIT * FACTOR / 2)) &&
+            ((centerY + HEIGHT_UNIT * FACTOR / 2) > (other->centerY - HEIGHT_UNIT * FACTOR / 2)) &&
+            (centerX > other->centerX))
+        {
+            canMove = false;
+            other->SetCurrentDir(state - 3);
+            //movables[i].DetectObsCollision(map);
+            other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+            other->UpdatePosition();
+            cout << other->centerX << " " << other->centerY << endl;
+            other->SetCurrentDir(0);
+            
+        }
+    }
+    else if (state == Rightward_M)
+    {
+        if (((centerX + LENGTH_UNIT / 2) > (other->centerX - LENGTH_UNIT / 2)) &&
+            ((centerY - HEIGHT_UNIT * FACTOR / 2) < (other->centerY + HEIGHT_UNIT * FACTOR / 2)) &&
+            ((centerY + HEIGHT_UNIT * FACTOR / 2) > (other->centerY - HEIGHT_UNIT * FACTOR / 2)) &&
+            (centerX < other->centerX))
+        {
+            canMove = false;
+            other->SetCurrentDir(state - 3);
+            //movables[i].DetectObsCollision(map);
+            other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+            other->UpdatePosition();
+            cout << other->centerX << " " << other->centerY << endl;
+            other->SetCurrentDir(0);
+            
+        }
+    }
+}
+
+void Creature::CollisionObstacle(Element *other)
+{
+    if (state == Forward_M)
+    {
+        if (((centerY + HEIGHT_UNIT / 2) > (other->centerY - HEIGHT_UNIT / 2)) &&
+            ((centerX - LENGTH_UNIT * FACTOR / 2) < (other->centerX + LENGTH_UNIT * FACTOR / 2)) &&
+            ((centerX + LENGTH_UNIT * FACTOR / 2) > (other->centerX - LENGTH_UNIT * FACTOR / 2)) &&
+            (centerY < other->centerY))
+        {
+            canMove = false;
+            cout << " cannot move forward" << endl;
+        }
+    }
+    else if (state == Backward_M)
+    {
+        if (((centerY - HEIGHT_UNIT / 2) < (other->centerY + HEIGHT_UNIT / 2)) &&
+            ((centerX - LENGTH_UNIT * FACTOR / 2) < (other->centerX + LENGTH_UNIT * FACTOR / 2)) &&
+            ((centerX + LENGTH_UNIT * FACTOR / 2) > (other->centerX - LENGTH_UNIT * FACTOR / 2)) &&
+            (centerY > other->centerY))
+        {
+            canMove = false;
+            cout << " cannot move backward" << endl;
+        }
+    }
+    else if (state == Leftward_M)
+    {
+        if (((centerX - LENGTH_UNIT / 2) < (other->centerX + LENGTH_UNIT / 2)) &&
+            ((centerY - HEIGHT_UNIT * FACTOR / 2) < (other->centerY + HEIGHT_UNIT * FACTOR / 2)) &&
+            ((centerY + HEIGHT_UNIT * FACTOR / 2) > (other->centerY - HEIGHT_UNIT * FACTOR / 2)) &&
+            (centerX > other->centerX))
+        {
+            canMove = false;
+            cout << " cannot move left" << endl;
+        }
+    }
+    else if (state == Rightward_M)
+    {
+        if (((centerX + LENGTH_UNIT / 2) > (other->centerX - LENGTH_UNIT / 2)) &&
+            ((centerY - HEIGHT_UNIT * FACTOR / 2) < (other->centerY + HEIGHT_UNIT * FACTOR / 2)) &&
+            ((centerY + HEIGHT_UNIT * FACTOR / 2) > (other->centerY - HEIGHT_UNIT * FACTOR / 2)) &&
+            (centerX < other->centerX))
+        {
+            canMove = false;
+            cout << " cannot move right" << endl;
         }
     }
 }

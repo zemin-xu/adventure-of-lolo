@@ -36,7 +36,8 @@ GraphicController::GraphicController()
             // background
             if(j >= 1 && j < 14)
             {
-                Element backgroundUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureBG, 1, 1, false);
+                Element backgroundUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureBG, 1, 1, 11);
+                
                 background.push_back(backgroundUnit);
             }
             
@@ -45,14 +46,15 @@ GraphicController::GraphicController()
             {
                 Element obstacleUnit;
                 if (map.level[i][j] == 22)
-                    obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureOuterWall,1,1, true);
+                    obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureOuterWall,1,1, 22);
                 else if (map.level[i][j] == 24)
-                obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureClosedDoor,1,1, true);
+                obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureClosedDoor,1,1, 24);
                 else if (map.level[i][j] == 21)
-                    obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureObstacle1,1,1, true);
+                    obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureObstacle1,1,1, 21);
                 else if (map.level[i][j] == 23)
-                    obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureObstacle2,1,1, true);
+                    obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureObstacle2,1,1, 23);
                 obstacles.push_back(obstacleUnit);
+                
             }
             
             
@@ -61,39 +63,40 @@ GraphicController::GraphicController()
             {
                 Collectable collectableUnit;
                 if (map.level[i][j] == 31)
-                    collectableUnit = Collectable(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureCollectable ,1,1, false);
+                    collectableUnit = Collectable(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureCollectable ,1,1, 31);
+                cout << collectableUnit.kind << endl;
                 collectables.push_back(collectableUnit);
             }
             
             // movable
-            if(map.level[i][j] == 41)
+            if(map.level[i][j] / 10 == 4)
             {
-                Movable movableUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureMovable ,1,1, true);
+                Movable movableUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureMovable ,1,1, 41);
+                
                 movables.push_back(movableUnit);
+                
             }
             
             // enemy
-            if(map.level[i][j] == 5)
+            if(map.level[i][j] == 51)
             {
-                Enemy enemyUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureEnemy ,ANIM_ENEMY1_NUM_HORIZONTAL, ANIM_ENEMY1_NUM_VERTICAL, true);
+                Enemy enemyUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureEnemy ,ANIM_ENEMY1_NUM_HORIZONTAL, ANIM_ENEMY1_NUM_VERTICAL, 51);
                 enemies.push_back(enemyUnit);
             }
             
             if(map.level[i][j] == 13)
-            {
-            keyBox = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureClosedKeyBox, 1, 1, false);
-            }
+                keyBox = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureClosedKeyBox, 1, 1, 13);
+            
             if(map.level[i][j] == 24)
-            {
-            door = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureClosedDoor, 1, 1, false);
-            }
+                door = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureClosedDoor, 1, 1, 24);
+            
+            if(map.level[i][j] == 71)
+                player = Player(8 * LENGTH_UNIT,6 * LENGTH_UNIT,LENGTH_UNIT, HEIGHT_UNIT, &texturePlayer, ANIM_PLAYER_NUM_HORIZONTAL, ANIM_PLAYER_NUM_VERTICAL, 71);
         }
     }
     
-    player = Player(8 * LENGTH_UNIT,6 * LENGTH_UNIT,LENGTH_UNIT, HEIGHT_UNIT, &texturePlayer, ANIM_PLAYER_NUM_HORIZONTAL, ANIM_PLAYER_NUM_VERTICAL, true);
-    
-    uiLife = Element(14.0f * LENGTH_UNIT, 4 * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureUI, 1,1, true);
-    uiWeapon = Element(14.0f * LENGTH_UNIT, 5.5f * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureUI, 1,1, true);
+    uiLife = Element(14.0f * LENGTH_UNIT, 4 * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureUI, 1,1, 11);
+    uiWeapon = Element(14.0f * LENGTH_UNIT, 5.5f * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureUI, 1,1, 11);
    
     
     
@@ -130,8 +133,8 @@ void GraphicController::ReadTextureFile()
 
 void GraphicController::Update(const float deltaTime)
 {
-    player.Update(deltaTime, map, collectables, movables);
-    
+    player.Update(deltaTime, map, obstacles, collectables, movables);
+
     /* text update, will be placed in a condition when they change */
     textLife.setString(to_string(player.GetLifePoint()));
     textWeapon.setString(to_string(player.GetWeaponPoint()));

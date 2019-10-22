@@ -32,17 +32,18 @@ public:
     //void DetectCollision(Map map, vector<Collectable> &collectables, vector<Movable> &movables, const float deltaTime);
     
     
-    void ScanAround(Element &e);
+   
     // reaction when meeting a collision
     
-    void Collision(vector<Collectable> &collectables);
-    void Collision(Map map, vector<Movable> &movables, const float deltaTime);
+    //void Collision(vector<Collectable> &collectables);
+    //void Collision(Map map, vector<Movable> &movables, const float deltaTime);
     
     virtual void Move(const float deltaTime);
     
     void UpdateState();
-    void Update(const float deltaTime, Map map, vector<Collectable> &collectables, vector<Movable> &movables);
+    void Update(const float deltaTime, Map map, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables);
     void Render(sf::RenderWindow &window);
+    
 
 };
 
