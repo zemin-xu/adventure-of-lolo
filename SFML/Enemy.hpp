@@ -6,10 +6,10 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
+#include "LIB.hpp"
+
 #ifndef Enemy_hpp
 #define Enemy_hpp
-
-#include "Creature.hpp"
 
 class Enemy: public Creature
 {

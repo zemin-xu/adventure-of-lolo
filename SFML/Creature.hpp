@@ -5,14 +5,11 @@
 //  Created by ZEMIN on 17/10/2019.
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
+#include "LIB.hpp"
+using namespace std;
 
 #ifndef Creature_hpp
 #define Creature_hpp
-
-#include "Element.hpp"
-#include "Collectable.hpp"
-#include "Movable.hpp"
-
 
 
 class Creature : public Element

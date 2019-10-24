@@ -6,31 +6,10 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
+#include "LIB.hpp"
+
 #ifndef GameController_hpp
 #define GameController_hpp
-
-#include <iostream>
-#include <ctime>
-#include <cstdlib>
-#include <stdio.h>
-#include <vector>
-#include <fstream>
-#include <sstream>
-#include <stack>
-#include <map>
-#include <string>
-
-#include <SFML/Audio.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Network.hpp>
-#include <SFML/Graphics.hpp>
-
-#include "Element.hpp"
-#include "Player.hpp"
-#include "GraphicController.hpp"
-
-using namespace std;
 
 class GameController{
 private:

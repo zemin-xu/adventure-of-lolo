@@ -6,8 +6,7 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
-#include "Player.hpp"
-
+#include "LIB.hpp"
 
 Player::Player()
 {
@@ -67,7 +66,7 @@ void Player::UpdateState()
     }
 }
 
-void Player::Update(const float deltaTime, Map map, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables)
+void Player::Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables)
 {
     UpdateVariable();
     

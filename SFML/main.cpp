@@ -6,8 +6,7 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
-#include "GameController.hpp"
-
+#include "LIB.hpp"
 
 int main()
 {

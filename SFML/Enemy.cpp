@@ -6,7 +6,7 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
-#include "Enemy.hpp"
+#include "LIB.hpp"
 
 Enemy::Enemy()
 {

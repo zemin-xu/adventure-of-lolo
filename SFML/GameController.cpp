@@ -5,8 +5,7 @@
 //  Created by ZEMIN on 14/10/2019.
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
-
-#include "GameController.hpp"
+#include "LIB.hpp"
 
 GameController::GameController() : window(sf::VideoMode(LENGTH, HEIGHT), "C++ Game"), graphicController(), inputController()
 {

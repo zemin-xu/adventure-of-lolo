@@ -5,13 +5,10 @@
 //  Created by ZEMIN on 24/10/2019.
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
+#include "LIB.hpp"
 
 #ifndef Level_hpp
 #define Level_hpp
-
-#include <iostream>
-#include <vector>
-
 
 /* the index of level start from 1 */
 

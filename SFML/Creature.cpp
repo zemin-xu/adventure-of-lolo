@@ -5,8 +5,7 @@
 //  Created by ZEMIN on 17/10/2019.
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
-
-#include "Creature.hpp"
+#include "LIB.hpp"
 
 Creature::Creature()
 {

@@ -6,22 +6,10 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
+#include "LIB.hpp"
+
 #ifndef GraphicController_hpp
 #define GraphicController_hpp
-
-#include <stdio.h>
-#include <SFML/Graphics.hpp>
-#include <vector>
-
-#include "Element.hpp"
-#include "Movable.hpp"
-#include "Collectable.hpp"
-#include "Enemy.hpp"
-#include "Player.hpp"
-#include "Map.hpp"
-#include "Level.hpp"
-
-using namespace std;
 
 class GraphicController
 {
@@ -54,8 +42,6 @@ public:
     
     
     Level level;
-   
-    Map map;
     
     sf::Font font;
     sf::Text title;

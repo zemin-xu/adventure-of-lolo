@@ -6,11 +6,10 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
+#include "LIB.hpp"
+
 #ifndef Movable_hpp
 #define Movable_hpp
-
-#include "Element.hpp"
-
 
 class Movable : public Element
 {

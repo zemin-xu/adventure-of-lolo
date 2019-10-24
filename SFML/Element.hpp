@@ -5,17 +5,11 @@
 //  Created by ZEMIN on 14/10/2019.
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
+#include "LIB.hpp"
 
 #ifndef Element_hpp
 #define Element_hpp
 
-#include <SFML/Graphics.hpp>
-#include <string>
-#include <iostream>
-#include "Map.hpp"
-
-
-using namespace std;
 class Element
 {
 private:

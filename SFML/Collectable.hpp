@@ -6,11 +6,11 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
+#include "LIB.hpp"
+
 #ifndef Collectable_hpp
 #define Collectable_hpp
 
-#include "Element.hpp"
-#include "Level.hpp"
 class Collectable: public Element
 {
 protected:

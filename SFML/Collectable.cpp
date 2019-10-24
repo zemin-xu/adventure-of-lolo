@@ -6,7 +6,7 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
-#include "Collectable.hpp"
+#include "LIB.hpp"
 
 Collectable::Collectable()
 {

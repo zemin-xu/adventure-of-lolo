@@ -6,13 +6,10 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
+#include "LIB.hpp"
+
 #ifndef Player_hpp
 #define Player_hpp
-
-#include "Element.hpp"
-#include "Collectable.hpp"
-#include "Movable.hpp"
-#include "Creature.hpp"
 
 class Player : public Creature
 {
@@ -42,7 +39,7 @@ public:
     virtual void Move(const float deltaTime);
     
     void UpdateState();
-    void Update(const float deltaTime, Map map, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables);
+    void Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables);
     void Render(sf::RenderWindow &window);
     
 

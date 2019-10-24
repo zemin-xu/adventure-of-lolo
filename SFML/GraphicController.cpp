@@ -6,7 +6,7 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
-#include "GraphicController.hpp"
+#include "LIB.hpp"
 
 
 GraphicController::GraphicController() : level(1)
@@ -43,33 +43,34 @@ GraphicController::GraphicController() : level(1)
             }
             
             // obstacles
-            if(map.level[i][j] / 10 == 2)
+            if(level.level1[i][j] / 10 == 2)
             {
+                
                 Element obstacleUnit;
-                if (map.level[i][j] == 22)
+                if (level.level1[i][j] == 22)
                     obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureOuterWall,1,1, 22);
-                else if (map.level[i][j] == 24)
+                else if (level.level1[i][j] == 24)
                     obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureClosedDoor,1,1, 24);
-                else if (map.level[i][j] == 21)
+                else if (level.level1[i][j] == 21)
                     obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureObstacle1,1,1, 21);
-                else if (map.level[i][j] == 23)
+                else if (level.level1[i][j] == 23)
                     obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureObstacle2,1,1, 23);
                 obstacles.push_back(obstacleUnit);
                 
             }
             
             // collectable
-            if (map.level[i][j] / 10 == 3)
+            if (level.level1[i][j] / 10 == 3)
             {
                 Collectable collectableUnit;
-                if (map.level[i][j] == 31)
+                if (level.level1[i][j] == 31)
                     collectableUnit = Collectable(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureCollectable ,1,1, 31);
                 
                 collectables.push_back(collectableUnit);
             }
             
             // movable
-            if(map.level[i][j] / 10 == 4)
+            if(level.level1[i][j] / 10 == 4)
             {
                 Movable movableUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureMovable ,1,1, 41);
                 
@@ -78,19 +79,19 @@ GraphicController::GraphicController() : level(1)
             }
             
             // enemy
-            if(map.level[i][j] == 51)
+            if(level.level1[i][j] == 51)
             {
                 Enemy enemyUnit(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureEnemy ,ANIM_ENEMY1_NUM_HORIZONTAL, ANIM_ENEMY1_NUM_VERTICAL, 51);
                 enemies.push_back(enemyUnit);
             }
             
-            if(map.level[i][j] == 13)
+            if(level.level1[i][j] == 13)
                 keyBox = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureClosedKeyBox, 1, 1, 13);
             
-            if(map.level[i][j] == 24)
+            if(level.level1[i][j] == 24)
                 door = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureClosedDoor, 1, 1, 24);
             
-            if(map.level[i][j] == 71)
+            if(level.level1[i][j] == 71)
                 player = Player(8 * LENGTH_UNIT,6 * LENGTH_UNIT,LENGTH_UNIT, HEIGHT_UNIT, &texturePlayer, ANIM_PLAYER_NUM_HORIZONTAL, ANIM_PLAYER_NUM_VERTICAL, 71);
         }
     }
@@ -131,7 +132,7 @@ void GraphicController::ReadTextureFile()
 
 void GraphicController::Update(const float deltaTime)
 {
-    player.Update(deltaTime, map, obstacles, collectables, movables);
+    player.Update(deltaTime, obstacles, collectables, movables);
     
     
     /* equal to movable class's update function */
