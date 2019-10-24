@@ -38,8 +38,6 @@ public:
     
     void ScanAround(vector<Element> &obstacles, vector<Movable> &movables, const float deltaTime);
     
-    void DetectCollision(Element *other, const float deltaTIme);
-    //virtual void DetectObsCollision(Map map);
     
     void CollisionObstacle(Element *other);
     

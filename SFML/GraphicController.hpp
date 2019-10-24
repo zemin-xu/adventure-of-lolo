@@ -13,13 +13,12 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+#include "Element.hpp"
 #include "Movable.hpp"
 #include "Collectable.hpp"
 #include "Enemy.hpp"
 #include "Player.hpp"
 #include "Map.hpp"
-
-
 
 using namespace std;
 

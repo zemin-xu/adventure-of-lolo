@@ -11,6 +11,7 @@
 
 #include "Element.hpp"
 
+
 class Movable : public Element
 {
 private:
@@ -21,14 +22,20 @@ private:
     // 4 : moving down
     int currentDir;
     
+    
 public:
+    bool canMove;
+    
     Movable();
     Movable(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
-    int GetCurrentDir();
-    void SetCurrentDir(int _currentDir);
     
-    void DetectCollision();
+    int GetCurrentDir() {return (currentDir);};
+    void SetCurrentDir(int _currentDir) {currentDir = _currentDir;};
     
+    
+    
+    void Update();
+    void Collision(Element *other);
 };
 
 #endif /* Movable_hpp */

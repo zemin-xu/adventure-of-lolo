@@ -24,43 +24,26 @@ void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables,
 {
     for (int i = 0; i < obstacles.size(); i++)
     {
-        DetectCollision(&obstacles[i], deltaTime);
+        if (DetectCollision(&obstacles[i]))
+        {
+            CollisionObstacle(&obstacles[i]);
+            obstacles[i].shape.setFillColor(sf::Color::Red);
+        }
     }
     for (int i = 0; i < movables.size(); i++)
     {
-        DetectCollision(&movables[i], deltaTime);
-        
+        if (DetectCollision(&movables[i]))
+        {
+            CollisionMovable(&movables[i], deltaTime);
+            movables[i].shape.setFillColor(sf::Color::Black);
+        }
     }
 }
 
-void Creature::DetectCollision(Element *other, const float deltaTime)
-{
-    // use the shape's bounding to detect
-    if ((other->centerX - LENGTH_UNIT / 2) < (centerX + LENGTH_UNIT / 2) &&
-        (other->centerX + LENGTH_UNIT / 2) > (centerX - LENGTH_UNIT / 2) &&
-        (other->centerY - HEIGHT_UNIT / 2) < (centerY + HEIGHT_UNIT / 2) &&
-        (other->centerY + HEIGHT_UNIT / 2) > (centerY - HEIGHT_UNIT / 2))
-    {
-        int type = other->GetObjectType();
-        
-        if (type / 10 == 2)
-        {
-            
-            CollisionObstacle(other);
-            
-        }
-        if (type / 10 == 4)
-        {
-            
-            CollisionMovable((Movable *)other, deltaTime);
-            
-        }
-    }
-}
+
 
 void Creature::CollisionMovable(Movable *other, const float deltaTime)
 {
-    cout << speed << endl;
     if (state == Forward_M)
     {
         if (((centerY + HEIGHT_UNIT / 2) > (other->centerY - HEIGHT_UNIT / 2)) &&
@@ -68,14 +51,14 @@ void Creature::CollisionMovable(Movable *other, const float deltaTime)
             ((centerX + LENGTH_UNIT * FACTOR / 2) > (other->centerX - LENGTH_UNIT * FACTOR / 2)) &&
             (centerY < other->centerY))
         {
-            canMove = false;
-            
+            if (!other->canMove)
+                canMove = false;
             other->SetCurrentDir(state - 3);
-            //movables[i].DetectObsCollision(map);
-            other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
-            other->UpdatePosition();
-            cout << other->centerX << " " << other->centerY << endl;
-            other->SetCurrentDir(0);
+            if (other->canMove)
+            {
+                other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+                other->UpdatePosition();
+            }
             
             
         }
@@ -87,13 +70,15 @@ void Creature::CollisionMovable(Movable *other, const float deltaTime)
             ((centerX + LENGTH_UNIT * FACTOR / 2) > (other->centerX - LENGTH_UNIT * FACTOR / 2)) &&
             (centerY > other->centerY))
         {
+            if (!other->canMove)
             canMove = false;
             other->SetCurrentDir(state - 3);
-            //movables[i].DetectObsCollision(map);
-            other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
-            other->UpdatePosition();
-            cout << other->centerX << " " << other->centerY << endl;
-            other->SetCurrentDir(0);
+            if (other->canMove)
+            {
+                other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+                other->UpdatePosition();
+            }
+            
             
         }
     }
@@ -104,14 +89,15 @@ void Creature::CollisionMovable(Movable *other, const float deltaTime)
             ((centerY + HEIGHT_UNIT * FACTOR / 2) > (other->centerY - HEIGHT_UNIT * FACTOR / 2)) &&
             (centerX > other->centerX))
         {
+            if (!other->canMove)
             canMove = false;
-            other->SetCurrentDir(state - 3);
-            //movables[i].DetectObsCollision(map);
-            other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
-            other->UpdatePosition();
-            cout << other->centerX << " " << other->centerY << endl;
-            other->SetCurrentDir(0);
             
+            other->SetCurrentDir(state - 3);
+            if (other->canMove)
+            {
+                other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+                other->UpdatePosition();
+            }
         }
     }
     else if (state == Rightward_M)
@@ -121,13 +107,16 @@ void Creature::CollisionMovable(Movable *other, const float deltaTime)
             ((centerY + HEIGHT_UNIT * FACTOR / 2) > (other->centerY - HEIGHT_UNIT * FACTOR / 2)) &&
             (centerX < other->centerX))
         {
+            if (!other->canMove)
             canMove = false;
+            
             other->SetCurrentDir(state - 3);
-            //movables[i].DetectObsCollision(map);
-            other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
-            other->UpdatePosition();
-            cout << other->centerX << " " << other->centerY << endl;
-            other->SetCurrentDir(0);
+            if (other->canMove)
+            {
+                other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+                other->UpdatePosition();
+            }
+            
             
         }
     }
@@ -143,7 +132,6 @@ void Creature::CollisionObstacle(Element *other)
             (centerY < other->centerY))
         {
             canMove = false;
-            cout << " cannot move forward" << endl;
         }
     }
     else if (state == Backward_M)
@@ -154,7 +142,6 @@ void Creature::CollisionObstacle(Element *other)
             (centerY > other->centerY))
         {
             canMove = false;
-            cout << " cannot move backward" << endl;
         }
     }
     else if (state == Leftward_M)
@@ -165,7 +152,6 @@ void Creature::CollisionObstacle(Element *other)
             (centerX > other->centerX))
         {
             canMove = false;
-            cout << " cannot move left" << endl;
         }
     }
     else if (state == Rightward_M)
@@ -176,7 +162,6 @@ void Creature::CollisionObstacle(Element *other)
             (centerX < other->centerX))
         {
             canMove = false;
-            cout << " cannot move right" << endl;
         }
     }
 }

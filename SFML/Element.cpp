@@ -21,7 +21,6 @@ Element::Element(int x, int y, int length, int height, sf::Texture *texture, int
     animUnitLength = (texture->getSize().x) / numHorizontal;
     animUnitHeight = (texture->getSize().y) / numVertical;
     
-    
     shape.setSize(sf::Vector2f(length, height));
     real.setSize(sf::Vector2f(length * FACTOR, height * FACTOR));
     
@@ -56,5 +55,17 @@ void Element::Render(sf::RenderWindow &window)
 int Element::GetObjectType()
 {
     return (kind);
+}
+
+int Element::DetectCollision(Element *other)
+{
+    // use the shape's bounding to detect
+    if ((other->centerX - LENGTH_UNIT / 2) < (centerX + LENGTH_UNIT / 2) &&
+        (other->centerX + LENGTH_UNIT / 2) > (centerX - LENGTH_UNIT / 2) &&
+        (other->centerY - HEIGHT_UNIT / 2) < (centerY + HEIGHT_UNIT / 2) &&
+        (other->centerY + HEIGHT_UNIT / 2) > (centerY - HEIGHT_UNIT / 2))
+        return (other->GetObjectType());
+    return (0);
+
 }
 

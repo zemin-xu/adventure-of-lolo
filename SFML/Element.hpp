@@ -53,6 +53,7 @@ public:
     void UpdatePosition();
     virtual void Render(sf::RenderWindow &window);
     int GetObjectType();
+    int DetectCollision(Element *other);
     
 };
 

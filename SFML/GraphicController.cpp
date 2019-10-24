@@ -64,7 +64,7 @@ GraphicController::GraphicController()
                 Collectable collectableUnit;
                 if (map.level[i][j] == 31)
                     collectableUnit = Collectable(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureCollectable ,1,1, 31);
-                cout << collectableUnit.kind << endl;
+                
                 collectables.push_back(collectableUnit);
             }
             
@@ -134,6 +134,35 @@ void GraphicController::ReadTextureFile()
 void GraphicController::Update(const float deltaTime)
 {
     player.Update(deltaTime, map, obstacles, collectables, movables);
+    
+    
+    
+    
+    for (int i = 0; i < movables.size(); i++)
+    {
+        // reset to be movable before checking each frame
+        movables[i].canMove = true;
+        
+        /* eventual movable checking */
+        if (movables[i].GetCurrentDir() != 0)
+        {
+            for(int j = 0; j < obstacles.size(); j++)
+            {
+                if (movables[i].DetectCollision(&obstacles[j]))
+               {
+                   movables[i].Collision(&obstacles[j]);
+               }
+            }
+            for(int j = 0; j < movables.size(); j++)
+            {
+                if (movables[i].DetectCollision(&movables[j]) && j != i)
+               {
+                   movables[i].Collision(&movables[j]);
+               }
+            }
+        }
+    }
+    
 
     /* text update, will be placed in a condition when they change */
     textLife.setString(to_string(player.GetLifePoint()));
@@ -164,13 +193,11 @@ void GraphicController::Render(sf::RenderWindow &window)
     {
         movables[i].Render(window);
     }
-    
     for (int i = 0; i < enemies.size(); i++)
     {
         enemies[i].Render(window);
     }
    
-    
     keyBox.Render(window);
     door.Render(window);
     
