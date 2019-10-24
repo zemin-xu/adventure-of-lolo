@@ -14,13 +14,14 @@ Player::Player()
     
 }
 
-Player::Player(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody) : Creature(x, y, length, height, texture, numHorizontal, numVertical, _isRigidbody)
+Player::Player(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind) : Creature(x, y, length, height, texture, numHorizontal, numVertical, _kind)
 {
     speed = 100.0f;
     dirHorizontal = 1;
     dirVertical = 1;
     weaponPoint = 3;
     canMove = false;
+    kind = _kind;
     
     shape.setOutlineThickness(2.0f);
     shape.setOutlineColor(sf::Color::Black);
@@ -70,20 +71,9 @@ void Player::Update(const float deltaTime, Map map, vector<Element> &obstacles, 
 {
     UpdateVariable();
     
-    ScanAround(obstacles, movables, deltaTime);
+    ScanAround(obstacles, movables, collectables, deltaTime);
     
     Move(deltaTime);
-    /*
-    if (canMove)
-        DetectObsCollision(map);
-    if (canMove)
-        Collision(map, movables, deltaTime);
-    if (canMove)
-        Move(deltaTime);
-        
-        // Collision(collectables);
-        
-     */
 
 }
 

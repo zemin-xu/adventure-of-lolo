@@ -19,6 +19,7 @@
 #include "Enemy.hpp"
 #include "Player.hpp"
 #include "Map.hpp"
+#include "Level.hpp"
 
 using namespace std;
 
@@ -27,6 +28,15 @@ class GraphicController
 private:
 
 public:
+    
+    static const int LENGTH_UNIT = 48;
+       static const int HEIGHT_UNIT = 48;
+       
+       static const int ANIM_PLAYER_NUM_HORIZONTAL = 10;
+       static const int ANIM_PLAYER_NUM_VERTICAL = 8;
+       
+       static const int ANIM_ENEMY1_NUM_HORIZONTAL = 4;
+       static const int ANIM_ENEMY1_NUM_VERTICAL = 4;
     
     sf::Texture texturePlayer;
     sf::Texture textureEnemy;
@@ -42,15 +52,9 @@ public:
     sf::Texture textureMovable;
     sf::Texture textureUI;
     
-    static const int LENGTH_UNIT = 48;
-    static const int HEIGHT_UNIT = 48;
     
-    static const int ANIM_PLAYER_NUM_HORIZONTAL = 10;
-    static const int ANIM_PLAYER_NUM_VERTICAL = 8;
-    
-    static const int ANIM_ENEMY1_NUM_HORIZONTAL = 4;
-    static const int ANIM_ENEMY1_NUM_VERTICAL = 4;
-    
+    Level level;
+   
     Map map;
     
     sf::Font font;

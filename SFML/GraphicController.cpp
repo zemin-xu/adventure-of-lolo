@@ -9,10 +9,11 @@
 #include "GraphicController.hpp"
 
 
-GraphicController::GraphicController() 
+GraphicController::GraphicController() : level(1)
 {
     ReadTextureFile();
-    // length and height of program here
+    
+    
     
     /* text init */
     title.setFont(font);
@@ -23,12 +24,12 @@ GraphicController::GraphicController()
     textLife.setFont(font);
     textLife.setCharacterSize(24);
     textLife.setPosition(15.2f * LENGTH_UNIT, 4.0f * HEIGHT_UNIT);
-
+    
     textWeapon.setFont(font);
     textWeapon.setCharacterSize(24);
     textWeapon.setPosition(15.2f * LENGTH_UNIT, 5.5f * HEIGHT_UNIT);
     
-    
+    // 12 and 16 are the length and height of game screen here
     for (int i = 0; i < 12; i++)
     {
         for (int j = 0; j < 16; j++)
@@ -48,7 +49,7 @@ GraphicController::GraphicController()
                 if (map.level[i][j] == 22)
                     obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureOuterWall,1,1, 22);
                 else if (map.level[i][j] == 24)
-                obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureClosedDoor,1,1, 24);
+                    obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureClosedDoor,1,1, 24);
                 else if (map.level[i][j] == 21)
                     obstacleUnit = Element(j * LENGTH_UNIT, i * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureObstacle1,1,1, 21);
                 else if (map.level[i][j] == 23)
@@ -56,7 +57,6 @@ GraphicController::GraphicController()
                 obstacles.push_back(obstacleUnit);
                 
             }
-            
             
             // collectable
             if (map.level[i][j] / 10 == 3)
@@ -97,15 +97,13 @@ GraphicController::GraphicController()
     
     uiLife = Element(14.0f * LENGTH_UNIT, 4 * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureUI, 1,1, 11);
     uiWeapon = Element(14.0f * LENGTH_UNIT, 5.5f * HEIGHT_UNIT, LENGTH_UNIT, HEIGHT_UNIT, &textureUI, 1,1, 11);
-   
-    
     
 }
 
 void GraphicController::ReadTextureFile()
 {
     if (!font.loadFromFile("Sources/karma_future.ttf"))
-    return ;
+        return ;
     
     if (!texturePlayer.loadFromFile("Sources/player.png"))
         return ;
@@ -114,11 +112,11 @@ void GraphicController::ReadTextureFile()
     if (!textureBG.loadFromFile("Sources/sable.jpg"))
         return ;
     if (!textureClosedKeyBox.loadFromFile("Sources/closed_key_box.png"))
-    return ;
+        return ;
     if (!textureOuterWall.loadFromFile("Sources/outer_wall.jpg"))
         return ;
     if (!textureClosedDoor.loadFromFile("Sources/closed_door.png"))
-    return ;
+        return ;
     if (!textureObstacle1.loadFromFile("Sources/obstacle1.png"))
         return ;
     if (!textureObstacle2.loadFromFile("Sources/obstacle2.png"))
@@ -136,8 +134,7 @@ void GraphicController::Update(const float deltaTime)
     player.Update(deltaTime, map, obstacles, collectables, movables);
     
     
-    
-    
+    /* equal to movable class's update function */
     for (int i = 0; i < movables.size(); i++)
     {
         // reset to be movable before checking each frame
@@ -146,24 +143,29 @@ void GraphicController::Update(const float deltaTime)
         /* eventual movable checking */
         if (movables[i].GetCurrentDir() != 0)
         {
-            for(int j = 0; j < obstacles.size(); j++)
-            {
+            for (int j = 0; j < obstacles.size(); j++)
                 if (movables[i].DetectCollision(&obstacles[j]))
-               {
-                   movables[i].Collision(&obstacles[j]);
-               }
-            }
-            for(int j = 0; j < movables.size(); j++)
-            {
+                    movables[i].Collision(&obstacles[j]);
+            for (int j = 0; j < movables.size(); j++)
                 if (movables[i].DetectCollision(&movables[j]) && j != i)
-               {
-                   movables[i].Collision(&movables[j]);
-               }
-            }
+                    movables[i].Collision(&movables[j]);
+            for (int j = 0; j < collectables.size(); j++)
+                if (movables[i].DetectCollision(&collectables[j]))
+                    movables[i].Collision(&collectables[j]);
         }
     }
     
-
+    /* update for collectable class */
+    for (int i = 0; i < collectables.size(); i++)
+    {
+        if (collectables[i].GetIsCollided())
+        {
+            level.UpdateHeartLeft();
+            collectables.erase(collectables.begin() + i);
+        }
+    }
+    
+    
     /* text update, will be placed in a condition when they change */
     textLife.setString(to_string(player.GetLifePoint()));
     textWeapon.setString(to_string(player.GetWeaponPoint()));
@@ -173,7 +175,7 @@ void GraphicController::Update(const float deltaTime)
 
 void GraphicController::Render(sf::RenderWindow &window)
 {
-
+    
     for (int i = 0; i < background.size(); i++)
     {
         background[i].Render(window);
@@ -184,10 +186,7 @@ void GraphicController::Render(sf::RenderWindow &window)
     }
     for (int i = 0; i < collectables.size(); i++)
     {
-        if (collectables[i].GetIsActive())
-        {
-            collectables[i].Render(window);
-        }
+        collectables[i].Render(window);
     }
     for (int i = 0; i < movables.size(); i++)
     {
@@ -197,7 +196,7 @@ void GraphicController::Render(sf::RenderWindow &window)
     {
         enemies[i].Render(window);
     }
-   
+    
     keyBox.Render(window);
     door.Render(window);
     
@@ -209,7 +208,7 @@ void GraphicController::Render(sf::RenderWindow &window)
     window.draw(title);
     window.draw(textLife);
     window.draw(textWeapon);
-
+    
     
 }
 

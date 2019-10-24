@@ -22,10 +22,11 @@ public:
 protected:
     int weaponPoint;
     
+    
 public:
     
     Player();
-    Player(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool isRigidbody);
+    Player(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
     
     int GetWeaponPoint() {return (weaponPoint); }
 

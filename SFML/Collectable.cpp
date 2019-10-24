@@ -15,21 +15,7 @@ Collectable::Collectable()
 
 Collectable::Collectable(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind) : Element(x, y, length, height, texture, numHorizontal, numVertical, _kind)
 {
-    value = 10;
     isActive = true;
+    isCollided = false;
 }
 
-bool Collectable::GetIsActive()
-{
-    return (isActive);
-}
-
-void Collectable::SetIsActive(bool _isActive)
-{
-    isActive = _isActive;
-}
-
-int  Collectable::GetValue()
-{
-    return (value);
-}

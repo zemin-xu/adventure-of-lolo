@@ -20,7 +20,7 @@ Creature::Creature(int x, int y, int length, int height, sf::Texture *texture,  
     state = Forward;
 }
 
-void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables, const float deltaTime)
+void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, const float deltaTime)
 {
     for (int i = 0; i < obstacles.size(); i++)
     {
@@ -38,8 +38,22 @@ void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables,
             movables[i].shape.setFillColor(sf::Color::Black);
         }
     }
+    
+    for (int i = 0; i < collectables.size(); i++)
+    {
+        if (DetectCollision(&collectables[i]))
+        {
+            CollisionCollectable(&collectables[i]);
+        }
+    }
 }
 
+void Creature::CollisionCollectable(Collectable *other)
+{
+    // player's type is 71
+    if (kind == 71 && other->GetIsActive())
+        other->SetIsCollided(true);
+}
 
 
 void Creature::CollisionMovable(Movable *other, const float deltaTime)
@@ -59,8 +73,6 @@ void Creature::CollisionMovable(Movable *other, const float deltaTime)
                 other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
                 other->UpdatePosition();
             }
-            
-            
         }
     }
     else if (state == Backward_M)
@@ -116,8 +128,6 @@ void Creature::CollisionMovable(Movable *other, const float deltaTime)
                 other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
                 other->UpdatePosition();
             }
-            
-            
         }
     }
 }

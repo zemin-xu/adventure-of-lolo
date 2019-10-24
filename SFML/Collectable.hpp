@@ -10,18 +10,26 @@
 #define Collectable_hpp
 
 #include "Element.hpp"
+#include "Level.hpp"
 class Collectable: public Element
 {
 protected:
-    int value;
+    bool isCollided;
     bool isActive;
     
 public:
+    
+    
     Collectable();
     Collectable(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
-    bool GetIsActive();
-    void SetIsActive(bool _isActive);
-    int  GetValue();
+    bool GetIsActive() { return (isActive);};
+    void SetIsActive(bool _isActive) {isActive = _isActive;};
+    
+    void SetIsCollided(bool _isCollided) {isCollided = _isCollided;};
+    bool GetIsCollided() { return (isCollided);};
+    
+
+    
     
 };
 

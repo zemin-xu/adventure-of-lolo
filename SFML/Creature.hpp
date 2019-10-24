@@ -10,7 +10,9 @@
 #define Creature_hpp
 
 #include "Element.hpp"
+#include "Collectable.hpp"
 #include "Movable.hpp"
+
 
 
 class Creature : public Element
@@ -36,10 +38,11 @@ public:
     
     virtual void Move(const float deltaTime) = 0;
     
-    void ScanAround(vector<Element> &obstacles, vector<Movable> &movables, const float deltaTime);
+    void ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, const float deltaTime);
     
     
     void CollisionObstacle(Element *other);
+    void CollisionCollectable(Collectable *other);
     
     void CollisionMovable(Movable *movable, const float deltaTime);
     
