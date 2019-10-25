@@ -21,14 +21,34 @@
 
 #include "Element.hpp"
 #include "Movable.hpp"
+#include "MovableEnemy.hpp"
 #include "Collectable.hpp"
 #include "Creature.hpp"
 #include "Enemy.hpp"
 #include "Player.hpp"
 #include "Level.hpp"
-#include "GraphicController.hpp"
+#include "InputController.hpp"
 #include "GameController.hpp"
 
 using namespace std;
+
+
+
+class LIB
+{
+public:
+    
+    
+    static const int LENGTH_UNIT = 48;
+    static const int HEIGHT_UNIT = 48;
+
+    static const int ANIM_PLAYER_NUM_HORIZONTAL = 10;
+    static const int ANIM_PLAYER_NUM_VERTICAL = 8;
+
+    static const int ANIM_ENEMY1_NUM_HORIZONTAL = 4;
+    static const int ANIM_ENEMY1_NUM_VERTICAL = 4;
+};
+
+
 
 #endif /* LIB_hpp */

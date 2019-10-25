@@ -271,6 +271,7 @@ void Creature::UpdateMoveAnimation(int forwardAnimRow, int forwardAnimCol, int b
     }
 }
 
+
 void Creature::UpdateIdleAnimation(int forwardAnimRow, int forwardAnimCol, int backwardAnimRow, int backwardAnimCol, int leftwardAnimRow, int leftwardAnimCol, int rightwardAnimRow, int rightwardAnimCol)
 {
     switch (state) {

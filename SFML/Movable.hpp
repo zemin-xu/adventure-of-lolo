@@ -19,7 +19,7 @@ private:
     // 2 : moving up
     // 3 : moving left
     // 4 : moving down
-    int currentDir;
+    
     
     
 public:
@@ -28,12 +28,6 @@ public:
     Movable();
     Movable(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
     
-    int GetCurrentDir() {return (currentDir);};
-    void SetCurrentDir(int _currentDir) {currentDir = _currentDir;};
-    
-    
-    
-    void Update();
     void Collision(Element *other);
 };
 

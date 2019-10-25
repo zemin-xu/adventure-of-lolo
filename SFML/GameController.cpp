@@ -7,7 +7,7 @@
 //
 #include "LIB.hpp"
 
-GameController::GameController() : window(sf::VideoMode(LENGTH, HEIGHT), "C++ Game"), graphicController(), inputController()
+GameController::GameController() : window(sf::VideoMode(LENGTH, HEIGHT), "C++ Game"),  inputController(), level(1)
 {
     window.setFramerateLimit(120);
 }
@@ -46,9 +46,9 @@ void GameController::UpdateSFMLEvents()
 void GameController::Update()
 {
     UpdateSFMLEvents();
-    inputController.UpdateInput(graphicController.player);
+    inputController.UpdateInput(level.player);
     
-    graphicController.Update(deltaTime);
+    level.Update(deltaTime);
     
     UpdateTime();
     
@@ -64,7 +64,7 @@ void GameController::Render()
 {
     window.clear();
     
-    graphicController.Render(window);
+    level.Render(window);
     
     window.display();
 }
@@ -72,7 +72,7 @@ void GameController::Render()
 void GameController::Run()
 {
     //the code to be execute all along the program
-    graphicController.ReadTextureFile();
+    
     
     while (window.isOpen())
     {

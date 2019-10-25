@@ -13,6 +13,8 @@
 class Element
 {
 private:
+    int currentDir;
+    
 protected:
     
     sf::IntRect spritePos;
@@ -29,6 +31,7 @@ protected:
     constexpr static const float FACTOR = 0.8f;
     
     static const int TRY_DISTANCE = 2;
+
     
     
     
@@ -44,10 +47,15 @@ public:
     Element();
     Element(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
 
+    int GetCurrentDir() {return (currentDir);};
+    void SetCurrentDir(int _currentDir) {currentDir = _currentDir;};
+    
     void UpdatePosition();
     virtual void Render(sf::RenderWindow &window);
     int GetObjectType();
     int DetectCollision(Element *other);
+    
+    void UpdateIdleAnimation(int forwardAnimRow, int forwardAnimCol, int backwardAnimRow, int backwardAnimCol, int leftwardAnimRow, int leftwardAnimCol, int rightwardAnimRow, int rightwardAnimCol);
     
 };
 

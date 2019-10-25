@@ -19,18 +19,59 @@ private:
     int heartLeft;
     int playerLife;
     
+    struct coord
+    {
+        int x;
+        int y;
+        int type;
+    };
+    
     static const int MAX_LEVEL = 2;
     
 public:
+    
+    sf::Texture texturePlayer;
+    sf::Texture textureEnemy;
+    sf::Texture textureBG;
+    sf::Texture textureClosedKeyBox;
+    
+    sf::Texture textureOuterWall;
+    sf::Texture textureClosedDoor;
+    sf::Texture textureObstacle1;
+    sf::Texture textureObstacle2;
+    
+    sf::Texture textureCollectable;
+    sf::Texture textureMovable;
+    sf::Texture textureUI;
+    
+    sf::Font font;
+    sf::Text title;
+    sf::Text textLife;
+    sf::Text textWeapon;
+    
+    vector<Element> background;
+    vector<Element> obstacles;
+    vector<Collectable> collectables;
+    vector<Movable> movables;
+    vector<Enemy> enemies;
+    
+    Player player;
+    Element keyBox;
+    Element door;
+    Element uiLife;
+    Element uiWeapon;
+    
+    vector<coord> currentMap;
+  
+    
     // 00: background_black
     // 11: background1      12: background2     13: closed key box
     // 21: obstacle1        22: outerwall       23: obstacle2       24: closed door
     // 31: collectable
-    // 41: movable
+    // 41: movable          42: movableEnemy
     // 51: enemy1
     // 61: door
     // 71: player
-    
     
     const int level1[12][16] =
     {
@@ -39,7 +80,7 @@ public:
         {00,22,21,11, 11,11,11,11, 11,41,11,11, 11,22,00,00},
         {00,22,11,11, 31,11,11,11, 11,41,11,11, 11,22,00,00},
         {00,22,11,11, 11,11,11,11, 11,41,11,11, 11,22,00,00},
-        {00,22,11,11, 31,11,11,11, 11,11,51,11, 11,22,00,00},
+        {00,22,11,11, 31,11,42,11, 11,11,42,11, 11,22,00,00},
         {00,22,11,11, 11,11,11,11, 11,11,11,11, 11,22,00,00},
         {00,22,11,23, 23,11,11,11, 11,11,11,11, 11,22,00,00},
         {00,22,23,23, 23,23,11,11, 71,23,23,11, 11,22,00,00},
@@ -53,12 +94,12 @@ public:
         {00,22,22,22, 22,22,22,22, 24,22,22,22, 22,22,00,00},
         {00,22,21,21, 21,21,21,21, 11,11,11,11, 11,22,00,00},
         {00,22,21,11, 11,11,11,11, 11,41,11,11, 11,22,00,00},
-        {00,22,11,11, 31,11,11,11, 11,41,11,11, 11,22,00,00},
         {00,22,11,11, 11,11,11,11, 11,41,11,11, 11,22,00,00},
-        {00,22,11,11, 31,11,11,11, 11,11,51,11, 11,22,00,00},
+        {00,22,11,11, 11,11,11,11, 11,41,11,11, 11,22,00,00},
+        {00,22,11,11, 11,11,11,11, 11,11,51,11, 11,22,00,00},
         {00,22,11,11, 11,11,11,11, 11,11,11,11, 11,22,00,00},
-        {00,22,11,23, 23,11,11,11, 11,11,11,11, 11,22,00,00},
-        {00,22,23,23, 23,23,11,11, 71,23,23,11, 11,22,00,00},
+        {00,22,11,23, 11,11,11,11, 11,11,11,11, 11,22,00,00},
+        {00,22,23,23, 11,23,11,11, 11,23,23,11, 11,22,00,00},
         {00,22,21,11, 11,21,13,11, 11,11,23,23, 11,22,00,00},
         {00,22,21,21, 21,21,21,21, 11,11,11,11, 11,22,00,00},
         {00,22,22,22, 22,22,22,22, 22,22,22,22, 22,22,00,00}
@@ -66,9 +107,13 @@ public:
     
     Level();
     Level(int _currentLevel);
-    void InitLevel(int level);
-    void UpdateHeartLeft();
     
+    void InitLevel(int level);
+    void ReadTextureFile();
+    void UpdateHeartLeft();
+    void Render(sf::RenderWindow &window);
+    void UpdateCurrentMap();
+    void Update(const float deltaTime);
 };
 
 #endif /* Level_hpp */

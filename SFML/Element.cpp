@@ -69,3 +69,48 @@ int Element::DetectCollision(Element *other)
 
 }
 
+
+void Element::UpdateIdleAnimation(int forwardAnimRow, int forwardAnimCol, int backwardAnimRow, int backwardAnimCol, int leftwardAnimRow, int leftwardAnimCol, int rightwardAnimRow, int rightwardAnimCol)
+{
+    switch (currentDir) {
+        case 1:
+        {
+            spritePos.top = animUnitHeight * (forwardAnimRow - 1);
+            if (spritePos.left < animUnitLength * (forwardAnimCol - 1))
+                spritePos.left += animUnitLength;
+            else
+                spritePos.left = 0;
+        }
+            break;
+        case 2:
+        {
+            spritePos.top = animUnitHeight * (backwardAnimRow - 1);
+            if (spritePos.left < animUnitLength * (backwardAnimCol - 1))
+                spritePos.left += animUnitLength;
+            else
+                spritePos.left = 0;
+        }
+            break;
+        case 3:
+        {
+            spritePos.top = animUnitHeight * (leftwardAnimRow - 1);
+            if (spritePos.left < animUnitLength * (leftwardAnimCol - 1))
+                spritePos.left += animUnitLength;
+            else
+                spritePos.left = 0;
+        }
+            break;
+        case 4:
+        {
+            spritePos.top = animUnitHeight * (rightwardAnimRow - 1);
+            if (spritePos.left < animUnitLength * (rightwardAnimCol - 1))
+                spritePos.left += animUnitLength;
+            else
+                spritePos.left = 0;
+        }
+            break;
+        default:
+            break;
+    }
+}
+

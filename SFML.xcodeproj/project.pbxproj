@@ -22,7 +22,8 @@
 		7DE02B4423618E2100C59A7F /* Level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DE02B4223618E2100C59A7F /* Level.cpp */; };
 		7DEB55042354B83B00E31817 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DEB55022354B83B00E31817 /* GameController.cpp */; };
 		7DEB55072354D2AB00E31817 /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DEB55052354D2AB00E31817 /* Element.cpp */; };
-		7DEB550A2355B8FB00E31817 /* GraphicController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DEB55082355B8FB00E31817 /* GraphicController.cpp */; };
+		7DF479132362EBC500C1072A /* InputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DF479112362EBC500C1072A /* InputController.cpp */; };
+		7DF479162362F63000C1072A /* MovableEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DF479142362F63000C1072A /* MovableEnemy.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -63,9 +64,11 @@
 		7DEB55032354B83B00E31817 /* GameController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameController.hpp; sourceTree = "<group>"; };
 		7DEB55052354D2AB00E31817 /* Element.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Element.cpp; sourceTree = "<group>"; };
 		7DEB55062354D2AB00E31817 /* Element.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Element.hpp; sourceTree = "<group>"; };
-		7DEB55082355B8FB00E31817 /* GraphicController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicController.cpp; sourceTree = "<group>"; };
-		7DEB55092355B8FB00E31817 /* GraphicController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GraphicController.hpp; sourceTree = "<group>"; };
 		7DED4FD12361D55A00EDC325 /* LIB.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LIB.hpp; sourceTree = "<group>"; };
+		7DF479112362EBC500C1072A /* InputController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = InputController.cpp; sourceTree = "<group>"; };
+		7DF479122362EBC500C1072A /* InputController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = InputController.hpp; sourceTree = "<group>"; };
+		7DF479142362F63000C1072A /* MovableEnemy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MovableEnemy.cpp; sourceTree = "<group>"; };
+		7DF479152362F63000C1072A /* MovableEnemy.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MovableEnemy.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,10 +110,13 @@
 			isa = PBXGroup;
 			children = (
 				7DED4FD12361D55A00EDC325 /* LIB.hpp */,
+				7D95926E234F1351000D086B /* main.cpp */,
 				7DEB55052354D2AB00E31817 /* Element.cpp */,
 				7DEB55062354D2AB00E31817 /* Element.hpp */,
 				7D0F9747235893FC001BCE97 /* Movable.cpp */,
 				7D0F9748235893FC001BCE97 /* Movable.hpp */,
+				7DF479142362F63000C1072A /* MovableEnemy.cpp */,
+				7DF479152362F63000C1072A /* MovableEnemy.hpp */,
 				7D0F9744235893A4001BCE97 /* Collectable.cpp */,
 				7D0F9745235893A4001BCE97 /* Collectable.hpp */,
 				7D0F973E235888A7001BCE97 /* Creature.cpp */,
@@ -121,11 +127,10 @@
 				7D0F974223588960001BCE97 /* Enemy.hpp */,
 				7DE02B4223618E2100C59A7F /* Level.cpp */,
 				7DE02B4323618E2100C59A7F /* Level.hpp */,
-				7DEB55082355B8FB00E31817 /* GraphicController.cpp */,
-				7DEB55092355B8FB00E31817 /* GraphicController.hpp */,
+				7DF479112362EBC500C1072A /* InputController.cpp */,
+				7DF479122362EBC500C1072A /* InputController.hpp */,
 				7DEB55022354B83B00E31817 /* GameController.cpp */,
 				7DEB55032354B83B00E31817 /* GameController.hpp */,
-				7D95926E234F1351000D086B /* main.cpp */,
 			);
 			path = SFML;
 			sourceTree = "<group>";
@@ -202,14 +207,15 @@
 			files = (
 				7D0F974323588960001BCE97 /* Enemy.cpp in Sources */,
 				7D0F9740235888A7001BCE97 /* Creature.cpp in Sources */,
+				7DF479162362F63000C1072A /* MovableEnemy.cpp in Sources */,
 				7DEB55042354B83B00E31817 /* GameController.cpp in Sources */,
 				7D0F9746235893A4001BCE97 /* Collectable.cpp in Sources */,
 				7D0F9749235893FC001BCE97 /* Movable.cpp in Sources */,
 				7DE02B4423618E2100C59A7F /* Level.cpp in Sources */,
 				7D0F973D23588713001BCE97 /* Player.cpp in Sources */,
-				7DEB550A2355B8FB00E31817 /* GraphicController.cpp in Sources */,
 				7D95926F234F1351000D086B /* main.cpp in Sources */,
 				7DEB55072354D2AB00E31817 /* Element.cpp in Sources */,
+				7DF479132362EBC500C1072A /* InputController.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

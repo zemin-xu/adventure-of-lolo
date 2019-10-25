@@ -22,7 +22,8 @@ private:
     float deltaTime;
     float renderTime;
     
-    GraphicController graphicController;
+    Level level;
+
     InputController inputController;
     
     
