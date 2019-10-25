@@ -18,7 +18,6 @@ Player::Player(int x, int y, int length, int height, sf::Texture *texture, int n
     speed = 100.0f;
     dirHorizontal = 1;
     dirVertical = 1;
-    weaponPoint = 3;
     canMove = false;
     kind = _kind;
     
@@ -66,11 +65,11 @@ void Player::UpdateState()
     }
 }
 
-void Player::Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables)
+void Player::Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers)
 {
     UpdateVariable();
     
-    ScanAround(obstacles, movables, collectables, deltaTime);
+    ScanAround(obstacles, movables, collectables, triggers, deltaTime);
     
     Move(deltaTime);
 

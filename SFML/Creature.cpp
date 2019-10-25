@@ -19,7 +19,7 @@ Creature::Creature(int x, int y, int length, int height, sf::Texture *texture,  
     state = Forward;
 }
 
-void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, const float deltaTime)
+void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, vector<Trigger> &triggers, const float deltaTime)
 {
     for (int i = 0; i < obstacles.size(); i++)
     {
@@ -43,6 +43,34 @@ void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables,
         if (DetectCollision(&collectables[i]))
         {
             CollisionCollectable(&collectables[i]);
+        }
+    }
+    
+    for (int i = 0; i < triggers.size(); i++)
+    {
+        if (DetectCollision(&triggers[i]))
+        {
+            CollisionTrigger(&triggers[i]);
+        }
+    }
+}
+
+
+void Creature::CollisionTrigger(Trigger* other)
+{
+    if (kind == 71 && other->GetIsTriggerActive())
+    {
+        // door
+        if (other->kind == 61)
+        {
+            other->SetTrigger(true);
+        }
+        // key box
+        else if (other->kind == 62)
+        {
+            other->SetTrigger(true);
+            other->shape.setFillColor(sf::Color::Green);
+            //door.SetIsTriggerActive(true);
         }
     }
 }

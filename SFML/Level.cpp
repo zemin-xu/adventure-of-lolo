@@ -10,7 +10,7 @@
 
 Level::Level()
 {
-
+    
 }
 
 Level::Level(int _currentLevel)
@@ -18,6 +18,7 @@ Level::Level(int _currentLevel)
     ReadTextureFile();
     InitLevel(_currentLevel);
     playerLife = 5;
+    playerWeapon = 0;
 }
 
 void Level::UpdateCurrentMap()
@@ -25,20 +26,20 @@ void Level::UpdateCurrentMap()
     currentMap.clear();
     heartLeft = 0;
     
-   for (int i = 0; i < 12; i++)
-   {
-       for (int j = 0; j < 16; j++)
-       {
-               coord a;
-               a.x = j;
-               a.y = i;
-               if (currentLevel == 1)
-                   a.type = level1[i][j];
-               else if (currentLevel == 2)
-                   a.type = level2[i][j];
-               currentMap.push_back(a);
-       }
-   }
+    for (int i = 0; i < 12; i++)
+    {
+        for (int j = 0; j < 16; j++)
+        {
+            coord a;
+            a.x = j;
+            a.y = i;
+            if (currentLevel == 1)
+                a.type = level1[i][j];
+            else if (currentLevel == 2)
+                a.type = level2[i][j];
+            currentMap.push_back(a);
+        }
+    }
 }
 
 void Level::InitLevel(int level)
@@ -50,10 +51,9 @@ void Level::InitLevel(int level)
     background.clear();
     obstacles.clear();
     
-    // the collectable vector should not be clear because it is clean already
+    // the collectable vector and enemy vector should not be clear because it is clean already
     
-    movables.clear();
-    enemies.clear();
+    triggers.clear();
     
     /* text init */
     title.setFont(font);
@@ -89,8 +89,6 @@ void Level::InitLevel(int level)
                 Element obstacleUnit;
                 if (currentMap[i * 16 + j].type == 22)
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureOuterWall,1,1, 22);
-                else if (currentMap[i * 16 + j].type == 24)
-                    obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureClosedDoor,1,1, 24);
                 else if (currentMap[i * 16 + j].type == 21)
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle1,1,1, 21);
                 else if (currentMap[i * 16 + j].type == 23)
@@ -106,7 +104,6 @@ void Level::InitLevel(int level)
                     collectableUnit = Collectable(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureCollectable ,1,1, 31);
                     heartLeft++;
                 }
-                    
                 
                 collectables.push_back(collectableUnit);
             }
@@ -119,9 +116,11 @@ void Level::InitLevel(int level)
                 movables.push_back(movableUnit);
             }
             
+            // movable enemy
             else if(currentMap[i * 16 + j].type == 42)
             {
-                MovableEnemy movableEnemyUnit(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEnemy, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 42);
+                MovableEnemy movableEnemyUnit(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureMovableEnemy, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 42);
+                cout << i << " " << j << "  ";
                 movables.push_back(movableEnemyUnit);
             }
             
@@ -134,14 +133,21 @@ void Level::InitLevel(int level)
                 enemies.push_back(enemyUnit);
             }
             
+            
+            else if(currentMap[i * 16 + j].type / 10 == 6)
+            {
+                Trigger triggerUnit;
+                if (currentMap[i * 16 + j].type == 61)
+                    triggerUnit = Trigger(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureClosedDoor ,1,1, 61);
+                else if (currentMap[i * 16 + j].type == 62)
+                    triggerUnit = Trigger(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureClosedKeyBox ,1,1, 62);
+                
+                triggers.push_back(triggerUnit);
+            }
+            
             else if(currentMap[i * 16 + j].type == 71)
-            player = Player(8 * LIB::LENGTH_UNIT,6 * LIB::LENGTH_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &texturePlayer, LIB::ANIM_PLAYER_NUM_HORIZONTAL, LIB::ANIM_PLAYER_NUM_VERTICAL, 71);
+                player = Player(8 * LIB::LENGTH_UNIT,6 * LIB::LENGTH_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &texturePlayer, LIB::ANIM_PLAYER_NUM_HORIZONTAL, LIB::ANIM_PLAYER_NUM_VERTICAL, 71);
             
-            if(currentMap[i * 16 + j].type == 13)
-                keyBox = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureClosedKeyBox, 1, 1, 13);
-            
-            if(currentMap[i * 16 + j].type == 24)
-                door = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureClosedDoor, 1, 1, 24);
             
             
         }
@@ -157,6 +163,8 @@ void Level::ReadTextureFile()
         return ;
     if (!textureEnemy.loadFromFile("Sources/enemy.png"))
         return ;
+    if (!textureMovableEnemy.loadFromFile("Sources/ghost.png"))
+    return ;
     if (!textureBG.loadFromFile("Sources/sable.jpg"))
         return ;
     if (!textureClosedKeyBox.loadFromFile("Sources/closed_key_box.png"))
@@ -180,11 +188,8 @@ void Level::ReadTextureFile()
 void Level::UpdateHeartLeft()
 {
     heartLeft--;
-    if (heartLeft <= 0 && currentLevel < MAX_LEVEL)
-    {
-        currentLevel++;
-        InitLevel(currentLevel);
-    }
+    if (heartLeft <= 0)
+        HeartCollected();
 }
 
 void Level::Render(sf::RenderWindow &window)
@@ -209,14 +214,15 @@ void Level::Render(sf::RenderWindow &window)
     {
         enemies[i].Render(window);
     }
+    for (int i = 0; i < triggers.size(); i++)
+    {
+        triggers[i].Render(window);
+    }
     
-    keyBox.Render(window);
-    door.Render(window);
+    player.Render(window);
     
     uiLife.Render(window);
     uiWeapon.Render(window);
-    
-    player.Render(window);
     
     window.draw(title);
     window.draw(textLife);
@@ -226,7 +232,7 @@ void Level::Render(sf::RenderWindow &window)
 
 void Level::Update(const float deltaTime)
 {
-    player.Update(deltaTime, obstacles, collectables, movables);
+    player.Update(deltaTime, obstacles, collectables, movables, triggers);
     
     /* equal to movable class's update function */
     for (int i = 0; i < movables.size(); i++)
@@ -254,7 +260,6 @@ void Level::Update(const float deltaTime)
             MovableEnemy* p = (MovableEnemy*)&movables[i];
             p->Update(&player);
         }
-        
     }
     
     /* update for collectable class */
@@ -267,10 +272,52 @@ void Level::Update(const float deltaTime)
         }
     }
     
+    /* make door trigger active if the key is got */
+    for (int i = 0; i < triggers.size(); i++)
+    {
+        if (triggers[i].GetTrigger() && triggers[i].kind == 62)
+        {
+            
+            for (int j = 0; j< triggers.size(); j++)
+            {
+                if(triggers[j].kind == 61 && !triggers[j].GetIsTriggerActive())
+                {
+                    triggers[j].SetIsTriggerActive(true);
+                    CleanLevelEnemy();
+                }
+            }
+        }
+        if (triggers[i].GetTrigger() && triggers[i].kind == 61)
+        {
+            if (currentLevel < MAX_LEVEL)
+            {
+                currentLevel++;
+                InitLevel(currentLevel);
+            }
+            
+        }
+    }
     
     /* text update, will be placed in a condition when they change */
     textLife.setString(to_string(player.GetLifePoint()));
-    textWeapon.setString(to_string(player.GetWeaponPoint()));
+    textWeapon.setString(to_string(playerWeapon));
+}
+
+// when all the hearts are collected
+void Level::HeartCollected()
+{
+    for(int i = 0; i < triggers.size(); i++)
+        if (triggers[i].kind == 62)
+        {
+            triggers[i].shape.setFillColor(sf::Color::Red);
+            triggers[i].SetIsTriggerActive(true);
+        }
+}
+
+void Level::CleanLevelEnemy()
+{
+    enemies.clear();
+    movables.clear();
 }
 
 

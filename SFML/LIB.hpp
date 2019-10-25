@@ -16,10 +16,10 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
-#include <SFML/Network.hpp>
 #include <SFML/Graphics.hpp>
 
 #include "Element.hpp"
+#include "Trigger.hpp"
 #include "Movable.hpp"
 #include "MovableEnemy.hpp"
 #include "Collectable.hpp"
@@ -31,8 +31,6 @@
 #include "GameController.hpp"
 
 using namespace std;
-
-
 
 class LIB
 {

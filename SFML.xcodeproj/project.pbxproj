@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D07D83E23633C9C00BEF3DE /* Trigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D07D83C23633C9C00BEF3DE /* Trigger.cpp */; };
 		7D0F973D23588713001BCE97 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F973B23588713001BCE97 /* Player.cpp */; };
 		7D0F9740235888A7001BCE97 /* Creature.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F973E235888A7001BCE97 /* Creature.cpp */; };
 		7D0F974323588960001BCE97 /* Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F974123588960001BCE97 /* Enemy.cpp */; };
@@ -39,6 +40,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7D07D83C23633C9C00BEF3DE /* Trigger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Trigger.cpp; sourceTree = "<group>"; };
+		7D07D83D23633C9C00BEF3DE /* Trigger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Trigger.hpp; sourceTree = "<group>"; };
 		7D0F973B23588713001BCE97 /* Player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		7D0F973C23588713001BCE97 /* Player.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Player.hpp; sourceTree = "<group>"; };
 		7D0F973E235888A7001BCE97 /* Creature.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Creature.cpp; sourceTree = "<group>"; };
@@ -113,6 +116,8 @@
 				7D95926E234F1351000D086B /* main.cpp */,
 				7DEB55052354D2AB00E31817 /* Element.cpp */,
 				7DEB55062354D2AB00E31817 /* Element.hpp */,
+				7D07D83C23633C9C00BEF3DE /* Trigger.cpp */,
+				7D07D83D23633C9C00BEF3DE /* Trigger.hpp */,
 				7D0F9747235893FC001BCE97 /* Movable.cpp */,
 				7D0F9748235893FC001BCE97 /* Movable.hpp */,
 				7DF479142362F63000C1072A /* MovableEnemy.cpp */,
@@ -209,6 +214,7 @@
 				7D0F9740235888A7001BCE97 /* Creature.cpp in Sources */,
 				7DF479162362F63000C1072A /* MovableEnemy.cpp in Sources */,
 				7DEB55042354B83B00E31817 /* GameController.cpp in Sources */,
+				7D07D83E23633C9C00BEF3DE /* Trigger.cpp in Sources */,
 				7D0F9746235893A4001BCE97 /* Collectable.cpp in Sources */,
 				7D0F9749235893FC001BCE97 /* Movable.cpp in Sources */,
 				7DE02B4423618E2100C59A7F /* Level.cpp in Sources */,
