@@ -7,7 +7,7 @@
 //
 
 #include "LIB.hpp"
-
+using namespace std;
 Enemy::Enemy()
 {
     
@@ -84,64 +84,22 @@ void Enemy::ChangeDirection()
     state = Leftward_M;
     else if (isUpDownBlocked == 2 && isLeftRightBlocked == 0)
     state = Leftward_M;
-    
-    
-    /*
-     
-     if (isUpDownBlocked != 0)
-     {
-     if (isUpDownBlocked == 1)
-     state = Backward_M;
-     else if (isUpDownBlocked == 2)
-     state = Forward_M;
-     else if (isUpDownBlocked == 3 && isLeftRightBlocked != 3)
-     {
-     if (isLeftRightBlocked == 1)
-     state = Rightward_M;
-     else if (isLeftRightBlocked == 2 || isLeftRightBlocked == 0)
-     state = Leftward_M;
-     }
-     
-     }
-     else if (isUpDownBlocked == 0 && isLeftRightBlocked != 0)
-     state = Forward_M;
-     cout << "!!! CHANGE DIRECTION BECASUE OF BLOCK !!! \n" ;
-     cout << state << "  " << GetCanMove() << endl;
-     cout << endl;
-     
-     */
 }
 
 /* be executed each 1 sec to redirect */
 void Enemy::FollowDirection(Element* player)
 {
-    if (isUpDownBlocked == 0 && isLeftRightBlocked == 0)
-    {
-        if (player->centerX < centerX)
+    float a = abs(player->centerX - centerX);
+    float b = abs(player->centerY - centerY);
+        if ((player->centerX - centerX < -4) && a > b)
             state = Leftward_M;
-        else if (player->centerX > centerX)
+        else if (player->centerX - centerX > 4)
             state = Rightward_M;
-        /*
-        if (player->centerY - centerY <= 0)
+
+        else if (player->centerY - centerY < 0)
             state = Backward_M;
-        else if (player->centerY - centerY >= 0)
+        else if (player->centerY - centerY > 0)
             state = Forward_M;
-         */
-    }
-    else if (isUpDownBlocked != 0 && isLeftRightBlocked == 0)
-    {
-        if (player->centerX - centerX <= 0)
-            state = Leftward_M;
-        else if (player->centerX - centerX >= 0)
-            state = Rightward_M;
-    }
-    else if (isLeftRightBlocked != 0 && isUpDownBlocked == 0)
-    {
-        if (player->centerY - centerY <= 0)
-            state = Backward_M;
-        else if (player->centerY - centerY >= 0)
-            state = Forward_M;
-    }
 }
 
 void Enemy::UpdateVariable()

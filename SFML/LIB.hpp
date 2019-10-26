@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <cstdlib>
+#include <cmath>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
