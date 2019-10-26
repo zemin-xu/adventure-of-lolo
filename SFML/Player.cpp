@@ -23,6 +23,11 @@ Player::Player(int x, int y, int length, int height, sf::Texture *texture, int n
     
     shape.setOutlineThickness(2.0f);
     shape.setOutlineColor(sf::Color::Black);
+    
+    if (!bufferPlayerStep.loadFromFile("Sources/Sounds/footstep.wav"))
+        cout << "fail to load sound \n";
+    playerStep.setBuffer(bufferPlayerStep);
+    playerStep.setVolume(500.0f);
 }
 
 void Player::UpdateState()
@@ -70,6 +75,7 @@ void Player::UpdateVariable()
             dirHorizontal = 0;
             dirVertical = 1;
             canMove = true;
+            
         }
             break;
         case Backward_M:
@@ -97,6 +103,13 @@ void Player::UpdateVariable()
         default:
             break;
     }
+}
+
+void Player::Move(const float deltaTime)
+{
+    Creature::Move(deltaTime);
+    
+    
 }
 
 void Player::Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers)

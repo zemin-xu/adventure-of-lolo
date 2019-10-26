@@ -142,9 +142,6 @@ void Enemy::Update(const float deltaTime, vector<Element> &obstacles, vector<Col
     timer += deltaTime;
     if (timer > 0.2f)
     {
-        
-        cout << "state : followdir " << endl;
-
         FollowDirection(player);
         isLeftRightBlocked = 0;
         isUpDownBlocked = 0;

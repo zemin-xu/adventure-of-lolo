@@ -29,6 +29,7 @@
 #include "Enemy.hpp"
 #include "Player.hpp"
 #include "Level.hpp"
+#include "GameMenu.hpp"
 #include "InputController.hpp"
 #include "GameController.hpp"
 
@@ -36,9 +37,7 @@ using namespace std;
 
 class LIB
 {
-public:
-    
-    
+public:    
     static const int LENGTH_UNIT = 48;
     static const int HEIGHT_UNIT = 48;
 

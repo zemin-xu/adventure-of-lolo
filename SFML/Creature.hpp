@@ -50,7 +50,7 @@ public:
     
     void Damage(Creature &other, int damage);
     
-    void Move(const float deltaTime);
+    virtual void Move(const float deltaTime);
     
 };
 

@@ -19,6 +19,8 @@ Level::Level(int _currentLevel)
     InitLevel(_currentLevel);
     playerLife = 5;
     playerWeapon = 0;
+    
+    
 }
 
 void Level::UpdateCurrentMap()
@@ -158,6 +160,13 @@ void Level::ReadTextureFile()
 {
     if (!font.loadFromFile("Sources/karma_future.ttf"))
         return ;
+    if (!bgMusic.openFromFile("Sources/Sounds/ingame.ogg"))
+    return ;
+    if (!winMusic.openFromFile("Sources/Sounds/win.ogg"))
+    return ;
+    if (!loseMusic.openFromFile("Sources/Sounds/gameover.ogg"))
+    return ;
+    
     
     if (!texturePlayer.loadFromFile("Sources/player.png"))
         return ;

@@ -28,6 +28,10 @@ private:
     };
     
     static const int MAX_LEVEL = 2;
+
+    sf::Music bgMusic;
+    sf::Music winMusic;
+    sf::Music loseMusic;
     
 public:
     

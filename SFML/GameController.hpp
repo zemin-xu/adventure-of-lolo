@@ -19,8 +19,13 @@ private:
     sf::Clock deltaTimeClock;
     sf::Clock renderClock;
     sf::Event event;
+    
     float deltaTime;
     float renderTime;
+    
+    GameMenu menu;
+    
+    
     
     Level level;
 
@@ -28,8 +33,13 @@ private:
     
     
 public:
+    
+    
     static const int LENGTH = 768;
     static const int HEIGHT = 576;
+    
+    enum State {Menu, InGame, GameOver} state;
+    
     
     
     GameController();

@@ -20,6 +20,7 @@
 		7D95927F234F13BA000D086B /* SFML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D959279234F13BA000D086B /* SFML.framework */; };
 		7D959280234F13BA000D086B /* sfml-window.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D95927A234F13BA000D086B /* sfml-window.framework */; };
 		7D959281234F13BA000D086B /* sfml-graphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D95927B234F13BA000D086B /* sfml-graphics.framework */; };
+		7DA7B03323648C100057BCD1 /* GameMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DA7B03123648C100057BCD1 /* GameMenu.cpp */; };
 		7DE02B4423618E2100C59A7F /* Level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DE02B4223618E2100C59A7F /* Level.cpp */; };
 		7DEB55042354B83B00E31817 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DEB55022354B83B00E31817 /* GameController.cpp */; };
 		7DEB55072354D2AB00E31817 /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DEB55052354D2AB00E31817 /* Element.cpp */; };
@@ -61,6 +62,8 @@
 		7D959279234F13BA000D086B /* SFML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SFML.framework; path = SFML/Frameworks/SFML.framework; sourceTree = "<group>"; };
 		7D95927A234F13BA000D086B /* sfml-window.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-window.framework"; path = "SFML/Frameworks/sfml-window.framework"; sourceTree = "<group>"; };
 		7D95927B234F13BA000D086B /* sfml-graphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-graphics.framework"; path = "SFML/Frameworks/sfml-graphics.framework"; sourceTree = "<group>"; };
+		7DA7B03123648C100057BCD1 /* GameMenu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameMenu.cpp; sourceTree = "<group>"; };
+		7DA7B03223648C100057BCD1 /* GameMenu.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameMenu.hpp; sourceTree = "<group>"; };
 		7DE02B4223618E2100C59A7F /* Level.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Level.cpp; sourceTree = "<group>"; };
 		7DE02B4323618E2100C59A7F /* Level.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Level.hpp; sourceTree = "<group>"; };
 		7DEB55022354B83B00E31817 /* GameController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameController.cpp; sourceTree = "<group>"; };
@@ -132,6 +135,8 @@
 				7D0F974223588960001BCE97 /* Enemy.hpp */,
 				7DE02B4223618E2100C59A7F /* Level.cpp */,
 				7DE02B4323618E2100C59A7F /* Level.hpp */,
+				7DA7B03123648C100057BCD1 /* GameMenu.cpp */,
+				7DA7B03223648C100057BCD1 /* GameMenu.hpp */,
 				7DF479112362EBC500C1072A /* InputController.cpp */,
 				7DF479122362EBC500C1072A /* InputController.hpp */,
 				7DEB55022354B83B00E31817 /* GameController.cpp */,
@@ -211,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D0F974323588960001BCE97 /* Enemy.cpp in Sources */,
+				7DA7B03323648C100057BCD1 /* GameMenu.cpp in Sources */,
 				7D0F9740235888A7001BCE97 /* Creature.cpp in Sources */,
 				7DF479162362F63000C1072A /* MovableEnemy.cpp in Sources */,
 				7DEB55042354B83B00E31817 /* GameController.cpp in Sources */,

@@ -7,9 +7,10 @@
 //
 #include "LIB.hpp"
 
-GameController::GameController() : window(sf::VideoMode(LENGTH, HEIGHT), "C++ Game"),  inputController(), level(1)
+GameController::GameController() : window(sf::VideoMode(LENGTH, HEIGHT), "C++ Game"),  inputController(), menu(LENGTH, HEIGHT),  level(1)
 {
     window.setFramerateLimit(120);
+    state = Menu;
 }
 
 
@@ -31,15 +32,56 @@ void GameController::UpdateTime()
         renderTime = renderClock.restart().asSeconds();
         Render();
     }
-        
+    
 }
 
 void GameController::UpdateSFMLEvents()
 {
     while (window.pollEvent(event))
     {
+        switch (event.type) {
+            case sf::Event::KeyReleased:
+            {
+                switch (event.key.code)
+                {
+                    case sf::Keyboard::Up:
+                        menu.MoveUp();
+                        break;
+                        
+                    case sf::Keyboard::Down:
+                        menu.MoveDown();
+                        break;
+                    case sf::Keyboard::Return:
+                    {
+                        switch (menu.GetPressedItem()) {
+                            case 0:
+                                state = InGame;
+                                break;
+                                
+                            case 1:
+                                cout << "option" << endl;
+                                break;
+                                
+                            case 2:
+                                window.close();
+                                break;
+                                
+                            default:
+                                break;
+                        }
+                    }
+                        break;
+                        
+                }
+            }
+                break;
+                
+            default:
+                break;
+        }
+        
         if (event.type == sf::Event::Closed)
-        window.close();
+            window.close();
     }
 }
 
@@ -48,7 +90,8 @@ void GameController::Update()
     UpdateSFMLEvents();
     inputController.UpdateInput(level.player);
     
-    level.Update(deltaTime);
+    if (state == InGame)
+        level.Update(deltaTime);
     
     UpdateTime();
     
@@ -64,7 +107,11 @@ void GameController::Render()
 {
     window.clear();
     
-    level.Render(window);
+    if (state == Menu)
+        menu.Render(window);
+    
+    else if (state == InGame)
+        level.Render(window);
     
     window.display();
 }
