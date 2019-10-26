@@ -16,7 +16,9 @@ Creature::Creature(int x, int y, int length, int height, sf::Texture *texture,  
 {
     lifePoint = 5;
     isAlive = true;
-    state = Forward;
+    state = Forward_M;
+    
+    real.setFillColor(sf::Color::Blue);
 }
 
 void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, vector<Trigger> &triggers, const float deltaTime)
@@ -26,7 +28,7 @@ void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables,
         if (DetectCollision(&obstacles[i]))
         {
             CollisionObstacle(&obstacles[i]);
-            obstacles[i].shape.setFillColor(sf::Color::Red);
+            //obstacles[i].shape.setFillColor(sf::Color::Red);
         }
     }
     for (int i = 0; i < movables.size(); i++)
@@ -34,7 +36,7 @@ void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables,
         if (DetectCollision(&movables[i]))
         {
             CollisionMovable(&movables[i], deltaTime);
-            movables[i].shape.setFillColor(sf::Color::Black);
+            //movables[i].shape.setFillColor(sf::Color::Black);
         }
     }
     
@@ -73,6 +75,8 @@ void Creature::CollisionTrigger(Trigger* other)
             //door.SetIsTriggerActive(true);
         }
     }
+    //if (kind == 51)
+      //  canMove = false;
 }
 
 void Creature::CollisionCollectable(Collectable *other)
@@ -80,12 +84,15 @@ void Creature::CollisionCollectable(Collectable *other)
     // player's type is 71
     if (kind == 71 && other->GetIsActive())
         other->SetIsCollided(true);
+    
+    //if (kind == 51)
+      //  canMove = false;
 }
 
 
 void Creature::CollisionMovable(Movable *other, const float deltaTime)
 {
-    if (state == Forward_M)
+    if (kind == 71 && state == Forward_M)
     {
         if (((centerY + HEIGHT_UNIT / 2) > (other->centerY - HEIGHT_UNIT / 2)) &&
             ((centerX - LENGTH_UNIT * FACTOR / 2) < (other->centerX + LENGTH_UNIT * FACTOR / 2)) &&
@@ -102,7 +109,7 @@ void Creature::CollisionMovable(Movable *other, const float deltaTime)
             }
         }
     }
-    else if (state == Backward_M)
+    else if (kind == 71 && state == Backward_M)
     {
         if (((centerY - HEIGHT_UNIT / 2) < (other->centerY + HEIGHT_UNIT / 2)) &&
             ((centerX - LENGTH_UNIT * FACTOR / 2) < (other->centerX + LENGTH_UNIT * FACTOR / 2)) &&
@@ -121,7 +128,7 @@ void Creature::CollisionMovable(Movable *other, const float deltaTime)
             
         }
     }
-    else if (state == Leftward_M)
+    else if (kind == 71 && state == Leftward_M)
     {
         if (((centerX - LENGTH_UNIT / 2) < (other->centerX + LENGTH_UNIT / 2)) &&
             ((centerY - HEIGHT_UNIT * FACTOR / 2) < (other->centerY + HEIGHT_UNIT * FACTOR / 2)) &&
@@ -139,7 +146,7 @@ void Creature::CollisionMovable(Movable *other, const float deltaTime)
             }
         }
     }
-    else if (state == Rightward_M)
+    else if (kind == 71 && state == Rightward_M)
     {
         if (((centerX + LENGTH_UNIT / 2) > (other->centerX - LENGTH_UNIT / 2)) &&
             ((centerY - HEIGHT_UNIT * FACTOR / 2) < (other->centerY + HEIGHT_UNIT * FACTOR / 2)) &&
@@ -157,6 +164,8 @@ void Creature::CollisionMovable(Movable *other, const float deltaTime)
             }
         }
     }
+    //else
+      //  canMove = false;
 }
 
 void Creature::CollisionObstacle(Element *other)
@@ -208,51 +217,6 @@ void Creature::Damage(Creature &other, int damage)
     other.lifePoint -= damage;
     if (other.lifePoint <= 0)
         other.isAlive = false;
-}
-
-// the corresponding changement because of the changement of state of a creature
-void Creature::UpdateVariable()
-{
-    switch (state) {
-        case Forward:
-        case Backward:
-        case Leftward:
-        case Rightward:
-            canMove = false;
-            break;
-            
-        case Forward_M:
-        {
-            dirHorizontal = 0;
-            dirVertical = 1;
-            canMove = true;
-        }
-            break;
-        case Backward_M:
-        {
-            dirHorizontal = 0;
-            dirVertical = -1;
-            canMove = true;
-        }
-            break;
-        case Leftward_M:
-        {
-            dirHorizontal = -1;
-            dirVertical = 0;
-            canMove = true;
-        }
-            break;
-        case Rightward_M:
-        {
-            dirHorizontal = 1;
-            dirVertical = 0;
-            canMove = true;
-        }
-            break;
-            
-        default:
-            break;
-    }
 }
 
 void Creature::UpdateMoveAnimation(int forwardAnimRow, int forwardAnimCol, int backwardAnimRow, int backwardAnimCol, int leftwardAnimRow, int leftwardAnimCol, int rightwardAnimRow, int rightwardAnimCol)
@@ -341,5 +305,14 @@ void Creature::UpdateIdleAnimation(int forwardAnimRow, int forwardAnimCol, int b
             break;
         default:
             break;
+    }
+}
+
+void Creature::Move(const float deltaTime)
+{
+    if (canMove)
+    {
+        real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+        UpdatePosition();
     }
 }

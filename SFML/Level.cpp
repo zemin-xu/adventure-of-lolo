@@ -120,7 +120,7 @@ void Level::InitLevel(int level)
             else if(currentMap[i * 16 + j].type == 42)
             {
                 MovableEnemy movableEnemyUnit(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureMovableEnemy, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 42);
-                cout << i << " " << j << "  ";
+                
                 movables.push_back(movableEnemyUnit);
             }
             
@@ -212,14 +212,18 @@ void Level::Render(sf::RenderWindow &window)
     }
     for (int i = 0; i < enemies.size(); i++)
     {
+        window.draw(enemies[i].real);
         enemies[i].Render(window);
+        
+        
     }
     for (int i = 0; i < triggers.size(); i++)
     {
         triggers[i].Render(window);
     }
-    
+    window.draw(player.real);
     player.Render(window);
+    
     
     uiLife.Render(window);
     uiWeapon.Render(window);
@@ -227,12 +231,18 @@ void Level::Render(sf::RenderWindow &window)
     window.draw(title);
     window.draw(textLife);
     window.draw(textWeapon);
+    
 }
 
 
 void Level::Update(const float deltaTime)
 {
     player.Update(deltaTime, obstacles, collectables, movables, triggers);
+    
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        enemies[i].Update(deltaTime, obstacles, collectables, movables, triggers, &player);
+    }
     
     /* equal to movable class's update function */
     for (int i = 0; i < movables.size(); i++)

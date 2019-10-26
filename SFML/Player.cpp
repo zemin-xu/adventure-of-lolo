@@ -25,16 +25,6 @@ Player::Player(int x, int y, int length, int height, sf::Texture *texture, int n
     shape.setOutlineColor(sf::Color::Black);
 }
 
-
-void Player::Move(const float deltaTime)
-{
-    if (canMove)
-    {
-        real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
-        UpdatePosition();
-    }
-}
-
 void Player::UpdateState()
 {
     
@@ -57,6 +47,50 @@ void Player::UpdateState()
         case Rightward_M:
         {
             state = Rightward;
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+void Player::UpdateVariable()
+{
+    switch (state) {
+        case Forward:
+        case Backward:
+        case Leftward:
+        case Rightward:
+            canMove = false;
+            break;
+            
+        case Forward_M:
+        {
+            dirHorizontal = 0;
+            dirVertical = 1;
+            canMove = true;
+        }
+            break;
+        case Backward_M:
+        {
+            dirHorizontal = 0;
+            dirVertical = -1;
+            canMove = true;
+        }
+            break;
+        case Leftward_M:
+        {
+            dirHorizontal = -1;
+            dirVertical = 0;
+            canMove = true;
+        }
+            break;
+        case Rightward_M:
+        {
+            dirHorizontal = 1;
+            dirVertical = 0;
+            canMove = true;
         }
             break;
             

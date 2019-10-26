@@ -13,11 +13,27 @@
 
 class Enemy: public Creature
 {
+protected:
+    float timer;
 public:
+    int isUpDownBlocked;
+    int isLeftRightBlocked;
     Enemy();
     Enemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody);
     
-    void Move(const float deltaTime);
+    void ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, vector<Trigger> &triggers, const float deltaTime);
+    
+    void ChangeDirection();
+    
+    void FollowDirection(Element* player);
+    
+    void UpdateVariable();
+    
+    void Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, Element* player);
+    
+  
+    void Render(sf::RenderWindow &window);
 };
+
 
 #endif /* Enemy_hpp */

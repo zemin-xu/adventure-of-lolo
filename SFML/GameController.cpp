@@ -71,9 +71,6 @@ void GameController::Render()
 
 void GameController::Run()
 {
-    //the code to be execute all along the program
-    
-    
     while (window.isOpen())
     {
         Update();

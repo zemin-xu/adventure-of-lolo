@@ -29,13 +29,13 @@ public:
     Creature();
     Creature(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
     
+    bool GetCanMove() { return (canMove);};
+    
      
     
     int GetLifePoint() {return (lifePoint); }
     
-    virtual void Move(const float deltaTime) = 0;
-    
-    void ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables,vector<Trigger> &triggers, const float deltaTime);
+    virtual void ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables,vector<Trigger> &triggers, const float deltaTime);
     
     
     void CollisionObstacle(Element *other);
@@ -49,7 +49,8 @@ public:
     void UpdateMoveAnimation(int forwardAnimRow, int forwardAnimCol, int backwardAnimRow, int backwardAnimCol, int leftwardAnimRow, int leftwardAnimCol, int rightwardAnimRow, int rightwardAnimCol);
     
     void Damage(Creature &other, int damage);
-    void UpdateVariable();
+    
+    void Move(const float deltaTime);
     
 };
 
