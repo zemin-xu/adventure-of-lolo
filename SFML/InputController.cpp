@@ -12,27 +12,29 @@ InputController::InputController()
     
 }
 
-void InputController::UpdateInput(Player &player)
+void InputController::UpdateInput(Level &level)
 {
-  
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-        {
-            player.state = Creature::Backward_M;
-            /*
-            if (player.playerStep.getStatus() != sf::Sound::Status::Playing)
-            {
-                player.playerStep.play();
-            }
-             */
-              
-        }
-                
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-                player.state = Creature::Forward_M;
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-                player.state = Creature::Leftward_M;
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-                player.state = Creature::Rightward_M;
-        
-}
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+    {
+        level.player.state = Creature::Backward_M;
+        /*
+         if (player.playerStep.getStatus() != sf::Sound::Status::Playing)
+         {
+         player.playerStep.play();
+         }
+         */
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+        level.player.state = Creature::Forward_M;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+        level.player.state = Creature::Leftward_M;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+        level.player.state = Creature::Rightward_M;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F))
+    {
+        level.player.Fire(level, level.playerProjectile);
+    }
+       
     
+}
+

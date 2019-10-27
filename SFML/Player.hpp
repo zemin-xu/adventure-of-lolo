@@ -8,9 +8,10 @@
 
 #include "LIB.hpp"
 
+
 #ifndef Player_hpp
 #define Player_hpp
-
+class Level;
 class Player : public Creature
 {
 public:
@@ -28,9 +29,10 @@ public:
     
     void UpdateState();
     void UpdateVariable();
-    virtual void Move(const float deltaTime);
-    void Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers);
+    void Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs);
     void Render(sf::RenderWindow &window);
+    
+    virtual void Fire(Level& level, Projectile& projectile);
 };
 
 

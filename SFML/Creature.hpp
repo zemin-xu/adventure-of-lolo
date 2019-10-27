@@ -11,6 +11,7 @@ using namespace std;
 #ifndef Creature_hpp
 #define Creature_hpp
 
+class Level;
 
 class Creature : public Element
 {
@@ -35,7 +36,7 @@ public:
     
     int GetLifePoint() {return (lifePoint); }
     
-    virtual void ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables,vector<Trigger> &triggers, const float deltaTime);
+    virtual void ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables,vector<Trigger> &triggers, vector<MovableEnemy> &eggs, const float deltaTime);
     
     
     void CollisionObstacle(Element *other);
@@ -51,6 +52,7 @@ public:
     void Damage(Creature &other, int damage);
     
     virtual void Move(const float deltaTime);
+    virtual void Fire(Level& level, Projectile& projectile) = 0;
     
 };
 

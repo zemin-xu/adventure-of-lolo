@@ -18,7 +18,7 @@ Level::Level(int _currentLevel)
     ReadTextureFile();
     InitLevel(_currentLevel);
     playerLife = 5;
-    playerWeapon = 0;
+    playerProjectileNum = 3;
 }
 
 void Level::UpdateCurrentMap()
@@ -38,7 +38,7 @@ void Level::UpdateCurrentMap()
             else if (currentLevel == 2)
                 a.type = level2[i][j];
             else if (currentLevel == 3)
-            a.type = level3[i][j];
+                a.type = level3[i][j];
             currentMap.push_back(a);
         }
     }
@@ -50,11 +50,11 @@ void Level::InitLevel(int level)
     heartLeft = 0;
     UpdateCurrentMap();
     
+    // the collectable vector and enemy vector should not be clear because it is clean already during running
+    if (eggs.size() > 0)
+        eggs.clear();
     background.clear();
     obstacles.clear();
-    
-    // the collectable vector and enemy vector should not be clear because it is clean already
-    
     triggers.clear();
     
     /* text init */
@@ -73,6 +73,9 @@ void Level::InitLevel(int level)
     
     uiLife = Element(14.0f * LIB::LENGTH_UNIT, 4 * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureUI, 1,1, 11);
     uiWeapon = Element(14.0f * LIB::LENGTH_UNIT, 5.5f * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureUI, 1,1, 11);
+    
+    
+    playerProjectile = Projectile(0,0, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEgg, 1, 1, 22);
     
     for (int i = 0; i < 12; i++)
     {
@@ -100,12 +103,12 @@ void Level::InitLevel(int level)
                 else if (currentMap[i * 16 + j].type == 23)
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle2,1,1, 23);
                 else if (currentMap[i * 16 + j].type == 25)
-                obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle3, 1, 1, 25);
-                
+                    obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle3, 1, 1, 25);
+                else if (currentMap[i * 16 + j].type == 26)
+                obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacleEnemy, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 26);
                 else if (currentMap[i * 16 + j].type == 61)
                 {
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureClosedDoor, 1, 1, 61);
-                    cout << "show";
                 }
                 
                 obstacles.push_back(obstacleUnit);
@@ -130,15 +133,13 @@ void Level::InitLevel(int level)
                 movables.push_back(movableUnit);
             }
             
-            // movable enemy
+            // movable egg
             else if(currentMap[i * 16 + j].type == 42)
             {
-                MovableEnemy movableEnemyUnit(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureMovableEnemy, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 42);
+                MovableEnemy movableEnemyUnit(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEgg, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 42);
                 
                 movables.push_back(movableEnemyUnit);
             }
-            
-            
             
             // enemy
             else if(currentMap[i * 16 + j].type == 51)
@@ -153,22 +154,18 @@ void Level::InitLevel(int level)
                 Trigger triggerUnit;
                 
                 if (currentMap[i * 16 + j].type == 61)
-                triggerUnit = Trigger(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureOpenDoor, 1, 1, 61);
+                    triggerUnit = Trigger(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureOpenDoor, 1, 1, 61);
                 
                 else if (currentMap[i * 16 + j].type == 62)
                 {
                     triggerUnit = Trigger(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureClosedKeyBox ,1,1, 62);
                     triggerUnit.SetIsTriggerActive(true);
                 }
-                
                 triggers.push_back(triggerUnit);
             }
             
             else if(currentMap[i * 16 + j].type == 71)
                 player = Player(j * LIB::LENGTH_UNIT, i * LIB::LENGTH_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &texturePlayer, LIB::ANIM_PLAYER_NUM_HORIZONTAL, LIB::ANIM_PLAYER_NUM_VERTICAL, 71);
-            
-            
-            
         }
     }
 }
@@ -178,19 +175,21 @@ void Level::ReadTextureFile()
     if (!font.loadFromFile("Sources/karma_future.ttf"))
         return ;
     if (!bgMusic.openFromFile("Sources/Sounds/ingame.ogg"))
-    return ;
+        return ;
     if (!winMusic.openFromFile("Sources/Sounds/win.ogg"))
-    return ;
+        return ;
     if (!loseMusic.openFromFile("Sources/Sounds/gameover.ogg"))
-    return ;
+        return ;
     
     
     if (!texturePlayer.loadFromFile("Sources/player.png"))
         return ;
     if (!textureEnemy.loadFromFile("Sources/enemy.png"))
         return ;
-    if (!textureMovableEnemy.loadFromFile("Sources/ghost.png"))
-    return ;
+    if (!textureEgg.loadFromFile("Sources/egg.png"))
+        return ;
+    if (!textureObstacleEnemy.loadFromFile("Sources/ghost.png"))
+        return ;
     if (!textureBG.loadFromFile("Sources/sable.jpg"))
         return ;
     if (!textureBG2.loadFromFile("Sources/wood.jpg"))
@@ -202,7 +201,7 @@ void Level::ReadTextureFile()
     if (!textureClosedDoor.loadFromFile("Sources/closed_door.png"))
         return ;
     if (!textureOpenDoor.loadFromFile("Sources/open_door.png"))
-    return ;
+        return ;
     if (!textureObstacle1.loadFromFile("Sources/obstacle1.png"))
         return ;
     if (!textureObstacle2.loadFromFile("Sources/obstacle2.png"))
@@ -247,14 +246,24 @@ void Level::Render(sf::RenderWindow &window)
         window.draw(enemies[i].real);
         enemies[i].Render(window);
     }
+    
+    for (int i = 0; i < eggs.size(); i++)
+    {
+        
+        eggs[i].Render(window);
+    }
+    
     for (int i = 0; i < triggers.size(); i++)
     {
         if (triggers[i].GetIsTriggerActive())
             triggers[i].Render(window);
     }
-    window.draw(player.real);
-    player.Render(window);
     
+    
+    if (playerProjectile.GetIsUsing())
+        playerProjectile.Render(window);
+    
+    player.Render(window);
     
     uiLife.Render(window);
     uiWeapon.Render(window);
@@ -268,12 +277,24 @@ void Level::Render(sf::RenderWindow &window)
 
 void Level::Update(const float deltaTime)
 {
-    player.Update(deltaTime, obstacles, collectables, movables, triggers);
+    player.Update(deltaTime, obstacles, collectables, movables, triggers ,eggs);
+    
+    playerProjectile.Update(deltaTime, obstacles, enemies, eggs, *this);
     
     for (int i = 0; i < enemies.size(); i++)
     {
-        enemies[i].Update(deltaTime, obstacles, collectables, movables, triggers, &player);
+        enemies[i].Update(deltaTime, obstacles, collectables, movables, triggers, eggs, &player);
     }
+    
+    for (int i = 0; i < obstacles.size(); i++)
+    {
+        if (obstacles[i].kind == 26)
+        {
+            ObstacleEnemy* p = (ObstacleEnemy*)&obstacles[i];
+            p->Update(&player, deltaTime);
+        }
+    }
+     
     
     /* equal to movable class's update function */
     for (int i = 0; i < movables.size(); i++)
@@ -294,12 +315,25 @@ void Level::Update(const float deltaTime)
                 if (movables[i].DetectCollision(&collectables[j]))
                     movables[i].Collision(&collectables[j]);
         }
+    }
+    
+    for (int i = 0; i < eggs.size(); i++)
+    {
+        // reset to be movable before checking each frame
+        eggs[i].canMove = true;
         
-        /* movable enemy update */
-        if (movables[i].kind == 42)
+        /* eventual movable checking */
+        if (eggs[i].GetCurrentDir() != 0)
         {
-            MovableEnemy* p = (MovableEnemy*)&movables[i];
-            p->Update(&player);
+            for (int j = 0; j < obstacles.size(); j++)
+                if (eggs[i].DetectCollision(&obstacles[j]))
+                    eggs[i].Collision(&obstacles[j]);
+            for (int j = 0; j < eggs.size(); j++)
+                if (eggs[i].DetectCollision(&eggs[j]) && j != i)
+                    eggs[i].Collision(&eggs[j]);
+            for (int j = 0; j < collectables.size(); j++)
+                if (eggs[i].DetectCollision(&collectables[j]))
+                    eggs[i].Collision(&collectables[j]);
         }
     }
     
@@ -343,13 +377,12 @@ void Level::Update(const float deltaTime)
                 currentLevel++;
                 InitLevel(currentLevel);
             }
-            
         }
     }
     
     /* text update, will be placed in a condition when they change */
     textLife.setString(to_string(player.GetLifePoint()));
-    textWeapon.setString(to_string(playerWeapon));
+    textWeapon.setString(to_string(playerProjectileNum));
 }
 
 // when all the hearts are collected
@@ -368,7 +401,3 @@ void Level::CleanLevelEnemy()
     enemies.clear();
     movables.clear();
 }
-
-
-
-

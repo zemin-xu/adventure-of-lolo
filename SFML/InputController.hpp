@@ -15,7 +15,7 @@ class InputController
 public:
     InputController();
     
-    void UpdateInput(Player &player);
+    void UpdateInput(Level &level);
 };
 
 #endif /* InputController_hpp */

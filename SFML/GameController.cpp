@@ -88,7 +88,7 @@ void GameController::UpdateSFMLEvents()
 void GameController::Update()
 {
     UpdateSFMLEvents();
-    inputController.UpdateInput(level.player);
+    inputController.UpdateInput(level);
     
     if (state == InGame)
         level.Update(deltaTime);

@@ -21,9 +21,11 @@
 #include <SFML/Graphics.hpp>
 
 #include "Element.hpp"
+#include "ObstacleEnemy.hpp"
 #include "Trigger.hpp"
 #include "Movable.hpp"
 #include "MovableEnemy.hpp"
+#include "Projectile.hpp"
 #include "Collectable.hpp"
 #include "Creature.hpp"
 #include "Enemy.hpp"

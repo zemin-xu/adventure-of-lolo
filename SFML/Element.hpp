@@ -15,6 +15,7 @@ class Element
 private:
     int currentDir;
     
+    
 protected:
     
     sf::IntRect spritePos;
@@ -40,6 +41,7 @@ public:
     float centerY;
     
     int kind;
+    bool isShowing;
     
     sf::RectangleShape shape;
     sf::RectangleShape real;

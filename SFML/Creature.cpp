@@ -21,7 +21,7 @@ Creature::Creature(int x, int y, int length, int height, sf::Texture *texture,  
     real.setFillColor(sf::Color::Blue);
 }
 
-void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, vector<Trigger> &triggers, const float deltaTime)
+void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs, const float deltaTime)
 {
     for (int i = 0; i < obstacles.size(); i++)
     {
@@ -36,6 +36,15 @@ void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables,
         if (DetectCollision(&movables[i]))
         {
             CollisionMovable(&movables[i], deltaTime);
+            //movables[i].shape.setFillColor(sf::Color::Black);
+        }
+    }
+    
+    for (int i = 0; i < eggs.size(); i++)
+    {
+        if (DetectCollision(&eggs[i]))
+        {
+            CollisionMovable(&eggs[i], deltaTime);
             //movables[i].shape.setFillColor(sf::Color::Black);
         }
     }

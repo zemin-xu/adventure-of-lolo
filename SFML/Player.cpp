@@ -105,18 +105,11 @@ void Player::UpdateVariable()
     }
 }
 
-void Player::Move(const float deltaTime)
-{
-    Creature::Move(deltaTime);
-    
-    
-}
-
-void Player::Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers)
+void Player::Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs)
 {
     UpdateVariable();
     
-    ScanAround(obstacles, movables, collectables, triggers, deltaTime);
+    ScanAround(obstacles, movables, collectables, triggers, eggs, deltaTime);
     
     Move(deltaTime);
 
@@ -131,5 +124,28 @@ void Player::Render(sf::RenderWindow &window)
     Element::Render(window);
     
     UpdateState();
+}
+
+void Player::Fire(Level& level, Projectile& projectile)
+{
+    if (level.GetPlayerProjectileNum() > 0 && !projectile.GetIsUsing())
+    {
+        level.SetPlayerProjectileNum(level.GetPlayerProjectileNum() - 1);
+        projectile.SetIsUsing(true);
+           
+           if (state == Forward || state == Forward_M)
+               projectile.SetCurrentDir(1);
+           else if (state == Backward || state == Backward_M)
+               projectile.SetCurrentDir(2);
+           else if (state == Leftward || state == Leftward_M)
+               projectile.SetCurrentDir(3);
+           else if (state == Rightward || state == Rightward_M)
+               projectile.SetCurrentDir(4);
+           
+           projectile.real.setPosition(centerX, centerY);
+           projectile.canMove = true;
+    }
+   
+    
     
 }

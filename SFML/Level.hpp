@@ -18,7 +18,7 @@ private:
     int currentLevel;
     int heartLeft;
     int playerLife;
-    int playerWeapon;
+    int playerProjectileNum;
     
     struct coord
     {
@@ -37,7 +37,8 @@ public:
     
     sf::Texture texturePlayer;
     sf::Texture textureEnemy;
-    sf::Texture textureMovableEnemy;
+    sf::Texture textureEgg;
+    sf::Texture textureObstacleEnemy;
     sf::Texture textureBG;
     sf::Texture textureBG2;
     sf::Texture textureClosedKeyBox;
@@ -64,23 +65,28 @@ public:
     vector<Movable> movables;
     vector<Enemy> enemies;
     vector<Trigger> triggers;
+    vector<MovableEnemy> eggs;
     
     Player player;
     Element uiLife;
     Element uiWeapon;
+    
+    Projectile playerProjectile;
+    
     
     vector<coord> currentMap;
   
     
     // 00: background_black
     // 11: background1      12: background2
-    // 21: flower        22: outerwall       23: tree       24: closed door
-    // 25: water
+    // 21: flower           22: outerwall        23: tree
+    // 24: closed door      25: water            26: obstacle enemy
     // 31: collectable
-    // 41: movable          42: movableEnemy
+    // 41: movable          42: enemy in egg
     // 51: enemy1
-    // 61: closed door             62: closed key box
+    // 61: closed door      62: closed key box
     // 71: player
+    // 81: playerProjectile 82: enemyProjectile
     
     const int level1[12][16] =
     {
@@ -89,7 +95,7 @@ public:
         {00,22,21,23, 23,21,31,11, 11,21,21,23, 23,22,00,00},
         {00,22,11,11, 23,23,21,21, 11,21,21,21, 23,22,00,00},
         {00,22,71,11, 11,11,21,21, 11,21,21,23, 31,22,00,00},
-        {00,22,11,11, 11,11,11,11, 42,11,21,11, 11,22,00,00},
+        {00,22,11,11, 11,11,11,11, 26,11,21,11, 11,22,00,00},
         {00,22,11,11, 11,11,11,11, 11,11,11,11, 11,22,00,00},
         {00,22,11,23, 23,11,11,11, 11,23,23,11, 11,22,00,00},
         {00,22,23,23, 23,23,11,11, 11,23,23,23, 11,22,00,00},
@@ -101,14 +107,14 @@ public:
     const int level2[12][16] =
     {
         {00,22,22,22, 22,22,22,22, 22,22,22,61, 22,22,00,00},
-        {00,22,11,11, 11,42,11,21, 21,21,11,11, 11,22,00,00},
+        {00,22,11,11, 11,26,11,21, 21,21,11,11, 11,22,00,00},
         {00,22,21,31, 11,11,11,21, 21,21,11,31, 11,22,00,00},
         {00,22,11,11, 11,11,11,11, 23,23,11,11, 11,22,00,00},
         {00,22,25,25, 25,25,12,25, 25,25,25,12, 25,22,00,00},
         {00,22,62,11, 23,23,11,11, 11,11,11,11, 25,22,00,00},
         {00,22,11,11, 23,23,11,11, 11,23,23,11, 25,22,00,00},
         {00,22,11,11, 11,11,11,21, 21,23,23,11, 25,22,00,00},
-        {00,22,42,11, 11,11,11,21, 21,31,11,11, 25,22,00,00},
+        {00,22,26,11, 11,11,11,21, 21,31,11,11, 25,22,00,00},
         {00,22,11,11, 11,11,11,11, 41,11,11,11, 25,22,00,00},
         {00,22,31,11, 11,11,71,11, 25,25,25,25, 25,22,00,00},
         {00,22,22,22, 22,22,22,22, 22,22,22,22, 22,22,00,00}
@@ -117,14 +123,14 @@ public:
     const int level3[12][16] =
     {
         {00,22,22,22, 22,22,22,22, 22,22,22,61, 22,22,00,00},
-        {00,22,11,11, 11,42,11,21, 21,21,11,11, 11,22,00,00},
+        {00,22,11,11, 11,11,11,21, 21,21,11,11, 11,22,00,00},
         {00,22,21,31, 11,11,11,21, 21,21,11,31, 11,22,00,00},
         {00,22,11,11, 11,11,11,11, 23,23,11,11, 11,22,00,00},
         {00,22,25,25, 25,25,12,25, 25,25,25,12, 25,22,00,00},
         {00,22,62,11, 23,23,11,11, 11,11,11,11, 25,22,00,00},
         {00,22,11,11, 23,23,11,11, 11,23,23,11, 25,22,00,00},
         {00,22,11,11, 11,11,11,21, 21,23,23,11, 25,22,00,00},
-        {00,22,42,11, 11,11,11,21, 21,31,11,11, 25,22,00,00},
+        {00,22,11,11, 11,11,11,21, 21,31,11,11, 25,22,00,00},
         {00,22,11,11, 11,11,11,11, 41,11,11,11, 25,22,00,00},
         {00,22,31,11, 11,11,71,11, 25,25,25,25, 25,22,00,00},
         {00,22,22,22, 22,22,22,22, 22,22,22,22, 22,22,00,00}
@@ -132,6 +138,9 @@ public:
     
     Level();
     Level(int _currentLevel);
+    
+    int GetPlayerProjectileNum(){return (playerProjectileNum);};
+    void SetPlayerProjectileNum(int i){playerProjectileNum = i;};
     
     void InitLevel(int level);
     void ReadTextureFile();

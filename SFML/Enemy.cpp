@@ -24,9 +24,9 @@ Enemy::Enemy(int x, int y, int length, int height, sf::Texture *texture, int num
     timer = 0;
 }
 
-void Enemy::ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, vector<Trigger> &triggers, const float deltaTime)
+void Enemy::ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, vector<Trigger> &triggers ,vector<MovableEnemy> &eggs, const float deltaTime)
 {
-    Creature::ScanAround(obstacles, movables, collectables, triggers, deltaTime);
+    Creature::ScanAround(obstacles, movables, collectables, triggers, eggs, deltaTime);
     if (!canMove)
     {
         if (state == Forward_M && isUpDownBlocked == 0)
@@ -137,7 +137,7 @@ void Enemy::UpdateVariable()
     
 }
 
-void Enemy::Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, Element* player)
+void Enemy::Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs, Element* player)
 {
     timer += deltaTime;
     if (timer > 0.2f)
@@ -149,7 +149,7 @@ void Enemy::Update(const float deltaTime, vector<Element> &obstacles, vector<Col
         timer = 0.0f;
     }
     canMove = true;
-    ScanAround(obstacles, movables, collectables, triggers, deltaTime);
+    ScanAround(obstacles, movables, collectables, triggers, eggs, deltaTime);
     UpdateVariable();
     
     ChangeDirection();
@@ -167,3 +167,7 @@ void Enemy::Render(sf::RenderWindow &window)
     Element::Render(window);
 }
 
+void Enemy::Fire(Level& level, Projectile& projectile)
+{
+    cout << " enemy fire";
+}

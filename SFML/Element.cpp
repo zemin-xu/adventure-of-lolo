@@ -10,11 +10,13 @@
 
 Element::Element()
 {
-    
+    isShowing = true;
 }
 
 Element::Element(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind)
 {
+    isShowing = true;
+    
     animNumVertical = numHorizontal;
     animNumVertical = numVertical;
     
@@ -34,6 +36,7 @@ Element::Element(int x, int y, int length, int height, sf::Texture *texture, int
     shape.setTexture(texture);
     kind = _kind;
     UpdatePosition();
+    
     
 }
 
