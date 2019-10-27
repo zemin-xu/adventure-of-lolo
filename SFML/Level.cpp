@@ -37,6 +37,8 @@ void Level::UpdateCurrentMap()
                 a.type = level1[i][j];
             else if (currentLevel == 2)
                 a.type = level2[i][j];
+            else if (currentLevel == 3)
+            a.type = level3[i][j];
             currentMap.push_back(a);
         }
     }
@@ -88,7 +90,7 @@ void Level::InitLevel(int level)
             }
             
             // obstacles
-            if (currentMap[i * 16 + j].type / 10 == 2)
+            if (currentMap[i * 16 + j].type / 10 == 2 || currentMap[i * 16 + j].type == 61)
             {
                 Element obstacleUnit;
                 if (currentMap[i * 16 + j].type == 22)
@@ -98,7 +100,14 @@ void Level::InitLevel(int level)
                 else if (currentMap[i * 16 + j].type == 23)
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle2,1,1, 23);
                 else if (currentMap[i * 16 + j].type == 25)
-                obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle3, 1, 1, 23);
+                obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle3, 1, 1, 25);
+                
+                else if (currentMap[i * 16 + j].type == 61)
+                {
+                    obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureClosedDoor, 1, 1, 61);
+                    cout << "show";
+                }
+                
                 obstacles.push_back(obstacleUnit);
             }
             
@@ -109,9 +118,7 @@ void Level::InitLevel(int level)
                 {
                     collectableUnit = Collectable(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureCollectable ,1,1, 31);
                     heartLeft++;
-               
                 }
-                
                 collectables.push_back(collectableUnit);
             }
             
@@ -141,13 +148,18 @@ void Level::InitLevel(int level)
             }
             
             
-            else if(currentMap[i * 16 + j].type / 10 == 6)
+            if(currentMap[i * 16 + j].type / 10 == 6)
             {
                 Trigger triggerUnit;
+                
                 if (currentMap[i * 16 + j].type == 61)
-                    triggerUnit = Trigger(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureClosedDoor ,1,1, 61);
+                triggerUnit = Trigger(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureOpenDoor, 1, 1, 61);
+                
                 else if (currentMap[i * 16 + j].type == 62)
+                {
                     triggerUnit = Trigger(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureClosedKeyBox ,1,1, 62);
+                    triggerUnit.SetIsTriggerActive(true);
+                }
                 
                 triggers.push_back(triggerUnit);
             }
@@ -189,6 +201,8 @@ void Level::ReadTextureFile()
         return ;
     if (!textureClosedDoor.loadFromFile("Sources/closed_door.png"))
         return ;
+    if (!textureOpenDoor.loadFromFile("Sources/open_door.png"))
+    return ;
     if (!textureObstacle1.loadFromFile("Sources/obstacle1.png"))
         return ;
     if (!textureObstacle2.loadFromFile("Sources/obstacle2.png"))
@@ -232,12 +246,11 @@ void Level::Render(sf::RenderWindow &window)
     {
         window.draw(enemies[i].real);
         enemies[i].Render(window);
-        
-        
     }
     for (int i = 0; i < triggers.size(); i++)
     {
-        triggers[i].Render(window);
+        if (triggers[i].GetIsTriggerActive())
+            triggers[i].Render(window);
     }
     window.draw(player.real);
     player.Render(window);
@@ -303,15 +316,22 @@ void Level::Update(const float deltaTime)
     /* make door trigger active if the key is got */
     for (int i = 0; i < triggers.size(); i++)
     {
-        // door
+        // keybox
         if (triggers[i].GetTrigger() && triggers[i].kind == 62)
         {
-            for (int j = 0; j< triggers.size(); j++)
+            CleanLevelEnemy();
+            // erase closed door
+            for (int j = 0; j < obstacles.size(); j++)
             {
-                if(triggers[j].kind == 61 && !triggers[j].GetIsTriggerActive())
+                if(obstacles[j].kind == 61)
+                    obstacles.erase(obstacles.begin() + j);
+            }
+            // show open door
+            for (int j = 0; j < triggers.size(); j++)
+            {
+                if(triggers[j].kind == 61)
                 {
                     triggers[j].SetIsTriggerActive(true);
-                    CleanLevelEnemy();
                 }
             }
         }

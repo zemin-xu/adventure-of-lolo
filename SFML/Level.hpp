@@ -43,6 +43,7 @@ public:
     sf::Texture textureClosedKeyBox;
     
     sf::Texture textureOuterWall;
+    sf::Texture textureOpenDoor;
     sf::Texture textureClosedDoor;
     sf::Texture textureObstacle1;
     sf::Texture textureObstacle2;
@@ -78,7 +79,7 @@ public:
     // 31: collectable
     // 41: movable          42: movableEnemy
     // 51: enemy1
-    // 61: door             62: closed key box
+    // 61: closed door             62: closed key box
     // 71: player
     
     const int level1[12][16] =
