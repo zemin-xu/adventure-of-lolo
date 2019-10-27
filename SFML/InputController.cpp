@@ -18,11 +18,12 @@ void InputController::UpdateInput(Player &player)
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
         {
             player.state = Creature::Backward_M;
+            /*
             if (player.playerStep.getStatus() != sf::Sound::Status::Playing)
             {
                 player.playerStep.play();
-                          cout << "sound";
             }
+             */
               
         }
                 

@@ -13,6 +13,8 @@
 
 class MovableEnemy : public Movable
 {
+private:
+    bool isInEgg;
 public:
     MovableEnemy();
     MovableEnemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);

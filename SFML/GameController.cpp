@@ -10,7 +10,7 @@
 GameController::GameController() : window(sf::VideoMode(LENGTH, HEIGHT), "C++ Game"),  inputController(), menu(LENGTH, HEIGHT),  level(1)
 {
     window.setFramerateLimit(120);
-    state = Menu;
+    state = InGame;
 }
 
 

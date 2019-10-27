@@ -19,6 +19,9 @@ private:
     sf::Font font;
     sf::Text menu[MAX_NUM_ITEMS_MENU];
     
+    sf::Texture bgTexture;
+    sf::Sprite bg;
+    
     sf::Music music;
     
     

@@ -50,6 +50,7 @@ void Element::Render(sf::RenderWindow &window)
 {
     shape.setTextureRect(spritePos);
     window.draw(shape);
+
 }
 
 int Element::GetObjectType()

@@ -15,7 +15,7 @@ MovableEnemy::MovableEnemy()
 
 MovableEnemy::MovableEnemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind) : Movable(x, y, length, height, texture, numHorizontal, numVertical, _kind)
 {
-    
+    isInEgg = false;
 }
 
 void MovableEnemy::TurnTowardsPlayer(Element *player)

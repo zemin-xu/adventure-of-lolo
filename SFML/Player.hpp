@@ -23,7 +23,6 @@ public:
     sf::Sound playerStep;
     sf::Sound playerFire;
     
-    
     Player();
     Player(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
     

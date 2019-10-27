@@ -30,7 +30,7 @@ protected:
     
     constexpr static const float FACTOR = 0.8f;
     
-    static const int TRY_DISTANCE = 2;
+    static const int TRY_DISTANCE = 6;
 
     
     

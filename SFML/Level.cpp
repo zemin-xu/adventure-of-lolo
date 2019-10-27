@@ -19,8 +19,6 @@ Level::Level(int _currentLevel)
     InitLevel(_currentLevel);
     playerLife = 5;
     playerWeapon = 0;
-    
-    
 }
 
 void Level::UpdateCurrentMap()
@@ -81,7 +79,11 @@ void Level::InitLevel(int level)
             // background
             if(j >= 1 && j < 14)
             {
-                Element backgroundUnit(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureBG, 1, 1, 11);
+                Element backgroundUnit;
+                if (currentMap[i * 16 + j].type == 12)
+                    backgroundUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureBG2, 1, 1, 11);
+                else
+                    backgroundUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureBG, 1, 1, 11);
                 background.push_back(backgroundUnit);
             }
             
@@ -95,6 +97,8 @@ void Level::InitLevel(int level)
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle1,1,1, 21);
                 else if (currentMap[i * 16 + j].type == 23)
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle2,1,1, 23);
+                else if (currentMap[i * 16 + j].type == 25)
+                obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle3, 1, 1, 23);
                 obstacles.push_back(obstacleUnit);
             }
             
@@ -105,6 +109,7 @@ void Level::InitLevel(int level)
                 {
                     collectableUnit = Collectable(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureCollectable ,1,1, 31);
                     heartLeft++;
+               
                 }
                 
                 collectables.push_back(collectableUnit);
@@ -148,7 +153,7 @@ void Level::InitLevel(int level)
             }
             
             else if(currentMap[i * 16 + j].type == 71)
-                player = Player(8 * LIB::LENGTH_UNIT,6 * LIB::LENGTH_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &texturePlayer, LIB::ANIM_PLAYER_NUM_HORIZONTAL, LIB::ANIM_PLAYER_NUM_VERTICAL, 71);
+                player = Player(j * LIB::LENGTH_UNIT, i * LIB::LENGTH_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &texturePlayer, LIB::ANIM_PLAYER_NUM_HORIZONTAL, LIB::ANIM_PLAYER_NUM_VERTICAL, 71);
             
             
             
@@ -176,6 +181,8 @@ void Level::ReadTextureFile()
     return ;
     if (!textureBG.loadFromFile("Sources/sable.jpg"))
         return ;
+    if (!textureBG2.loadFromFile("Sources/wood.jpg"))
+        return ;
     if (!textureClosedKeyBox.loadFromFile("Sources/closed_key_box.png"))
         return ;
     if (!textureOuterWall.loadFromFile("Sources/outer_wall.jpg"))
@@ -185,6 +192,8 @@ void Level::ReadTextureFile()
     if (!textureObstacle1.loadFromFile("Sources/obstacle1.png"))
         return ;
     if (!textureObstacle2.loadFromFile("Sources/obstacle2.png"))
+        return ;
+    if (!textureObstacle3.loadFromFile("Sources/water.jpg"))
         return ;
     if (!textureCollectable.loadFromFile("Sources/coin.png"))
         return ;
@@ -294,9 +303,9 @@ void Level::Update(const float deltaTime)
     /* make door trigger active if the key is got */
     for (int i = 0; i < triggers.size(); i++)
     {
+        // door
         if (triggers[i].GetTrigger() && triggers[i].kind == 62)
         {
-            
             for (int j = 0; j< triggers.size(); j++)
             {
                 if(triggers[j].kind == 61 && !triggers[j].GetIsTriggerActive())
@@ -306,6 +315,7 @@ void Level::Update(const float deltaTime)
                 }
             }
         }
+        // door
         if (triggers[i].GetTrigger() && triggers[i].kind == 61)
         {
             if (currentLevel < MAX_LEVEL)

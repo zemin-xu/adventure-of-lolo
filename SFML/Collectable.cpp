@@ -15,6 +15,9 @@ Collectable::Collectable()
 
 Collectable::Collectable(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind) : Element(x, y, length, height, texture, numHorizontal, numVertical, _kind)
 {
+
+    
+    // the boolean is for key box and door
     isActive = true;
     isCollided = false;
 }

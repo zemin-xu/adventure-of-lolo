@@ -75,18 +75,19 @@ void Creature::CollisionTrigger(Trigger* other)
             //door.SetIsTriggerActive(true);
         }
     }
-    //if (kind == 51)
-      //  canMove = false;
 }
 
 void Creature::CollisionCollectable(Collectable *other)
 {
     // player's type is 71
     if (kind == 71 && other->GetIsActive())
-        other->SetIsCollided(true);
-    
-    //if (kind == 51)
-      //  canMove = false;
+    {
+        if ( abs(centerX - other->centerX) <= TRY_DISTANCE &&
+             abs(centerY - other->centerY) <= TRY_DISTANCE )
+            other->SetIsCollided(true);
+    }
+        
+
 }
 
 
@@ -164,8 +165,6 @@ void Creature::CollisionMovable(Movable *other, const float deltaTime)
             }
         }
     }
-    //else
-      //  canMove = false;
 }
 
 void Creature::CollisionObstacle(Element *other)
