@@ -21,8 +21,6 @@ Player::Player(int x, int y, int length, int height, sf::Texture *texture, int n
     canMove = false;
     kind = _kind;
     
-    shape.setOutlineThickness(2.0f);
-    shape.setOutlineColor(sf::Color::Black);
     
     if (!bufferPlayerStep.loadFromFile("Sources/Sounds/footstep.wav"))
         cout << "fail to load sound \n";
@@ -118,8 +116,8 @@ void Player::Update(const float deltaTime, vector<Element> &obstacles, vector<Co
 // the functions in render will be update each frame of about 0.1s
 void Player::Render(sf::RenderWindow &window)
 {
-    UpdateIdleAnimation(1, 3, 3, 1, 2, 3, 4, 3);
-    UpdateMoveAnimation(5, 10, 7, 10, 6, 10, 8, 10);
+    UpdateIdleAnimation(1, 4, 4, 4, 2, 4, 3, 4);
+    UpdateMoveAnimation(1, 4, 4, 4, 2, 4, 3, 4);
     
     Element::Render(window);
     

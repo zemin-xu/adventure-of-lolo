@@ -87,12 +87,18 @@ void Level::InitLevel(int level)
             {
                 
                 Element backgroundUnit;
-                if (currentMap[i * 16 + j].type == 12)
-                    backgroundUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureBackground, 5, 1, 11);
-                else
-                    backgroundUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureBackground, 5, 1, 11);
-                
+                backgroundUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureBackground, 5, 1, 11);
                 background.push_back(backgroundUnit);
+                
+                if (currentMap[i * 16 + j].type == 12)
+                {
+                    backgroundUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureBG2, 1, 1, 11);
+                    background.push_back(backgroundUnit);
+                }
+                
+                    
+                
+                
             }
             
             // obstacles
@@ -106,7 +112,7 @@ void Level::InitLevel(int level)
                 else if (currentMap[i * 16 + j].type == 23)
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle2,1,1, 23);
                 else if (currentMap[i * 16 + j].type == 25)
-                    obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle3, 1, 1, 25);
+                    obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle3, 3, 1, 25);
                 else if (currentMap[i * 16 + j].type == 26)
                 obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacleEnemy, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 26);
                 else if (currentMap[i * 16 + j].type == 61)
@@ -185,7 +191,7 @@ void Level::ReadTextureFile()
         return ;
     
     
-    if (!texturePlayer.loadFromFile("Sources/player_now.png"))
+    if (!texturePlayer.loadFromFile("Sources/player.png"))
         return ;
     if (!textureEnemy.loadFromFile("Sources/enemy.png"))
         return ;
@@ -193,7 +199,7 @@ void Level::ReadTextureFile()
         return ;
     if (!textureObstacleEnemy.loadFromFile("Sources/ghost.png"))
         return ;
-    if (!textureBG.loadFromFile("Sources/sable.jpg"))
+    if (!textureBG.loadFromFile("Sources/background.png"))
         return ;
     if (!textureBG2.loadFromFile("Sources/bridge.png"))
         return ;
@@ -209,7 +215,7 @@ void Level::ReadTextureFile()
         return ;
     if (!textureObstacle2.loadFromFile("Sources/tree2.png"))
         return ;
-    if (!textureObstacle3.loadFromFile("Sources/water.jpg"))
+    if (!textureObstacle3.loadFromFile("Sources/head.png"))
         return ;
     if (!textureCollectable.loadFromFile("Sources/mashroom1.png"))
         return ;

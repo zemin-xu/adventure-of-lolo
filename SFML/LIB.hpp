@@ -43,8 +43,8 @@ public:
     static const int LENGTH_UNIT = 48;
     static const int HEIGHT_UNIT = 48;
 
-    static const int ANIM_PLAYER_NUM_HORIZONTAL = 10;
-    static const int ANIM_PLAYER_NUM_VERTICAL = 8;
+    static const int ANIM_PLAYER_NUM_HORIZONTAL = 4;
+    static const int ANIM_PLAYER_NUM_VERTICAL = 4;
 
     static const int ANIM_ENEMY1_NUM_HORIZONTAL = 4;
     static const int ANIM_ENEMY1_NUM_VERTICAL = 4;
