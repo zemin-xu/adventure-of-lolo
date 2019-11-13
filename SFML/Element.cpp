@@ -32,7 +32,9 @@ Element::Element(int x, int y, int length, int height, sf::Texture *texture, int
     shape.setPosition(x + length / 2, y + length / 2);
     real.setPosition(x + length / 2, y + length / 2);
     
-    spritePos = sf::IntRect(0,0, animUnitLength, animUnitHeight);
+    int ranNumX = (rand() % numHorizontal) * animUnitLength;
+    int ranNumY = (rand() % animNumVertical) * animUnitHeight;
+    spritePos = sf::IntRect(ranNumX,ranNumY, animUnitLength, animUnitHeight);
     shape.setTexture(texture);
     kind = _kind;
     UpdatePosition();

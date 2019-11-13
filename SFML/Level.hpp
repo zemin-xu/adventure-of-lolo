@@ -10,8 +10,6 @@
 #ifndef Level_hpp
 #define Level_hpp
 
-/* the index of level start from 1 */
-
 class Level
 {
 private:
@@ -53,6 +51,8 @@ public:
     sf::Texture textureCollectable;
     sf::Texture textureMovable;
     sf::Texture textureUI;
+    
+    sf::Texture textureBackground;
     
     sf::Font font;
     sf::Text title;

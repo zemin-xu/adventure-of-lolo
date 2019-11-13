@@ -81,6 +81,8 @@ void Creature::CollisionTrigger(Trigger* other)
         {
             other->SetTrigger(true);
             other->shape.setFillColor(sf::Color::Green);
+            
+            // when all are collected
             //door.SetIsTriggerActive(true);
         }
     }

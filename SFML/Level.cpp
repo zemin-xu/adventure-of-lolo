@@ -81,14 +81,17 @@ void Level::InitLevel(int level)
     {
         for (int j = 0; j < 16; j++)
         {
+            
             // background
             if(j >= 1 && j < 14)
             {
+                
                 Element backgroundUnit;
                 if (currentMap[i * 16 + j].type == 12)
-                    backgroundUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureBG2, 1, 1, 11);
+                    backgroundUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureBackground, 5, 1, 11);
                 else
-                    backgroundUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureBG, 1, 1, 11);
+                    backgroundUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureBackground, 5, 1, 11);
+                
                 background.push_back(backgroundUnit);
             }
             
@@ -97,7 +100,7 @@ void Level::InitLevel(int level)
             {
                 Element obstacleUnit;
                 if (currentMap[i * 16 + j].type == 22)
-                    obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureOuterWall,1,1, 22);
+                    obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureOuterWall, 3, 1, 22);
                 else if (currentMap[i * 16 + j].type == 21)
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle1,1,1, 21);
                 else if (currentMap[i * 16 + j].type == 23)
@@ -159,7 +162,7 @@ void Level::InitLevel(int level)
                 else if (currentMap[i * 16 + j].type == 62)
                 {
                     triggerUnit = Trigger(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureClosedKeyBox ,1,1, 62);
-                    triggerUnit.SetIsTriggerActive(true);
+                    triggerUnit.SetIsTriggerActive(false);
                 }
                 triggers.push_back(triggerUnit);
             }
@@ -182,7 +185,7 @@ void Level::ReadTextureFile()
         return ;
     
     
-    if (!texturePlayer.loadFromFile("Sources/player.png"))
+    if (!texturePlayer.loadFromFile("Sources/player_now.png"))
         return ;
     if (!textureEnemy.loadFromFile("Sources/enemy.png"))
         return ;
@@ -192,28 +195,32 @@ void Level::ReadTextureFile()
         return ;
     if (!textureBG.loadFromFile("Sources/sable.jpg"))
         return ;
-    if (!textureBG2.loadFromFile("Sources/wood.jpg"))
+    if (!textureBG2.loadFromFile("Sources/bridge.png"))
         return ;
     if (!textureClosedKeyBox.loadFromFile("Sources/closed_key_box.png"))
         return ;
-    if (!textureOuterWall.loadFromFile("Sources/outer_wall.jpg"))
+    if (!textureOuterWall.loadFromFile("Sources/wall.png"))
         return ;
     if (!textureClosedDoor.loadFromFile("Sources/closed_door.png"))
         return ;
     if (!textureOpenDoor.loadFromFile("Sources/open_door.png"))
         return ;
-    if (!textureObstacle1.loadFromFile("Sources/obstacle1.png"))
+    if (!textureObstacle1.loadFromFile("Sources/tree1.png"))
         return ;
-    if (!textureObstacle2.loadFromFile("Sources/obstacle2.png"))
+    if (!textureObstacle2.loadFromFile("Sources/tree2.png"))
         return ;
     if (!textureObstacle3.loadFromFile("Sources/water.jpg"))
         return ;
-    if (!textureCollectable.loadFromFile("Sources/coin.png"))
+    if (!textureCollectable.loadFromFile("Sources/mashroom1.png"))
         return ;
     if (!textureMovable.loadFromFile("Sources/movable.png"))
         return ;
-    if (!textureUI.loadFromFile("Sources/coin.png"))
+    if (!textureUI.loadFromFile("Sources/mashroom1.png"))
         return ;
+    
+    if (!textureBackground.loadFromFile("Sources/background.png"))
+    return ;
+
 }
 
 void Level::UpdateHeartLeft()
@@ -249,13 +256,16 @@ void Level::Render(sf::RenderWindow &window)
     
     for (int i = 0; i < eggs.size(); i++)
     {
-        
         eggs[i].Render(window);
     }
+     
+     
     
     for (int i = 0; i < triggers.size(); i++)
     {
         if (triggers[i].GetIsTriggerActive())
+            triggers[i].Render(window);
+        if (triggers[i].kind == 62)
             triggers[i].Render(window);
     }
     
