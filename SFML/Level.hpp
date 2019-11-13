@@ -49,6 +49,7 @@ public:
     sf::Texture textureObstacle3;
     
     sf::Texture textureCollectable;
+    sf::Texture textureCollectable2;
     sf::Texture textureMovable;
     sf::Texture textureUI;
     
@@ -81,7 +82,7 @@ public:
     // 11: background1      12: background2
     // 21: flower           22: outerwall        23: tree
     // 24: closed door      25: water            26: obstacle enemy
-    // 31: collectable
+    // 31: collectable      32: projectile
     // 41: movable          42: enemy in egg
     // 51: enemy1
     // 61: closed door      62: closed key box
@@ -96,7 +97,7 @@ public:
         {00,22,11,11, 23,23,21,21, 11,21,21,21, 23,22,00,00},
         {00,22,71,11, 11,11,21,21, 11,21,21,23, 31,22,00,00},
         {00,22,11,11, 11,11,11,11, 26,11,21,11, 11,22,00,00},
-        {00,22,11,11, 11,11,11,11, 11,11,11,11, 11,22,00,00},
+        {00,22,11,11, 11,11,11,11, 11,11,11,32, 11,22,00,00},
         {00,22,11,23, 23,11,11,11, 11,23,23,11, 11,22,00,00},
         {00,22,23,23, 23,23,11,11, 11,23,23,23, 11,22,00,00},
         {00,22,21,23, 23,21,62,11, 11,11,23,23, 11,22,00,00},
@@ -111,7 +112,7 @@ public:
         {00,22,21,31, 11,11,11,21, 21,21,11,31, 11,22,00,00},
         {00,22,11,11, 11,11,11,11, 23,23,11,11, 11,22,00,00},
         {00,22,25,25, 25,25,12,25, 25,25,25,12, 25,22,00,00},
-        {00,22,62,11, 23,23,11,11, 11,11,11,11, 25,22,00,00},
+        {00,22,62,11, 23,23,11,11, 11,11,11,32, 25,22,00,00},
         {00,22,11,11, 23,23,11,11, 11,23,23,11, 25,22,00,00},
         {00,22,11,11, 11,11,11,21, 21,23,23,11, 25,22,00,00},
         {00,22,26,11, 11,11,11,21, 21,31,11,11, 25,22,00,00},
@@ -142,14 +143,17 @@ public:
     int GetPlayerProjectileNum(){return (playerProjectileNum);};
     void SetPlayerProjectileNum(int i){playerProjectileNum = i;};
     
-    void InitLevel(int level);
     void ReadTextureFile();
-    void UpdateHeartLeft();
-    void Render(sf::RenderWindow &window);
     void UpdateCurrentMap();
-    void Update(const float deltaTime);
+    void InitLevel(int level);
+
+    void UpdateHeartLeft();
+    void UpdatePlayerProjectileNum();
     void HeartCollected();
     void CleanLevelEnemy();
+    
+    void Update(const float deltaTime);
+    void Render(sf::RenderWindow &window);
 };
 
 #endif /* Level_hpp */

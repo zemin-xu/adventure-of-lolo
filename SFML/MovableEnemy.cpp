@@ -10,15 +10,17 @@
 
 MovableEnemy::MovableEnemy()
 {
-    
+    eggTime = 5.0f;
+    enemyKind = 11;
 }
 
-MovableEnemy::MovableEnemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind) : Movable(x, y, length, height, texture, numHorizontal, numVertical, _kind)
+MovableEnemy::MovableEnemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind, int _enemyKind) : Movable(x, y, length, height, texture, numHorizontal, numVertical, _kind)
 {
-
+    eggTime = 5.0f;
+    enemyKind = _enemyKind;
 }
 
-void MovableEnemy::Update(Element *player)
+void MovableEnemy::Update(Element *player, Level &level, const float deltaTime)
 {
-    cout << "egg update";
+    eggTime-=deltaTime;
 }

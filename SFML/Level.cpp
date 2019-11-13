@@ -18,7 +18,57 @@ Level::Level(int _currentLevel)
     ReadTextureFile();
     InitLevel(_currentLevel);
     playerLife = 5;
-    playerProjectileNum = 3;
+    playerProjectileNum = 0;
+}
+
+
+void Level::ReadTextureFile()
+{
+    if (!font.loadFromFile("Sources/karma_future.ttf"))
+        return ;
+    if (!bgMusic.openFromFile("Sources/Sounds/ingame.ogg"))
+        return ;
+    if (!winMusic.openFromFile("Sources/Sounds/win.ogg"))
+        return ;
+    if (!loseMusic.openFromFile("Sources/Sounds/gameover.ogg"))
+        return ;
+    
+    
+    if (!texturePlayer.loadFromFile("Sources/player.png"))
+        return ;
+    if (!textureEnemy.loadFromFile("Sources/enemy.png"))
+        return ;
+    if (!textureEgg.loadFromFile("Sources/mushroom3.png"))
+        return ;
+    if (!textureObstacleEnemy.loadFromFile("Sources/ghost.png"))
+        return ;
+    
+    if (!textureBackground.loadFromFile("Sources/background.png"))
+    return ;
+    if (!textureBG2.loadFromFile("Sources/bridge.png"))
+        return ;
+    if (!textureClosedKeyBox.loadFromFile("Sources/keybox_closed.png"))
+        return ;
+    if (!textureOuterWall.loadFromFile("Sources/wall.png"))
+        return ;
+    if (!textureClosedDoor.loadFromFile("Sources/door_closed.png"))
+        return ;
+    if (!textureOpenDoor.loadFromFile("Sources/door_open.png"))
+        return ;
+    if (!textureObstacle1.loadFromFile("Sources/tree1.png"))
+        return ;
+    if (!textureObstacle2.loadFromFile("Sources/tree2.png"))
+        return ;
+    if (!textureObstacle3.loadFromFile("Sources/head.png"))
+        return ;
+    if (!textureCollectable.loadFromFile("Sources/mushroom1.png"))
+        return ;
+    if (!textureCollectable2.loadFromFile("Sources/mushroom2.png"))
+        return ;
+    if (!textureMovable.loadFromFile("Sources/movable.png"))
+        return ;
+    if (!textureUI.loadFromFile("Sources/mushroom2.png"))
+        return ;
 }
 
 void Level::UpdateCurrentMap()
@@ -71,11 +121,11 @@ void Level::InitLevel(int level)
     textWeapon.setCharacterSize(24);
     textWeapon.setPosition(15.2f * LIB::LENGTH_UNIT, 5.5f * LIB::HEIGHT_UNIT);
     
-    uiLife = Element(14.0f * LIB::LENGTH_UNIT, 4 * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureUI, 1,1, 11);
+    uiLife = Element(14.0f * LIB::LENGTH_UNIT, 4 * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &texturePlayer, 4, 4, 11);
     uiWeapon = Element(14.0f * LIB::LENGTH_UNIT, 5.5f * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureUI, 1,1, 11);
     
     
-    playerProjectile = Projectile(0,0, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEgg, 1, 1, 22);
+    playerProjectile = Projectile(0,0, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureCollectable2, 1, 1, 22);
     
     for (int i = 0; i < 12; i++)
     {
@@ -95,10 +145,6 @@ void Level::InitLevel(int level)
                     backgroundUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureBG2, 1, 1, 11);
                     background.push_back(backgroundUnit);
                 }
-                
-                    
-                
-                
             }
             
             // obstacles
@@ -131,6 +177,10 @@ void Level::InitLevel(int level)
                     collectableUnit = Collectable(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureCollectable ,1,1, 31);
                     heartLeft++;
                 }
+                if (currentMap[i * 16 + j].type == 32)
+                {
+                    collectableUnit = Collectable(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureCollectable2, 1, 1, 32);
+                }
                 collectables.push_back(collectableUnit);
             }
             
@@ -140,14 +190,6 @@ void Level::InitLevel(int level)
             {
                 Movable movableUnit(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureMovable ,1,1, 41);
                 movables.push_back(movableUnit);
-            }
-            
-            // movable egg
-            else if(currentMap[i * 16 + j].type == 42)
-            {
-                MovableEnemy movableEnemyUnit(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEgg, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 42);
-                
-                movables.push_back(movableEnemyUnit);
             }
             
             // enemy
@@ -167,7 +209,7 @@ void Level::InitLevel(int level)
                 
                 else if (currentMap[i * 16 + j].type == 62)
                 {
-                    triggerUnit = Trigger(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureClosedKeyBox ,1,1, 62);
+                    triggerUnit = Trigger(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureClosedKeyBox, 1, 1, 62);
                     triggerUnit.SetIsTriggerActive(false);
                 }
                 triggers.push_back(triggerUnit);
@@ -179,55 +221,6 @@ void Level::InitLevel(int level)
     }
 }
 
-void Level::ReadTextureFile()
-{
-    if (!font.loadFromFile("Sources/karma_future.ttf"))
-        return ;
-    if (!bgMusic.openFromFile("Sources/Sounds/ingame.ogg"))
-        return ;
-    if (!winMusic.openFromFile("Sources/Sounds/win.ogg"))
-        return ;
-    if (!loseMusic.openFromFile("Sources/Sounds/gameover.ogg"))
-        return ;
-    
-    
-    if (!texturePlayer.loadFromFile("Sources/player.png"))
-        return ;
-    if (!textureEnemy.loadFromFile("Sources/enemy.png"))
-        return ;
-    if (!textureEgg.loadFromFile("Sources/egg.png"))
-        return ;
-    if (!textureObstacleEnemy.loadFromFile("Sources/ghost.png"))
-        return ;
-    if (!textureBG.loadFromFile("Sources/background.png"))
-        return ;
-    if (!textureBG2.loadFromFile("Sources/bridge.png"))
-        return ;
-    if (!textureClosedKeyBox.loadFromFile("Sources/closed_key_box.png"))
-        return ;
-    if (!textureOuterWall.loadFromFile("Sources/wall.png"))
-        return ;
-    if (!textureClosedDoor.loadFromFile("Sources/closed_door.png"))
-        return ;
-    if (!textureOpenDoor.loadFromFile("Sources/open_door.png"))
-        return ;
-    if (!textureObstacle1.loadFromFile("Sources/tree1.png"))
-        return ;
-    if (!textureObstacle2.loadFromFile("Sources/tree2.png"))
-        return ;
-    if (!textureObstacle3.loadFromFile("Sources/head.png"))
-        return ;
-    if (!textureCollectable.loadFromFile("Sources/mashroom1.png"))
-        return ;
-    if (!textureMovable.loadFromFile("Sources/movable.png"))
-        return ;
-    if (!textureUI.loadFromFile("Sources/mashroom1.png"))
-        return ;
-    
-    if (!textureBackground.loadFromFile("Sources/background.png"))
-    return ;
-
-}
 
 void Level::UpdateHeartLeft()
 {
@@ -236,58 +229,33 @@ void Level::UpdateHeartLeft()
         HeartCollected();
 }
 
-void Level::Render(sf::RenderWindow &window)
+void Level::UpdatePlayerProjectileNum()
 {
-    for (int i = 0; i < background.size(); i++)
-    {
-        background[i].Render(window);
-    }
+    playerProjectileNum++;
+}
+
+
+// when all the hearts are collected
+void Level::HeartCollected()
+{
+    for(int i = 0; i < triggers.size(); i++)
+        if (triggers[i].kind == 62)
+        {
+            triggers[i].shape.setFillColor(sf::Color::Red);
+            triggers[i].SetIsTriggerActive(true);
+        }
+}
+
+void Level::CleanLevelEnemy()
+{
+    enemies.clear();
+    movables.clear();
+    eggs.clear();
     for (int i = 0; i < obstacles.size(); i++)
     {
-        obstacles[i].Render(window);
+        if (obstacles[i].kind == 26)
+            obstacles.erase(obstacles.begin() + i);
     }
-    for (int i = 0; i < collectables.size(); i++)
-    {
-        collectables[i].Render(window);
-    }
-    for (int i = 0; i < movables.size(); i++)
-    {
-        movables[i].Render(window);
-    }
-    for (int i = 0; i < enemies.size(); i++)
-    {
-        window.draw(enemies[i].real);
-        enemies[i].Render(window);
-    }
-    
-    for (int i = 0; i < eggs.size(); i++)
-    {
-        eggs[i].Render(window);
-    }
-     
-     
-    
-    for (int i = 0; i < triggers.size(); i++)
-    {
-        if (triggers[i].GetIsTriggerActive())
-            triggers[i].Render(window);
-        if (triggers[i].kind == 62)
-            triggers[i].Render(window);
-    }
-    
-    
-    if (playerProjectile.GetIsUsing())
-        playerProjectile.Render(window);
-    
-    player.Render(window);
-    
-    uiLife.Render(window);
-    uiWeapon.Render(window);
-    
-    window.draw(title);
-    window.draw(textLife);
-    window.draw(textWeapon);
-    
 }
 
 
@@ -337,6 +305,18 @@ void Level::Update(const float deltaTime)
     {
         // reset to be movable before checking each frame
         eggs[i].canMove = true;
+        eggs[i].Update(&player, *this, deltaTime);
+        if (eggs[i].GetEggTime() < 0)
+        {
+            if (eggs[i].GetEnemyKind() == 26)
+            {
+                Element obstacleUnit = Element(eggs[i].centerX - 0.5f * LIB::LENGTH_UNIT, eggs[i].centerY -  0.5f * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacleEnemy, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 26);
+                obstacles.push_back(obstacleUnit);
+            }
+            eggs.erase(eggs.begin() + i);
+            
+        }
+            
         
         /* eventual movable checking */
         if (eggs[i].GetCurrentDir() != 0)
@@ -358,9 +338,17 @@ void Level::Update(const float deltaTime)
     {
         if (collectables[i].GetIsCollided())
         {
-            UpdateHeartLeft();
+            if (collectables[i].kind == 31)
+            {
+                UpdateHeartLeft();
+            }
+            else if (collectables[i].kind == 32)
+            {
+                UpdatePlayerProjectileNum();
+            }
             collectables.erase(collectables.begin() + i);
         }
+        
     }
     
     /* make door trigger active if the key is got */
@@ -401,19 +389,55 @@ void Level::Update(const float deltaTime)
     textWeapon.setString(to_string(playerProjectileNum));
 }
 
-// when all the hearts are collected
-void Level::HeartCollected()
-{
-    for(int i = 0; i < triggers.size(); i++)
-        if (triggers[i].kind == 62)
-        {
-            triggers[i].shape.setFillColor(sf::Color::Red);
-            triggers[i].SetIsTriggerActive(true);
-        }
-}
 
-void Level::CleanLevelEnemy()
+void Level::Render(sf::RenderWindow &window)
 {
-    enemies.clear();
-    movables.clear();
+    for (int i = 0; i < background.size(); i++)
+    {
+        background[i].Render(window);
+    }
+    for (int i = 0; i < obstacles.size(); i++)
+    {
+        obstacles[i].Render(window);
+    }
+    for (int i = 0; i < collectables.size(); i++)
+    {
+        collectables[i].Render(window);
+    }
+    for (int i = 0; i < movables.size(); i++)
+    {
+        movables[i].Render(window);
+    }
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        window.draw(enemies[i].real);
+        enemies[i].Render(window);
+    }
+    
+    for (int i = 0; i < eggs.size(); i++)
+    {
+        eggs[i].Render(window);
+    }
+     
+    for (int i = 0; i < triggers.size(); i++)
+    {
+        if (triggers[i].GetIsTriggerActive())
+            triggers[i].Render(window);
+        if (triggers[i].kind == 62)
+            triggers[i].Render(window);
+    }
+    
+    
+    if (playerProjectile.GetIsUsing())
+        playerProjectile.Render(window);
+    
+    player.Render(window);
+    
+    uiLife.Render(window);
+    uiWeapon.Render(window);
+    
+    window.draw(title);
+    window.draw(textLife);
+    window.draw(textWeapon);
+    
 }

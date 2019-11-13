@@ -11,16 +11,12 @@
 
 ObstacleEnemy::ObstacleEnemy()
 {
-    
-    eggTime = 5.0f;
-    timer = 0;
+
 }
 
 ObstacleEnemy::ObstacleEnemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind) : Element(x, y, length, height, texture, numHorizontal, numVertical, _kind)
 {
-    
-    eggTime = 5.0f;
-    timer = 0;
+
 }
 
 
@@ -39,4 +35,5 @@ void ObstacleEnemy::Update(Element *player, const float deltaTime)
 {
     TurnTowardsPlayer(player);
     UpdateIdleAnimation(1, 4, 4, 4, 2, 4, 3, 4);
+    
 }

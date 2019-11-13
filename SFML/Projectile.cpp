@@ -29,7 +29,6 @@ void Projectile::Update(const float deltaTime, vector<Element> &obstacles, vecto
     // the projectile of player
     if (isUsing)
     {
-        
         UpdatePosition();
         if (GetCurrentDir() == 1)
             real.move(speed * deltaTime * 0, speed * deltaTime * 1);
@@ -47,31 +46,14 @@ void Projectile::Update(const float deltaTime, vector<Element> &obstacles, vecto
                 if (canMove == false)
                 {
                     Disappear();
-                    MovableEnemy egg(obstacles[i].centerX - LIB::LENGTH_UNIT / 2, obstacles[i].centerY - LIB::LENGTH_UNIT / 2, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &level.textureEgg, 1, 1, 22);
+                    MovableEnemy egg(obstacles[i].centerX - LIB::LENGTH_UNIT / 2, obstacles[i].centerY - LIB::LENGTH_UNIT / 2, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &level.textureEgg, 1, 1, 22, 26);
                     obstacles.erase(obstacles.begin() + i);
                     eggs.push_back(egg);
-                    
                     return ;
                 }
                    
             }
         }
-        /*
-        for (int i = 0 ; i < enemies.size(); i++)
-        {
-            if (enemies[i].kind == 26 && DetectCollision(&enemies[i]))
-            {
-                Collision(&enemies[i]);
-                if (canMove == false)
-                {
-                     Disappear();
-                    
-                    return ;
-                }
-                   
-            }
-        }
-         */
         
         if (centerX < 0 || centerX > GameController::LENGTH ||
             centerY < 0 || centerY > GameController::HEIGHT)

@@ -14,10 +14,9 @@
 class ObstacleEnemy : public Element
 {
 private:
-    float eggTime;
-    
-    float timer;
+
 public:
+    
     ObstacleEnemy();
     ObstacleEnemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
     

@@ -96,6 +96,7 @@ void Creature::CollisionCollectable(Collectable *other)
         if ( abs(centerX - other->centerX) <= TRY_DISTANCE &&
              abs(centerY - other->centerY) <= TRY_DISTANCE )
             other->SetIsCollided(true);
+        
     }
         
 
