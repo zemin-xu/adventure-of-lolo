@@ -17,8 +17,6 @@ Creature::Creature(int x, int y, int length, int height, sf::Texture *texture,  
     lifePoint = 5;
     isAlive = true;
     state = Forward;
-    
-    real.setFillColor(sf::Color::Blue);
 }
 
 void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs, const float deltaTime)

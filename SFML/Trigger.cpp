@@ -13,7 +13,6 @@ Trigger::Trigger()
     
 }
 
-
 Trigger::Trigger(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind) : Element(x, y, length, height, texture, numHorizontal, numVertical, _kind)
 {
     isTriggerActive = false;

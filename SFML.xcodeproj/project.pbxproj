@@ -23,6 +23,7 @@
 		7DA7B03323648C100057BCD1 /* GameMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DA7B03123648C100057BCD1 /* GameMenu.cpp */; };
 		7DC9DC002365E2FB00682758 /* ObstacleEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DC9DBFE2365E2FB00682758 /* ObstacleEnemy.cpp */; };
 		7DC9DC032365F8D000682758 /* Projectile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DC9DC012365F8D000682758 /* Projectile.cpp */; };
+		7DDC07AB237CA2AD00A8438F /* StaticEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DDC07A9237CA2AD00A8438F /* StaticEnemy.cpp */; };
 		7DE02B4423618E2100C59A7F /* Level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DE02B4223618E2100C59A7F /* Level.cpp */; };
 		7DEB55042354B83B00E31817 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DEB55022354B83B00E31817 /* GameController.cpp */; };
 		7DEB55072354D2AB00E31817 /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DEB55052354D2AB00E31817 /* Element.cpp */; };
@@ -45,6 +46,7 @@
 /* Begin PBXFileReference section */
 		7D07D83C23633C9C00BEF3DE /* Trigger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Trigger.cpp; sourceTree = "<group>"; };
 		7D07D83D23633C9C00BEF3DE /* Trigger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Trigger.hpp; sourceTree = "<group>"; };
+		7D09129F237F3AF200A05B87 /* Sources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sources; path = "../../Library/Developer/Xcode/DerivedData/SFML-gkhixyaerdmvukcmvwznaenekqtn/Build/Products/Debug/Sources"; sourceTree = "<group>"; };
 		7D0F973B23588713001BCE97 /* Player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		7D0F973C23588713001BCE97 /* Player.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Player.hpp; sourceTree = "<group>"; };
 		7D0F973E235888A7001BCE97 /* Creature.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Creature.cpp; sourceTree = "<group>"; };
@@ -55,7 +57,6 @@
 		7D0F9745235893A4001BCE97 /* Collectable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Collectable.hpp; sourceTree = "<group>"; };
 		7D0F9747235893FC001BCE97 /* Movable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Movable.cpp; sourceTree = "<group>"; };
 		7D0F9748235893FC001BCE97 /* Movable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Movable.hpp; sourceTree = "<group>"; };
-		7D7CE196234F1FF6001DFACA /* Sources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Sources; path = "../../Library/Developer/Xcode/DerivedData/SFML-gkhixyaerdmvukcmvwznaenekqtn/Build/Products/Debug/Sources"; sourceTree = "<group>"; };
 		7D95926B234F1351000D086B /* SFML */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SFML; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D95926E234F1351000D086B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		7D959276234F13BA000D086B /* sfml-audio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-audio.framework"; path = "SFML/Frameworks/sfml-audio.framework"; sourceTree = "<group>"; };
@@ -70,6 +71,8 @@
 		7DC9DBFF2365E2FB00682758 /* ObstacleEnemy.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ObstacleEnemy.hpp; sourceTree = "<group>"; };
 		7DC9DC012365F8D000682758 /* Projectile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Projectile.cpp; sourceTree = "<group>"; };
 		7DC9DC022365F8D000682758 /* Projectile.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Projectile.hpp; sourceTree = "<group>"; };
+		7DDC07A9237CA2AD00A8438F /* StaticEnemy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StaticEnemy.cpp; sourceTree = "<group>"; };
+		7DDC07AA237CA2AD00A8438F /* StaticEnemy.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StaticEnemy.hpp; sourceTree = "<group>"; };
 		7DE02B4223618E2100C59A7F /* Level.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Level.cpp; sourceTree = "<group>"; };
 		7DE02B4323618E2100C59A7F /* Level.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Level.hpp; sourceTree = "<group>"; };
 		7DEB55022354B83B00E31817 /* GameController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameController.cpp; sourceTree = "<group>"; };
@@ -103,7 +106,7 @@
 		7D959262234F1350000D086B = {
 			isa = PBXGroup;
 			children = (
-				7D7CE196234F1FF6001DFACA /* Sources */,
+				7D09129F237F3AF200A05B87 /* Sources */,
 				7D95926D234F1351000D086B /* SFML */,
 				7D95926C234F1351000D086B /* Products */,
 				7D959275234F13BA000D086B /* Frameworks */,
@@ -127,6 +130,8 @@
 				7DEB55062354D2AB00E31817 /* Element.hpp */,
 				7DC9DBFE2365E2FB00682758 /* ObstacleEnemy.cpp */,
 				7DC9DBFF2365E2FB00682758 /* ObstacleEnemy.hpp */,
+				7DDC07A9237CA2AD00A8438F /* StaticEnemy.cpp */,
+				7DDC07AA237CA2AD00A8438F /* StaticEnemy.hpp */,
 				7D07D83C23633C9C00BEF3DE /* Trigger.cpp */,
 				7D07D83D23633C9C00BEF3DE /* Trigger.hpp */,
 				7D0F9747235893FC001BCE97 /* Movable.cpp */,
@@ -231,6 +236,7 @@
 				7D0F9740235888A7001BCE97 /* Creature.cpp in Sources */,
 				7DF479162362F63000C1072A /* MovableEnemy.cpp in Sources */,
 				7DEB55042354B83B00E31817 /* GameController.cpp in Sources */,
+				7DDC07AB237CA2AD00A8438F /* StaticEnemy.cpp in Sources */,
 				7D07D83E23633C9C00BEF3DE /* Trigger.cpp in Sources */,
 				7D0F9746235893A4001BCE97 /* Collectable.cpp in Sources */,
 				7D0F9749235893FC001BCE97 /* Movable.cpp in Sources */,

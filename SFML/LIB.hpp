@@ -22,6 +22,7 @@
 
 #include "Element.hpp"
 #include "ObstacleEnemy.hpp"
+#include "StaticEnemy.hpp"
 #include "Trigger.hpp"
 #include "Movable.hpp"
 #include "MovableEnemy.hpp"

@@ -143,7 +143,4 @@ void Player::Fire(Level& level, Projectile& projectile)
            projectile.real.setPosition(centerX, centerY);
            projectile.canMove = true;
     }
-   
-    
-    
 }

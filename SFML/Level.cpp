@@ -36,7 +36,7 @@ void Level::ReadTextureFile()
     
     if (!texturePlayer.loadFromFile("Sources/player.png"))
         return ;
-    if (!textureEnemy.loadFromFile("Sources/enemy.png"))
+    if (!textureEnemyStaticSleep.loadFromFile("Sources/enemy_static_sleep.png"))
         return ;
     if (!textureEgg.loadFromFile("Sources/mushroom3.png"))
         return ;
@@ -161,6 +161,9 @@ void Level::InitLevel(int level)
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle3, 3, 1, 25);
                 else if (currentMap[i * 16 + j].type == 26)
                 obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacleEnemy, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 26);
+                
+                else if (currentMap[i * 16 + j].type == 27)
+                    obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEnemyStaticSleep , 1, 1, 27);
                 else if (currentMap[i * 16 + j].type == 61)
                 {
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureClosedDoor, 1, 1, 61);
@@ -193,10 +196,9 @@ void Level::InitLevel(int level)
             }
             
             // enemy
-            else if(currentMap[i * 16 + j].type == 51)
+            else if(currentMap[i * 16 + j].type / 10 == 5)
             {
-                Enemy enemyUnit(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEnemy ,LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 51);
-                enemies.push_back(enemyUnit);
+                
             }
             
             
@@ -410,7 +412,6 @@ void Level::Render(sf::RenderWindow &window)
     }
     for (int i = 0; i < enemies.size(); i++)
     {
-        window.draw(enemies[i].real);
         enemies[i].Render(window);
     }
     
