@@ -35,5 +35,4 @@ void ObstacleEnemy::Update(Element *player, const float deltaTime)
 {
     TurnTowardsPlayer(player);
     UpdateIdleAnimation(1, 4, 4, 4, 2, 4, 3, 4);
-    
 }

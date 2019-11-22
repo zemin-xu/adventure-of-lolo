@@ -4,7 +4,12 @@
 //
 //  Created by ZEMIN on 24/10/2019.
 //  Copyright © 2019 ZEMIN. All rights reserved.
-//
+
+// Level state :
+// All the list of objects, textures as well as level maps will exist here.
+// All the corresponding initilization and update of list and objects will be here.
+// There are also the variables that are not supposed to be reinitialized like
+// the num of playerLife and that of playerProjectile, UI, etc.
 
 #include "LIB.hpp"
 
@@ -19,6 +24,7 @@ Level::Level(int _currentLevel)
     InitLevel(_currentLevel);
     playerLife = 5;
     playerProjectileNum = 0;
+    isEnemyAwake = false;
 }
 
 
@@ -37,6 +43,8 @@ void Level::ReadTextureFile()
     if (!texturePlayer.loadFromFile("Sources/player.png"))
         return ;
     if (!textureEnemyStaticSleep.loadFromFile("Sources/enemy_static_sleep.png"))
+        return ;
+    if (!textureEnemyStaticAwake.loadFromFile("Sources/enemy_static_awake.png"))
         return ;
     if (!textureEgg.loadFromFile("Sources/mushroom3.png"))
         return ;
@@ -226,9 +234,24 @@ void Level::InitLevel(int level)
 
 void Level::UpdateHeartLeft()
 {
+    
     heartLeft--;
     if (heartLeft <= 0)
         HeartCollected();
+}
+
+void Level::AwakenEnemy()
+{
+    for(int i = 0; i < obstacles.size(); i++)
+    {
+        
+        if (obstacles[i].kind == 27)
+        {
+            StaticEnemy staticEnemyUnit(obstacles[i].centerX - LIB::LENGTH_UNIT / 2, obstacles[i].centerY - LIB::LENGTH_UNIT / 2, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEnemyStaticAwake, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 28);
+            obstacles.push_back(staticEnemyUnit);
+            obstacles.erase(obstacles.begin() + i);
+        }
+    }
 }
 
 void Level::UpdatePlayerProjectileNum()
@@ -255,7 +278,7 @@ void Level::CleanLevelEnemy()
     eggs.clear();
     for (int i = 0; i < obstacles.size(); i++)
     {
-        if (obstacles[i].kind == 26)
+        if (obstacles[i].kind == 26 || obstacles[i].kind == 28)
             obstacles.erase(obstacles.begin() + i);
     }
 }
@@ -267,16 +290,30 @@ void Level::Update(const float deltaTime)
     
     playerProjectile.Update(deltaTime, obstacles, enemies, eggs, *this);
     
+    // check the moment to awaken the enemies in sleep
+    if (heartLeft <= 1 && !isEnemyAwake)
+    {
+        cout<< "work";
+        AwakenEnemy();
+        isEnemyAwake = true;
+    }
+    
     for (int i = 0; i < enemies.size(); i++)
     {
         enemies[i].Update(deltaTime, obstacles, collectables, movables, triggers, eggs, &player);
     }
     
+    // update of obstacle ememies and static enemies
     for (int i = 0; i < obstacles.size(); i++)
     {
         if (obstacles[i].kind == 26)
         {
             ObstacleEnemy* p = (ObstacleEnemy*)&obstacles[i];
+            p->Update(&player, deltaTime);
+        }
+        else if (obstacles[i].kind == 28)
+        {
+            StaticEnemy* p = (StaticEnemy*)&obstacles[i];
             p->Update(&player, deltaTime);
         }
     }
@@ -303,6 +340,7 @@ void Level::Update(const float deltaTime)
         }
     }
     
+    // update for the obstacle enemies in egg state
     for (int i = 0; i < eggs.size(); i++)
     {
         // reset to be movable before checking each frame
@@ -316,10 +354,8 @@ void Level::Update(const float deltaTime)
                 obstacles.push_back(obstacleUnit);
             }
             eggs.erase(eggs.begin() + i);
-            
         }
-            
-        
+
         /* eventual movable checking */
         if (eggs[i].GetCurrentDir() != 0)
         {
@@ -440,5 +476,4 @@ void Level::Render(sf::RenderWindow &window)
     window.draw(title);
     window.draw(textLife);
     window.draw(textWeapon);
-    
 }

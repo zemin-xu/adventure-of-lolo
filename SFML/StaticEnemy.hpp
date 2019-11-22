@@ -2,7 +2,7 @@
 //  StaticEnemy.hpp
 //  SFML
 //
-//  Created by ZEMIN on 13/11/2019.
+//  Created by ZEMIN on 22/11/2019.
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
@@ -10,15 +10,15 @@
 
 #ifndef StaticEnemy_hpp
 #define StaticEnemy_hpp
-class Level;
+
 class StaticEnemy : public ObstacleEnemy
 {
-private:
-    bool isAwake;
 public:
     StaticEnemy();
     StaticEnemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
-    void Update(Level &level);
+    void Update(Element *player, const float deltaTime);
+    
 };
+
 
 #endif /* StaticEnemy_hpp */

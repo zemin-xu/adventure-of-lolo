@@ -54,7 +54,6 @@ public:
     
     void UpdatePosition();
     virtual void Render(sf::RenderWindow &window);
-    int GetObjectType();
     int DetectCollision(Element *other);
     
     void UpdateIdleAnimation(int forwardAnimRow, int forwardAnimCol, int backwardAnimRow, int backwardAnimCol, int leftwardAnimRow, int leftwardAnimCol, int rightwardAnimRow, int rightwardAnimCol);

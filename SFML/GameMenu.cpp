@@ -6,8 +6,11 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
-#include "LIB.hpp"
+// GameMenu state :
+// Define the render of menu page
+// Implement the option of game
 
+#include "LIB.hpp"
 GameMenu::GameMenu(int width, float height)
 {
     

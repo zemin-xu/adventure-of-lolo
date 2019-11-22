@@ -6,6 +6,8 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
+// Control the input of player
+
 #include "LIB.hpp"
 InputController::InputController()
 {

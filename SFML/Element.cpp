@@ -6,12 +6,20 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
+/* The base class of all existing sprite. */
+
 #include "LIB.hpp"
 
 Element::Element()
 {
     isShowing = true;
 }
+
+// The standard constructor that will include the position and the dimension of
+// sprite, as well as how many sprites there are on the texture image.
+// The variable 'kind' here is important, which is the same as that in clas s Level.
+// It is useful because there maybe diffrent kinds of objects in a same list.
+// We can use it to do downcasting if needed.
 
 Element::Element(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind)
 {
@@ -37,11 +45,7 @@ Element::Element(int x, int y, int length, int height, sf::Texture *texture, int
     shape.setTexture(texture);
     kind = _kind;
     UpdatePosition();
-    
-    
 }
-
-
 
 void Element::UpdatePosition()
 {
@@ -57,11 +61,6 @@ void Element::Render(sf::RenderWindow &window)
 
 }
 
-int Element::GetObjectType()
-{
-    return (kind);
-}
-
 int Element::DetectCollision(Element *other)
 {
     // use the shape's bounding to detect
@@ -69,12 +68,12 @@ int Element::DetectCollision(Element *other)
         (other->centerX + LENGTH_UNIT / 2) > (centerX - LENGTH_UNIT / 2) &&
         (other->centerY - HEIGHT_UNIT / 2) < (centerY + HEIGHT_UNIT / 2) &&
         (other->centerY + HEIGHT_UNIT / 2) > (centerY - HEIGHT_UNIT / 2))
-        return (other->GetObjectType());
+        return (other->kind);
     return (0);
 
 }
 
-
+// To play animation by indicating the aimed row how many sprite in it in the texture.
 void Element::UpdateIdleAnimation(int forwardAnimRow, int forwardAnimCol, int backwardAnimRow, int backwardAnimCol, int leftwardAnimRow, int leftwardAnimCol, int rightwardAnimRow, int rightwardAnimCol)
 {
     switch (currentDir) {
@@ -118,4 +117,3 @@ void Element::UpdateIdleAnimation(int forwardAnimRow, int forwardAnimCol, int ba
             break;
     }
 }
-

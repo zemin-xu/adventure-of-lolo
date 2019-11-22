@@ -11,7 +11,7 @@
 MovableEnemy::MovableEnemy()
 {
     eggTime = 5.0f;
-    enemyKind = 11;
+    enemyKind = 0;
 }
 
 MovableEnemy::MovableEnemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind, int _enemyKind) : Movable(x, y, length, height, texture, numHorizontal, numVertical, _kind)

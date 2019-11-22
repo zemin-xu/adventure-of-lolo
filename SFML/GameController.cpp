@@ -7,21 +7,20 @@
 //
 #include "LIB.hpp"
 
-GameController::GameController() : window(sf::VideoMode(LENGTH, HEIGHT), "C++ Game"),  inputController(), menu(LENGTH, HEIGHT),  level(1)
+GameController::GameController() : window(sf::VideoMode(LENGTH, HEIGHT), "C++ Game"),  inputController(), menu(LENGTH, HEIGHT),  level(2)
 {
     window.setFramerateLimit(120);
     state = InGame;
 }
-
-
-
 
 void GameController::EndApplication()
 {
     cout << "\n !!!Ending Application!!! \n";
 }
 
-// update the 'deltaTime' with the time it takes to update and render one frame
+// Update the 'deltaTime'.
+// The 'renderTime' is a variable to control the elapsed time between
+// each Render() execution.
 void GameController::UpdateTime()
 {
     deltaTime = deltaTimeClock.restart().asSeconds();
@@ -35,6 +34,8 @@ void GameController::UpdateTime()
     
 }
 
+
+// Switching options in Menu
 void GameController::UpdateSFMLEvents()
 {
     while (window.pollEvent(event))
@@ -71,7 +72,6 @@ void GameController::UpdateSFMLEvents()
                         }
                     }
                         break;
-                        
                 }
             }
                 break;
@@ -102,7 +102,7 @@ void GameController::Update()
     }
 }
 
-// execute nearest state's render functions
+// Execute the corresponding state's render functions.
 void GameController::Render()
 {
     window.clear();
