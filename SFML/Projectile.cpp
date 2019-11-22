@@ -24,6 +24,54 @@ void Projectile::Disappear()
     isUsing = false;
 }
 
+void Projectile::CollisionObstacle(Element *other)
+{
+    if (GetCurrentDir() == 1)
+    {
+        if (((centerY + HEIGHT_UNIT / 2) > (other->centerY - HEIGHT_UNIT / 2)) &&
+            ((centerX - LENGTH_UNIT * FACTOR / 2) < (other->centerX + LENGTH_UNIT * FACTOR / 2)) &&
+            ((centerX + LENGTH_UNIT * FACTOR / 2) > (other->centerX - LENGTH_UNIT * FACTOR / 2)) &&
+            (centerY < other->centerY))
+        {
+            canMove = false;
+            Disappear();
+        }
+    }
+    else if (GetCurrentDir() == 2)
+    {
+        if (((centerY - HEIGHT_UNIT / 2) < (other->centerY + HEIGHT_UNIT / 2)) &&
+            ((centerX - LENGTH_UNIT * FACTOR / 2) < (other->centerX + LENGTH_UNIT * FACTOR / 2)) &&
+            ((centerX + LENGTH_UNIT * FACTOR / 2) > (other->centerX - LENGTH_UNIT * FACTOR / 2)) &&
+            (centerY > other->centerY))
+        {
+            canMove = false;
+            Disappear();
+        }
+    }
+    else if (GetCurrentDir() == 3)
+    {
+        if (((centerX - LENGTH_UNIT / 2) < (other->centerX + LENGTH_UNIT / 2)) &&
+            ((centerY - HEIGHT_UNIT * FACTOR / 2) < (other->centerY + HEIGHT_UNIT * FACTOR / 2)) &&
+            ((centerY + HEIGHT_UNIT * FACTOR / 2) > (other->centerY - HEIGHT_UNIT * FACTOR / 2)) &&
+            (centerX > other->centerX))
+        {
+            canMove = false;
+            Disappear();
+        }
+    }
+    else if (GetCurrentDir() == 4)
+    {
+        if (((centerX + LENGTH_UNIT / 2) > (other->centerX - LENGTH_UNIT / 2)) &&
+            ((centerY - HEIGHT_UNIT * FACTOR / 2) < (other->centerY + HEIGHT_UNIT * FACTOR / 2)) &&
+            ((centerY + HEIGHT_UNIT * FACTOR / 2) > (other->centerY - HEIGHT_UNIT * FACTOR / 2)) &&
+            (centerX < other->centerX))
+        {
+            canMove = false;
+            Disappear();
+        }
+    }
+}
+
 void Projectile::Update(const float deltaTime, vector<Element> &obstacles, vector<Enemy> &enemies, vector<MovableEnemy> &eggs, Level &level)
 {
     // the projectile of player
@@ -64,12 +112,17 @@ void Projectile::Update(const float deltaTime, vector<Element> &obstacles, vecto
             for (int i = 0; i < level.obstacles.size(); i++)
             {
                 if (DetectCollision(&level.obstacles[i]))
-                    Disappear();
+                {
+                    CollisionObstacle(&level.obstacles[i]);
+                }
+                    
             }
             for (int i = 0; i < level.movables.size(); i++)
             {
                 if (DetectCollision(&level.movables[i]))
-                    Disappear();
+                {
+                    CollisionObstacle(&level.movables[i]);
+                }
             }
                 
             if (DetectCollision(&level.player))
