@@ -286,7 +286,7 @@ void Level::CleanLevelEnemy()
 
 void Level::Update(const float deltaTime)
 {
-    player.Update(deltaTime, obstacles, collectables, movables, triggers ,eggs);
+    player.Update(deltaTime, obstacles, collectables, movables, triggers, eggs);
     
     playerProjectile.Update(deltaTime, obstacles, enemies, eggs, *this);
     
@@ -350,9 +350,20 @@ void Level::Update(const float deltaTime)
         {
             if (eggs[i].GetEnemyKind() == 26)
             {
-                Element obstacleUnit = Element(eggs[i].centerX - 0.5f * LIB::LENGTH_UNIT, eggs[i].centerY -  0.5f * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacleEnemy, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 26);
+                Element obstacleUnit = Element(eggs[i].centerX - 0.5f * LIB::LENGTH_UNIT, eggs[i].centerY -  0.5f * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacleEnemy, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, eggs[i].GetEnemyKind());
                 obstacles.push_back(obstacleUnit);
             }
+            else if (eggs[i].GetEnemyKind() == 27)
+                {
+                    Element obstacleUnit = Element(eggs[i].centerX - 0.5f * LIB::LENGTH_UNIT, eggs[i].centerY -  0.5f * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEnemyStaticSleep, 1, 1, eggs[i].GetEnemyKind());
+                    obstacles.push_back(obstacleUnit);
+                }
+            else if (eggs[i].GetEnemyKind() == 28)
+            {
+                StaticEnemy obstacleUnit = StaticEnemy(eggs[i].centerX - 0.5f * LIB::LENGTH_UNIT, eggs[i].centerY -  0.5f * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEnemyStaticAwake, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, eggs[i].GetEnemyKind());
+                obstacles.push_back(obstacleUnit);
+            }
+                
             eggs.erase(eggs.begin() + i);
         }
 

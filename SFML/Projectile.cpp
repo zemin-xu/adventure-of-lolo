@@ -40,18 +40,21 @@ void Projectile::Update(const float deltaTime, vector<Element> &obstacles, vecto
             real.move(speed * deltaTime * 1, speed * deltaTime * 0);
         for (int i = 0 ; i < obstacles.size(); i++)
         {
-            if (obstacles[i].kind == 26 && DetectCollision(&obstacles[i]))
+            if (DetectCollision(&obstacles[i]))
             {
-                Collision(&obstacles[i]);
-                if (canMove == false)
+                if (obstacles[i].kind == 26 || obstacles[i].kind == 27 || obstacles[i].kind == 28)
                 {
-                    Disappear();
-                    MovableEnemy egg(obstacles[i].centerX - LIB::LENGTH_UNIT / 2, obstacles[i].centerY - LIB::LENGTH_UNIT / 2, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &level.textureEgg, 1, 1, 22, 26);
-                    obstacles.erase(obstacles.begin() + i);
-                    eggs.push_back(egg);
-                    return ;
+                    Collision(&obstacles[i]);
+                    if (canMove == false)
+                    {
+                        Disappear();
+                        MovableEnemy egg(obstacles[i].centerX - LIB::LENGTH_UNIT / 2, obstacles[i].centerY - LIB::LENGTH_UNIT / 2, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &level.textureEgg, 1, 1, 22, obstacles[i].kind);
+                        obstacles.erase(obstacles.begin() + i);
+                        eggs.push_back(egg);
+                        return ;
+                    }
                 }
-                   
+                
             }
         }
         
