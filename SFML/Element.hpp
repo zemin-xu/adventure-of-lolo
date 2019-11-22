@@ -15,7 +15,6 @@ class Element
 private:
     int currentDir;
     
-    
 protected:
     
     sf::IntRect spritePos;

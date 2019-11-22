@@ -132,8 +132,13 @@ void Level::InitLevel(int level)
     uiLife = Element(14.0f * LIB::LENGTH_UNIT, 4 * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &texturePlayer, 4, 4, 11);
     uiWeapon = Element(14.0f * LIB::LENGTH_UNIT, 5.5f * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureUI, 1,1, 11);
     
+    playerProjectile = Projectile(0,0, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureCollectable2, 1, 1, 32);
     
-    playerProjectile = Projectile(0,0, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureCollectable2, 1, 1, 22);
+    for (int i = 0; i < LIB::ENEMY_PROJECTILE_NUM; i++)
+    {
+        Projectile enemyProjectile = Projectile(0,0, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureCollectable2, 1, 1, 33);
+        enemyProjectiles.push_back(enemyProjectile);
+    }
     
     for (int i = 0; i < 12; i++)
     {
@@ -290,10 +295,14 @@ void Level::Update(const float deltaTime)
     
     playerProjectile.Update(deltaTime, obstacles, enemies, eggs, *this);
     
+    for(int i = 0; i < enemyProjectiles.size(); i++)
+    {
+        enemyProjectiles[i].Update(deltaTime, obstacles, enemies, eggs, *this);
+    }
+
     // check the moment to awaken the enemies in sleep
     if (heartLeft <= 1 && !isEnemyAwake)
     {
-        cout<< "work";
         AwakenEnemy();
         isEnemyAwake = true;
     }
@@ -314,7 +323,7 @@ void Level::Update(const float deltaTime)
         else if (obstacles[i].kind == 28)
         {
             StaticEnemy* p = (StaticEnemy*)&obstacles[i];
-            p->Update(&player, deltaTime);
+            p->Update(&player, deltaTime, *this);
         }
     }
      
@@ -475,6 +484,11 @@ void Level::Render(sf::RenderWindow &window)
             triggers[i].Render(window);
     }
     
+    for(int i = 0; i < enemyProjectiles.size(); i++)
+    {
+        if (enemyProjectiles[i].GetIsUsing())
+            enemyProjectiles[i].Render(window);
+    }
     
     if (playerProjectile.GetIsUsing())
         playerProjectile.Render(window);

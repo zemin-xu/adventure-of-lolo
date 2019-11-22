@@ -38,23 +38,51 @@ void Projectile::Update(const float deltaTime, vector<Element> &obstacles, vecto
             real.move(speed * deltaTime * -1, speed * deltaTime * 0);
         else if (GetCurrentDir() == 4)
             real.move(speed * deltaTime * 1, speed * deltaTime * 0);
-        for (int i = 0 ; i < obstacles.size(); i++)
+        if (kind == 32)
         {
-            if (DetectCollision(&obstacles[i]))
+            for (int i = 0 ; i < obstacles.size(); i++)
             {
-                if (obstacles[i].kind == 26 || obstacles[i].kind == 27 || obstacles[i].kind == 28)
+                if (DetectCollision(&obstacles[i]))
                 {
-                    Collision(&obstacles[i]);
-                    if (canMove == false)
+                    if (obstacles[i].kind == 26 || obstacles[i].kind == 27 || obstacles[i].kind == 28)
                     {
-                        Disappear();
-                        MovableEnemy egg(obstacles[i].centerX - LIB::LENGTH_UNIT / 2, obstacles[i].centerY - LIB::LENGTH_UNIT / 2, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &level.textureEgg, 1, 1, 22, obstacles[i].kind);
-                        obstacles.erase(obstacles.begin() + i);
-                        eggs.push_back(egg);
-                        return ;
+                        Collision(&obstacles[i]);
+                        if (canMove == false)
+                        {
+                            Disappear();
+                            MovableEnemy egg(obstacles[i].centerX - LIB::LENGTH_UNIT / 2, obstacles[i].centerY - LIB::LENGTH_UNIT / 2, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &level.textureEgg, 1, 1, 22, obstacles[i].kind);
+                            obstacles.erase(obstacles.begin() + i);
+                            eggs.push_back(egg);
+                            return ;
+                        }
                     }
                 }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < level.obstacles.size(); i++)
+            {
+                if (DetectCollision(&level.obstacles[i]))
+                    Disappear();
+            }
+            for (int i = 0; i < level.movables.size(); i++)
+            {
+                if (DetectCollision(&level.movables[i]))
+                    Disappear();
+            }
                 
+            if (DetectCollision(&level.player))
+            {
+                Collision(&level.player);
+                if (canMove == false)
+                {
+                    Disappear();
+                    
+                    cout << "damage";
+                    
+                    return ;
+                }
             }
         }
         

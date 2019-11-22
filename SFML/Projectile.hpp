@@ -24,6 +24,7 @@ public:
     void SetIsUsing(bool b) {isUsing = b;};
     bool GetIsUsing() {return (isUsing);};
     void Disappear();
+    void CollisionObstacle(Element *other);
     void Update(const float deltaTime, vector<Element> &obstacles, vector<Enemy> &enemies, vector<MovableEnemy> &eggs, Level &level);
 };
 

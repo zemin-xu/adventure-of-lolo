@@ -49,5 +49,7 @@ public:
 
     static const int ANIM_ENEMY1_NUM_HORIZONTAL = 4;
     static const int ANIM_ENEMY1_NUM_VERTICAL = 4;
+    
+    static const int ENEMY_PROJECTILE_NUM = 6;
 };
 #endif /* LIB_hpp */

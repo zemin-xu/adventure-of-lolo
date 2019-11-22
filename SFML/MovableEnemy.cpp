@@ -22,5 +22,5 @@ MovableEnemy::MovableEnemy(int x, int y, int length, int height, sf::Texture *te
 
 void MovableEnemy::Update(Element *player, Level &level, const float deltaTime)
 {
-    eggTime-=deltaTime;
+    eggTime -= deltaTime;
 }

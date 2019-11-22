@@ -26,7 +26,6 @@ void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables,
         if (DetectCollision(&obstacles[i]))
         {
             CollisionObstacle(&obstacles[i]);
-            //obstacles[i].shape.setFillColor(sf::Color::Red);
         }
     }
     for (int i = 0; i < movables.size(); i++)
@@ -34,7 +33,6 @@ void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables,
         if (DetectCollision(&movables[i]))
         {
             CollisionMovable(&movables[i], deltaTime);
-            //movables[i].shape.setFillColor(sf::Color::Black);
         }
     }
     
@@ -43,7 +41,6 @@ void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables,
         if (DetectCollision(&eggs[i]))
         {
             CollisionMovable(&eggs[i], deltaTime);
-            //movables[i].shape.setFillColor(sf::Color::Black);
         }
     }
     
@@ -79,9 +76,6 @@ void Creature::CollisionTrigger(Trigger* other)
         {
             other->SetTrigger(true);
             other->shape.setFillColor(sf::Color::Green);
-            
-            // when all are collected
-            //door.SetIsTriggerActive(true);
         }
     }
 }
@@ -91,8 +85,8 @@ void Creature::CollisionCollectable(Collectable *other)
     // player's type is 71
     if (kind == 71 && other->GetIsActive())
     {
-        if ( abs(centerX - other->centerX) <= TRY_DISTANCE &&
-             abs(centerY - other->centerY) <= TRY_DISTANCE )
+        if (abs(centerX - other->centerX) <= TRY_DISTANCE &&
+            abs(centerY - other->centerY) <= TRY_DISTANCE)
             other->SetIsCollided(true);
         
     }

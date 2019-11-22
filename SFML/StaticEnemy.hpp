@@ -11,12 +11,19 @@
 #ifndef StaticEnemy_hpp
 #define StaticEnemy_hpp
 
+class Projectile;
+class Level;
+
 class StaticEnemy : public ObstacleEnemy
 {
+private:
+    float fireDelay;
+    float time;
 public:
     StaticEnemy();
     StaticEnemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
-    void Update(Element *player, const float deltaTime);
+    void Update(Element *player, const float deltaTime, Level & level);
+    void Fire(Level& level);
     
 };
 

@@ -73,6 +73,7 @@ public:
     vector<Enemy> enemies;
     vector<Trigger> triggers;
     vector<MovableEnemy> eggs;
+    vector<Projectile> enemyProjectiles;
     
     Player player;
     Element uiLife;
@@ -87,7 +88,7 @@ public:
     // 21: flower           22: outerwall        23: tree
     // 24: closed door      25: water            26: obstacle enemy
     // 27: sleep enemy      28: static enemy
-    // 31: collectable      32: projectile
+    // 31: collectable      32: p_projectile     33: e_projectile
     // 41: movable          42: enemy in egg
     // 51: static enemy
     // 61: closed door      62: closed key box
