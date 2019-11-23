@@ -131,9 +131,7 @@ void Projectile::Update(const float deltaTime, vector<Element> &obstacles, vecto
                 if (canMove == false)
                 {
                     Disappear();
-                    
-                    cout << "damage";
-                    
+                    level.LoseLife();
                     return ;
                 }
             }

@@ -7,10 +7,11 @@
 //
 #include "LIB.hpp"
 
-GameController::GameController() : window(sf::VideoMode(LENGTH, HEIGHT), "C++ Game"),  inputController(), menu(LENGTH, HEIGHT),  level(1)
+GameController::GameController() : window(sf::VideoMode(LENGTH, HEIGHT), "C++ Game"),  inputController(), menu(LENGTH, HEIGHT), music(), level(2)
 {
     window.setFramerateLimit(120);
-    state = InGame;
+    state = Menu;
+    music.MenuMusicPlay();
 }
 
 void GameController::EndApplication()
@@ -60,7 +61,7 @@ void GameController::UpdateSFMLEvents()
                                 break;
                                 
                             case 1:
-                                cout << "option" << endl;
+                                state = Option;
                                 break;
                                 
                             case 2:
@@ -91,10 +92,15 @@ void GameController::Update()
     inputController.UpdateInput(level);
     
     if (state == InGame)
+    {
         level.Update(deltaTime);
-    
+        music.InGameMusicPlay();
+        if(level.GetHasWin())
+            music.WinMusicPlay();
+        else if (level.GetHasLost())
+            music.LoseMusicPlay();
+    }
     UpdateTime();
-    
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
     {
         EndApplication();

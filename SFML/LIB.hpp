@@ -33,6 +33,7 @@
 #include "Player.hpp"
 #include "Level.hpp"
 #include "GameMenu.hpp"
+#include "MusicController.hpp"
 #include "InputController.hpp"
 #include "GameController.hpp"
 

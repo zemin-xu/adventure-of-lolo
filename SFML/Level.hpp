@@ -22,6 +22,8 @@ private:
     int playerProjectileNum;
     
     bool isEnemyAwake;
+    bool hasWin;
+    bool hasLost;
     
     struct coord
     {
@@ -32,12 +34,7 @@ private:
     
     static const int MAX_LEVEL = 3;
 
-    sf::Music bgMusic;
-    sf::Music winMusic;
-    sf::Music loseMusic;
-    
 public:
-    
     sf::Texture texturePlayer;
     sf::Texture textureEnemyStaticSleep;
     sf::Texture textureEnemyStaticAwake;
@@ -64,10 +61,15 @@ public:
     
     sf::Texture textureBackground;
     
+    sf::Texture textureWin;
+    sf::Texture textureLose;
+    
     sf::Font font;
     sf::Text title;
     sf::Text textLife;
     sf::Text textWeapon;
+    sf::Sprite imageWin;
+    sf::Sprite imageLose;
     
     vector<Element> background;
     vector<Element> obstacles;
@@ -84,7 +86,7 @@ public:
     
     Projectile playerProjectile;
     vector<coord> currentMap;
-  
+
     // 00: background_black
     // 11: background1      12: background2
     // 21: flower           22: outerwall        23: tree
@@ -151,12 +153,17 @@ public:
     int GetPlayerProjectileNum(){return (playerProjectileNum);};
     void SetPlayerProjectileNum(int i){playerProjectileNum = i;};
     int GetHeartLeft(){return (heartLeft);};
+    bool GetHasWin(){return (hasWin);};
+    bool GetHasLost(){return (hasLost);};
     
     void ReadTextureFile();
     void UpdateCurrentMap();
     void InitLevel(int level);
 
     void UpdateHeartLeft();
+    void LoseLife();
+    void GameOver();
+    void GameWin();
     void AwakenEnemy();
     void UpdatePlayerProjectileNum();
     void HeartCollected();

@@ -11,6 +11,8 @@
 #ifndef GameMenu_hpp
 #define GameMenu_hpp
 
+class GameController;
+
 class GameMenu
 {
 private:
@@ -22,8 +24,7 @@ private:
     sf::Texture bgTexture;
     sf::Sprite bg;
     
-    sf::Music music;
-    
+
     
 public:
     

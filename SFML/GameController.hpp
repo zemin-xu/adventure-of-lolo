@@ -13,8 +13,6 @@
 
 class GameController{
 private:
-    
-    
     sf::RenderWindow window;
     sf::Clock deltaTimeClock;
     sf::Clock renderClock;
@@ -24,23 +22,16 @@ private:
     float renderTime;
     
     GameMenu menu;
-    
-    
-    
+    MusicController music;
     Level level;
-
     InputController inputController;
-    
-    
+        
 public:
-    
     
     static const int LENGTH = 768;
     static const int HEIGHT = 576;
     
-    enum State {Menu, InGame, GameOver} state;
-    
-    
+    enum State {Menu, Option, InGame, GameOver} state;
     
     GameController();
     

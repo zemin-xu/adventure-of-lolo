@@ -22,23 +22,17 @@ Level::Level(int _currentLevel)
 {
     ReadTextureFile();
     InitLevel(_currentLevel);
-    playerLife = 5;
+    playerLife = 2;
     playerProjectileNum = 0;
     isEnemyAwake = false;
+    hasWin = false;
+    hasLost = false;
 }
-
 
 void Level::ReadTextureFile()
 {
     if (!font.loadFromFile("Sources/karma_future.ttf"))
         return ;
-    if (!bgMusic.openFromFile("Sources/Sounds/ingame.ogg"))
-        return ;
-    if (!winMusic.openFromFile("Sources/Sounds/win.ogg"))
-        return ;
-    if (!loseMusic.openFromFile("Sources/Sounds/gameover.ogg"))
-        return ;
-    
     
     if (!texturePlayer.loadFromFile("Sources/player.png"))
         return ;
@@ -83,6 +77,10 @@ void Level::ReadTextureFile()
         return ;
     if (!textureUI.loadFromFile("Sources/mushroom2.png"))
         return ;
+    if (!textureWin.loadFromFile("Sources/win_image.png"))
+        return ;
+    if (!textureLose.loadFromFile("Sources/lose_image.png"))
+        return ;
 }
 
 void Level::UpdateCurrentMap()
@@ -112,14 +110,17 @@ void Level::InitLevel(int level)
 {
     currentLevel = level;
     heartLeft = 0;
+    playerProjectileNum = 0;
     UpdateCurrentMap();
     isEnemyAwake = false;
     
-    // the collectable vector and enemy vector should not be clear because it is clean already during running
+    // the collectable vector and enemy vector should not be clear because it is cleaned already during running
+    
     if (eggs.size() > 0)
         eggs.clear();
     background.clear();
     obstacles.clear();
+    movables.clear();
     triggers.clear();
     
     /* text init */
@@ -136,6 +137,9 @@ void Level::InitLevel(int level)
     textWeapon.setCharacterSize(24);
     textWeapon.setPosition(15.2f * LIB::LENGTH_UNIT, 5.5f * LIB::HEIGHT_UNIT);
     
+    imageWin.setTexture(textureWin);
+    imageLose.setTexture(textureLose);
+    
     uiLife = Element(14.0f * LIB::LENGTH_UNIT, 4 * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &texturePlayer, 4, 4, 11);
     uiWeapon = Element(14.0f * LIB::LENGTH_UNIT, 5.5f * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureUI, 1,1, 11);
     
@@ -151,11 +155,9 @@ void Level::InitLevel(int level)
     {
         for (int j = 0; j < 16; j++)
         {
-            
             // background
             if(j >= 1 && j < 14)
             {
-                
                 Element backgroundUnit;
                 backgroundUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureBackground, 5, 1, 11);
                 background.push_back(backgroundUnit);
@@ -181,7 +183,6 @@ void Level::InitLevel(int level)
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle3, 3, 1, 25);
                 else if (currentMap[i * 16 + j].type == 26)
                 obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacleEnemy, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 26);
-                
                 else if (currentMap[i * 16 + j].type == 27)
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEnemyStaticSleep , 1, 1, 27);
                 else if (currentMap[i * 16 + j].type == 61)
@@ -222,7 +223,6 @@ void Level::InitLevel(int level)
                 enemies.push_back(enemyUnit);
             }
             
-            
             if(currentMap[i * 16 + j].type / 10 == 6)
             {
                 Trigger triggerUnit;
@@ -244,13 +244,33 @@ void Level::InitLevel(int level)
     }
 }
 
-
 void Level::UpdateHeartLeft()
 {
-    
     heartLeft--;
     if (heartLeft <= 0)
         HeartCollected();
+}
+
+void Level::LoseLife()
+{
+    if(playerLife >= 1)
+    {
+        playerLife--;
+        InitLevel(currentLevel);
+    }
+    else
+        GameOver();
+    
+}
+
+void Level::GameOver()
+{
+    hasLost = true;
+}
+
+void Level::GameWin()
+{
+    hasWin = true;
 }
 
 void Level::AwakenEnemy()
@@ -310,7 +330,6 @@ void Level::Update(const float deltaTime)
     // check the moment to awaken the enemies in sleep
     if (heartLeft <= 1 && !isEnemyAwake)
     {
-        cout << "awake" << endl;
         AwakenEnemy();
         isEnemyAwake = true;
     }
@@ -447,11 +466,13 @@ void Level::Update(const float deltaTime)
                 currentLevel++;
                 InitLevel(currentLevel);
             }
+            else
+                GameWin();
         }
     }
     
     /* text update, will be placed in a condition when they change */
-    textLife.setString(to_string(player.GetLifePoint()));
+    textLife.setString(to_string(playerLife));
     textWeapon.setString(to_string(playerProjectileNum));
 }
 
@@ -509,4 +530,9 @@ void Level::Render(sf::RenderWindow &window)
     window.draw(title);
     window.draw(textLife);
     window.draw(textWeapon);
+    
+    if (hasWin)
+        window.draw(imageWin);
+    if (hasLost)
+        window.draw(imageLose);
 }

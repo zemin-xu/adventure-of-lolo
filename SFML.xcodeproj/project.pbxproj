@@ -26,6 +26,7 @@
 		7DE02B4423618E2100C59A7F /* Level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DE02B4223618E2100C59A7F /* Level.cpp */; };
 		7DEB55042354B83B00E31817 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DEB55022354B83B00E31817 /* GameController.cpp */; };
 		7DEB55072354D2AB00E31817 /* Element.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DEB55052354D2AB00E31817 /* Element.cpp */; };
+		7DF2AE4523897DD40001F946 /* MusicController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DF2AE4323897DD40001F946 /* MusicController.cpp */; };
 		7DF479132362EBC500C1072A /* InputController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DF479112362EBC500C1072A /* InputController.cpp */; };
 		7DF479162362F63000C1072A /* MovableEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DF479142362F63000C1072A /* MovableEnemy.cpp */; };
 		7DF8A1EC2388481B00633C7E /* StaticEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7DF8A1EA2388481B00633C7E /* StaticEnemy.cpp */; };
@@ -78,6 +79,8 @@
 		7DEB55052354D2AB00E31817 /* Element.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Element.cpp; sourceTree = "<group>"; };
 		7DEB55062354D2AB00E31817 /* Element.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Element.hpp; sourceTree = "<group>"; };
 		7DED4FD12361D55A00EDC325 /* LIB.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LIB.hpp; sourceTree = "<group>"; };
+		7DF2AE4323897DD40001F946 /* MusicController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MusicController.cpp; sourceTree = "<group>"; };
+		7DF2AE4423897DD40001F946 /* MusicController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MusicController.hpp; sourceTree = "<group>"; };
 		7DF479112362EBC500C1072A /* InputController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = InputController.cpp; sourceTree = "<group>"; };
 		7DF479122362EBC500C1072A /* InputController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = InputController.hpp; sourceTree = "<group>"; };
 		7DF479142362F63000C1072A /* MovableEnemy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MovableEnemy.cpp; sourceTree = "<group>"; };
@@ -152,6 +155,8 @@
 				7DE02B4323618E2100C59A7F /* Level.hpp */,
 				7DA7B03123648C100057BCD1 /* GameMenu.cpp */,
 				7DA7B03223648C100057BCD1 /* GameMenu.hpp */,
+				7DF2AE4323897DD40001F946 /* MusicController.cpp */,
+				7DF2AE4423897DD40001F946 /* MusicController.hpp */,
 				7DF479112362EBC500C1072A /* InputController.cpp */,
 				7DF479122362EBC500C1072A /* InputController.hpp */,
 				7DEB55022354B83B00E31817 /* GameController.cpp */,
@@ -239,6 +244,7 @@
 				7DF8A1EC2388481B00633C7E /* StaticEnemy.cpp in Sources */,
 				7D07D83E23633C9C00BEF3DE /* Trigger.cpp in Sources */,
 				7D0F9746235893A4001BCE97 /* Collectable.cpp in Sources */,
+				7DF2AE4523897DD40001F946 /* MusicController.cpp in Sources */,
 				7D0F9749235893FC001BCE97 /* Movable.cpp in Sources */,
 				7DE02B4423618E2100C59A7F /* Level.cpp in Sources */,
 				7DC9DC002365E2FB00682758 /* ObstacleEnemy.cpp in Sources */,

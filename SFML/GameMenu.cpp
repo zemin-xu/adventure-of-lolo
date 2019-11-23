@@ -13,15 +13,10 @@
 #include "LIB.hpp"
 GameMenu::GameMenu(int width, float height)
 {
-    
     if (!bgTexture.loadFromFile("Sources/start.jpg"))
         return ;
     if (!font.loadFromFile("Sources/karma_future.ttf"))
         return ;
-    if (!music.openFromFile("Sources/Sounds/menu.ogg"))
-        return ;
-    
-
      bg.setTexture(bgTexture);
     
     menu[0].setFont(font);
@@ -37,23 +32,18 @@ GameMenu::GameMenu(int width, float height)
     menu[2].setFont(font);
     menu[2].setColor(sf::Color::White);
     menu[2].setString("Exit");
-    menu[2].setPosition(width *2 / 3, height / 2 + height / 3 / (MAX_NUM_ITEMS_MENU) * 3);
+    menu[2].setPosition(width * 2 / 3, height / 2 + height / 3 / (MAX_NUM_ITEMS_MENU) * 3);
     
     selectedItemIndex = 0;
-    
-   
-    
-    
-    //music.play();
 }
 
 void GameMenu::Render(sf::RenderWindow &window)
 {
     window.draw(bg);
-    for (int i = 0; i < MAX_NUM_ITEMS_MENU; i++) {
+    for (int i = 0; i < MAX_NUM_ITEMS_MENU; i++)
+    {
         window.draw(menu[i]);
     }
-    
 }
 
 void GameMenu::MoveUp()
@@ -78,7 +68,8 @@ void GameMenu::MoveDown()
 
 int GameMenu::GetPressedItem()
 {
-    for (int i = 0; i < MAX_NUM_ITEMS_MENU; i++) {
+    for (int i = 0; i < MAX_NUM_ITEMS_MENU; i++)
+    {
         if (menu[i].getFillColor() == sf::Color::Red)
             return (i);
     }
