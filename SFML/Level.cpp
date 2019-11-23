@@ -50,6 +50,8 @@ void Level::ReadTextureFile()
         return ;
     if (!textureObstacleEnemy.loadFromFile("Sources/ghost.png"))
         return ;
+    if (!textureChasingEnemy.loadFromFile("Sources/enemy.png"))
+        return ;
     
     if (!textureBackground.loadFromFile("Sources/background.png"))
     return ;
@@ -211,7 +213,8 @@ void Level::InitLevel(int level)
             // enemy
             else if(currentMap[i * 16 + j].type / 10 == 5)
             {
-                
+                Enemy enemyUnit(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureChasingEnemy ,LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 51);
+                enemies.push_back(enemyUnit);
             }
             
             

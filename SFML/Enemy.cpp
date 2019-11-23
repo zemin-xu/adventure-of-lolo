@@ -145,12 +145,12 @@ void Enemy::Update(const float deltaTime, vector<Element> &obstacles, vector<Col
         FollowDirection(player);
         isLeftRightBlocked = 0;
         isUpDownBlocked = 0;
-        
         timer = 0.0f;
     }
     canMove = true;
     ScanAround(obstacles, movables, collectables, triggers, eggs, deltaTime);
     UpdateVariable();
+    UpdateMoveAnimation(1, 4, 4, 4, 2, 4, 3, 4);
     
     ChangeDirection();
     

@@ -43,9 +43,11 @@ public:
     sf::Texture textureEnemyStaticAwake;
     sf::Texture textureEgg;
     sf::Texture textureObstacleEnemy;
+    sf::Texture textureChasingEnemy;
     sf::Texture textureBG;
     sf::Texture textureBG2;
     sf::Texture textureClosedKeyBox;
+    sf::Texture textureOpenKeyBox;
     
     sf::Texture textureOuterWall;
     sf::Texture textureOpenDoor;
@@ -131,7 +133,7 @@ public:
     {
         {00,22,22,22, 22,22,22,22, 22,22,22,61, 22,22,00,00},
         {00,22,11,11, 11,11,11,11, 11,11,11,11, 11,22,00,00},
-        {00,22,11,25, 21,21,21,21, 31,25,25,25, 11,22,00,00},
+        {00,22,11,25, 21,21,21,21, 32,25,25,25, 11,22,00,00},
         {00,22,11,25, 25,25,25,25, 25,25,25,25, 11,22,00,00},
         {00,22,11,25, 62,23,11,26, 11,11,11,11, 11,22,00,00},
         {00,22,11,12, 11,23,11,23, 11,21,11,11, 11,22,00,00},
