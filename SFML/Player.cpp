@@ -103,14 +103,13 @@ void Player::UpdateVariable()
     }
 }
 
-void Player::Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs, Level & level)
+void Player::Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs,vector<Enemy> &enemies, Level & level)
 {
     UpdateVariable();
     
-    ScanAround(obstacles, movables, collectables, triggers, eggs, deltaTime, level);
+    ScanAround(obstacles, movables, collectables, triggers, eggs, enemies, deltaTime, level);
     
     Move(deltaTime);
-
 }
 
 // the functions in render will be update each frame of about 0.1s

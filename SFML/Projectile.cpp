@@ -106,6 +106,21 @@ void Projectile::Update(const float deltaTime, vector<Element> &obstacles, vecto
                     }
                 }
             }
+            for (int i = 0; i < enemies.size(); i++)
+            {
+                if (DetectCollision(&enemies[i]))
+                {
+                    Collision(&enemies[i]);
+                    if (canMove == false)
+                    {
+                        Disappear();
+                        MovableEnemy egg(enemies[i].centerX - LIB::LENGTH_UNIT / 2, enemies[i].centerY - LIB::LENGTH_UNIT / 2, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &level.textureEgg, 1, 1, 22, enemies[i].kind);
+                        enemies.erase(enemies.begin() + i);
+                        eggs.push_back(egg);
+                        return ;
+                    }
+                }
+            }
         }
         else
         {
@@ -115,7 +130,7 @@ void Projectile::Update(const float deltaTime, vector<Element> &obstacles, vecto
                 {
                     CollisionObstacle(&level.obstacles[i]);
                 }
-                    
+                
             }
             for (int i = 0; i < level.movables.size(); i++)
             {
@@ -124,7 +139,7 @@ void Projectile::Update(const float deltaTime, vector<Element> &obstacles, vecto
                     CollisionObstacle(&level.movables[i]);
                 }
             }
-                
+            
             if (DetectCollision(&level.player))
             {
                 Collision(&level.player);

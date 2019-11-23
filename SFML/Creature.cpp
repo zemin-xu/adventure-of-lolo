@@ -19,7 +19,7 @@ Creature::Creature(int x, int y, int length, int height, sf::Texture *texture,  
     state = Forward;
 }
 
-void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs, const float deltaTime, Level & level)
+void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs, vector<Enemy> &enemies, const float deltaTime, Level & level)
 {
     for (int i = 0; i < obstacles.size(); i++)
     {
@@ -59,6 +59,24 @@ void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables,
             CollisionTrigger(&triggers[i], level);
         }
     }
+    
+    for (int i = 0; i < enemies.size(); i++)
+    {
+        if (DetectCollision(&enemies[i]))
+        {
+            CollisionEnemy(&enemies[i], level);
+        }
+    }
+}
+
+void Creature::CollisionEnemy(Enemy* other, Level & level)
+{
+        if (kind == 71)
+        {
+            if (abs(centerX - other->centerX) <= TRY_DISTANCE &&
+                abs(centerY - other->centerY) <= TRY_DISTANCE)
+                level.LoseLife();
+        }
 }
 
 
@@ -212,12 +230,6 @@ void Creature::CollisionObstacle(Element *other)
     }
 }
 
-void Creature::Damage(Creature &other, int damage)
-{
-    other.lifePoint -= damage;
-    if (other.lifePoint <= 0)
-        other.isAlive = false;
-}
 
 void Creature::UpdateMoveAnimation(int forwardAnimRow, int forwardAnimCol, int backwardAnimRow, int backwardAnimCol, int leftwardAnimRow, int leftwardAnimCol, int rightwardAnimRow, int rightwardAnimCol)
 {

@@ -23,7 +23,7 @@ Level::Level(int _currentLevel)
     ReadTextureFile();
     InitLevel(_currentLevel);
     playerLife = 2;
-    playerProjectileNum = 0;
+    playerProjectileNum = 3;
     isEnemyAwake = false;
     hasWin = false;
     hasLost = false;
@@ -119,6 +119,8 @@ void Level::InitLevel(int level)
     
     if (eggs.size() > 0)
         eggs.clear();
+    if (enemies.size() > 0)
+        enemies.clear();
     background.clear();
     obstacles.clear();
     movables.clear();
@@ -319,7 +321,7 @@ void Level::CleanLevelEnemy()
 
 void Level::Update(const float deltaTime)
 {
-    player.Update(deltaTime, obstacles, collectables, movables, triggers, eggs, *this);
+    player.Update(deltaTime, obstacles, collectables, movables, triggers, eggs, enemies, *this);
     
     playerProjectile.Update(deltaTime, obstacles, enemies, eggs, *this);
     
@@ -337,7 +339,7 @@ void Level::Update(const float deltaTime)
     
     for (int i = 0; i < enemies.size(); i++)
     {
-        enemies[i].Update(deltaTime, obstacles, collectables, movables, triggers, eggs, &player, *this);
+        enemies[i].Update(deltaTime, obstacles, collectables, movables, triggers, eggs, enemies, &player, *this);
     }
     
     // update of obstacle ememies and static enemies
@@ -400,6 +402,12 @@ void Level::Update(const float deltaTime)
                 StaticEnemy obstacleUnit = StaticEnemy(eggs[i].centerX - 0.5f * LIB::LENGTH_UNIT, eggs[i].centerY -  0.5f * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEnemyStaticAwake, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, eggs[i].GetEnemyKind());
                 obstacles.push_back(obstacleUnit);
             }
+            else if (eggs[i].GetEnemyKind() == 51)
+            {
+                
+                Enemy enemyUnit = Enemy(eggs[i].centerX - 0.5f * LIB::LENGTH_UNIT, eggs[i].centerY -  0.5f * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureChasingEnemy, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, eggs[i].GetEnemyKind());
+                enemies.push_back(enemyUnit);
+            }
                 
             eggs.erase(eggs.begin() + i);
         }
@@ -434,7 +442,6 @@ void Level::Update(const float deltaTime)
             }
             collectables.erase(collectables.begin() + i);
         }
-        
     }
     
     /* make door trigger active if the key is got */

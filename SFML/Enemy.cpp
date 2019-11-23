@@ -13,7 +13,7 @@ Enemy::Enemy()
     
 }
 
-Enemy::Enemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody) : Creature(x, y, length, height, texture, numHorizontal, numVertical, _isRigidbody)
+Enemy::Enemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind) : Creature(x, y, length, height, texture, numHorizontal, numVertical, _kind)
 {
     speed = 70.0f;
     dirHorizontal = 1;
@@ -24,9 +24,9 @@ Enemy::Enemy(int x, int y, int length, int height, sf::Texture *texture, int num
     timer = 0;
 }
 
-void Enemy::ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, vector<Trigger> &triggers ,vector<MovableEnemy> &eggs, const float deltaTime, Level & level)
+void Enemy::ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, vector<Trigger> &triggers ,vector<MovableEnemy> &eggs, vector<Enemy> &enemies, const float deltaTime, Level & level)
 {
-    Creature::ScanAround(obstacles, movables, collectables, triggers, eggs, deltaTime, level);
+    Creature::ScanAround(obstacles, movables, collectables, triggers, eggs, enemies, deltaTime, level);
     if (!canMove)
     {
         if (state == Forward_M && isUpDownBlocked == 0)
@@ -137,7 +137,7 @@ void Enemy::UpdateVariable()
     
 }
 
-void Enemy::Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs, Element* player, Level & level)
+void Enemy::Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs, vector<Enemy> &enemies, Element* player, Level & level)
 {
     timer += deltaTime;
     if (timer > 0.2f)
@@ -148,16 +148,13 @@ void Enemy::Update(const float deltaTime, vector<Element> &obstacles, vector<Col
         timer = 0.0f;
     }
     canMove = true;
-    ScanAround(obstacles, movables, collectables, triggers, eggs, deltaTime, level);
+    ScanAround(obstacles, movables, collectables, triggers, eggs, enemies, deltaTime, level);
     UpdateVariable();
     UpdateMoveAnimation(1, 4, 4, 4, 2, 4, 3, 4);
     
     ChangeDirection();
     
     Move(deltaTime);
-    
-    
-    
 }
 
 void Enemy::Render(sf::RenderWindow &window)

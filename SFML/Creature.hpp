@@ -36,9 +36,9 @@ public:
     
     int GetLifePoint() {return (lifePoint); }
     
-    virtual void ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables,vector<Trigger> &triggers, vector<MovableEnemy> &eggs, const float deltaTime, Level & level);
+    virtual void ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables,vector<Trigger> &triggers, vector<MovableEnemy> &eggs, vector<Enemy> &enemies, const float deltaTime, Level & level);
     
-    
+    void CollisionEnemy(Enemy* other, Level & level);
     void CollisionObstacle(Element *other);
     void CollisionTrigger(Trigger* other, Level & level);
     void CollisionCollectable(Collectable *other);
@@ -48,8 +48,6 @@ public:
     void UpdateIdleAnimation(int forwardAnimRow, int forwardAnimCol, int backwardAnimRow, int backwardAnimCol, int leftwardAnimRow, int leftwardAnimCol, int rightwardAnimRow, int rightwardAnimCol);
     
     void UpdateMoveAnimation(int forwardAnimRow, int forwardAnimCol, int backwardAnimRow, int backwardAnimCol, int leftwardAnimRow, int leftwardAnimCol, int rightwardAnimRow, int rightwardAnimCol);
-    
-    void Damage(Creature &other, int damage);
     
     virtual void Move(const float deltaTime);
     virtual void Fire(Level& level, Projectile& projectile) = 0;

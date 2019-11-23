@@ -19,9 +19,9 @@ public:
     int isUpDownBlocked;
     int isLeftRightBlocked;
     Enemy();
-    Enemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, bool _isRigidbody);
+    Enemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int kind);
     
-    void ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs, const float deltaTime, Level & level);
+    void ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs, vector<Enemy> &enemies, const float deltaTime, Level & level);
     
     void ChangeDirection();
     
@@ -29,7 +29,7 @@ public:
     
     void UpdateVariable();
     
-    void Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs, Element* player,Level & level);
+    void Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs, vector<Enemy> &enemies, Element* player,Level & level);
     
   
     void Render(sf::RenderWindow &window);
