@@ -31,7 +31,7 @@ public:
     static const int LENGTH = 768;
     static const int HEIGHT = 576;
     
-    enum State {Menu, Option, InGame, GameOver} state;
+    enum State {Menu, InGame, GameOver} state;
     
     GameController();
     

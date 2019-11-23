@@ -40,7 +40,6 @@ void MusicController::InGameMusicPlay()
 
 void MusicController::WinMusicPlay()
 {
-    
     if (bgMusic.getStatus() == sf::Music::Playing)
         bgMusic.stop();
     if (winMusic.getStatus() != sf::Music::Playing)
@@ -49,11 +48,9 @@ void MusicController::WinMusicPlay()
 
 void MusicController::LoseMusicPlay()
 {
-    cout << "lost";
     if (bgMusic.getStatus() == sf::Music::Playing)
         bgMusic.stop();
     if (loseMusic.getStatus() != sf::Music::Playing)
         loseMusic.play();
-    
-    
+
 }

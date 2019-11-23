@@ -63,6 +63,7 @@ public:
     
     sf::Texture textureWin;
     sf::Texture textureLose;
+    sf::Texture textureIndication;
     
     sf::Font font;
     sf::Text title;
@@ -70,6 +71,7 @@ public:
     sf::Text textWeapon;
     sf::Sprite imageWin;
     sf::Sprite imageLose;
+    sf::Sprite spriteIndication;
     
     vector<Element> background;
     vector<Element> obstacles;

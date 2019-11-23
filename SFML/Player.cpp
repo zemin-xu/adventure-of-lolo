@@ -23,7 +23,7 @@ Player::Player(int x, int y, int length, int height, sf::Texture *texture, int n
     
     
     if (!bufferPlayerStep.loadFromFile("Sources/Sounds/footstep.wav"))
-        cout << "fail to load sound \n";
+        return ;
     playerStep.setBuffer(bufferPlayerStep);
     playerStep.setVolume(500.0f);
 }

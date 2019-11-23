@@ -7,7 +7,7 @@
 //
 #include "LIB.hpp"
 
-GameController::GameController() : window(sf::VideoMode(LENGTH, HEIGHT), "C++ Game"),  inputController(), menu(LENGTH, HEIGHT), music(), level(2)
+GameController::GameController() : window(sf::VideoMode(LENGTH, HEIGHT), "C++ Game"),  inputController(), menu(LENGTH, HEIGHT), music(), level(3)
 {
     window.setFramerateLimit(120);
     state = Menu;
@@ -55,21 +55,33 @@ void GameController::UpdateSFMLEvents()
                         break;
                     case sf::Keyboard::Return:
                     {
-                        switch (menu.GetPressedItem()) {
-                            case 0:
-                                state = InGame;
-                                break;
-                                
-                            case 1:
-                                state = Option;
-                                break;
-                                
-                            case 2:
-                                window.close();
-                                break;
-                                
-                            default:
-                                break;
+                        
+                        if (menu.GetInOptionState())
+                            menu.SetInOptionState(false);
+                        else
+                        {
+                            switch (menu.GetPressedItem()) {
+                                case 0:
+                                {
+                                    state = InGame;
+                                }
+                                    break;
+                                    
+                                case 1:
+                                {
+                                    menu.SetInOptionState(true);
+                                }
+                                    break;
+                                    
+                                case 2:
+                                {
+                                    window.close();
+                                }
+                                    break;
+                                    
+                                default:
+                                    break;
+                            }
                         }
                     }
                         break;

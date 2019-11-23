@@ -20,13 +20,19 @@ private:
     int selectedItemIndex;
     sf::Font font;
     sf::Text menu[MAX_NUM_ITEMS_MENU];
-    
+    sf::Texture textureIndication;
     sf::Texture bgTexture;
+    sf::Sprite indication;
     sf::Sprite bg;
+    
+    bool inOptionState;
+    
     
 
     
 public:
+    bool GetInOptionState() {return (inOptionState);};
+    void SetInOptionState(bool b) {inOptionState = b;};
     
     GameMenu(int width, float height);
     
@@ -34,6 +40,7 @@ public:
     void MoveUp();
     void MoveDown();
     int GetPressedItem();
+    
     
 };
 

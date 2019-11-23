@@ -81,6 +81,7 @@ void Level::ReadTextureFile()
         return ;
     if (!textureLose.loadFromFile("Sources/lose_image.png"))
         return ;
+    
 }
 
 void Level::UpdateCurrentMap()
