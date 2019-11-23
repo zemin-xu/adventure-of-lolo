@@ -59,6 +59,10 @@ void Level::ReadTextureFile()
         return ;
     if (!textureClosedKeyBox.loadFromFile("Sources/keybox_closed.png"))
         return ;
+    if (!textureMiKeyBox.loadFromFile("Sources/mi_keybox.png"))
+    return ;
+    if (!textureOpenKeyBox.loadFromFile("Sources/fin_keybox.png"))
+    return ;
     if (!textureOuterWall.loadFromFile("Sources/wall.png"))
         return ;
     if (!textureClosedDoor.loadFromFile("Sources/door_closed.png"))
@@ -109,6 +113,7 @@ void Level::InitLevel(int level)
     currentLevel = level;
     heartLeft = 0;
     UpdateCurrentMap();
+    isEnemyAwake = false;
     
     // the collectable vector and enemy vector should not be clear because it is clean already during running
     if (eggs.size() > 0)
@@ -252,7 +257,6 @@ void Level::AwakenEnemy()
 {
     for(int i = 0; i < obstacles.size(); i++)
     {
-        
         if (obstacles[i].kind == 27)
         {
             StaticEnemy staticEnemyUnit(obstacles[i].centerX - LIB::LENGTH_UNIT / 2, obstacles[i].centerY - LIB::LENGTH_UNIT / 2, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEnemyStaticAwake, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 28);
@@ -274,7 +278,7 @@ void Level::HeartCollected()
     for(int i = 0; i < triggers.size(); i++)
         if (triggers[i].kind == 62)
         {
-            triggers[i].shape.setFillColor(sf::Color::Red);
+            triggers[i].shape.setTexture(&textureMiKeyBox);
             triggers[i].SetIsTriggerActive(true);
         }
 }
@@ -294,7 +298,7 @@ void Level::CleanLevelEnemy()
 
 void Level::Update(const float deltaTime)
 {
-    player.Update(deltaTime, obstacles, collectables, movables, triggers, eggs);
+    player.Update(deltaTime, obstacles, collectables, movables, triggers, eggs, *this);
     
     playerProjectile.Update(deltaTime, obstacles, enemies, eggs, *this);
     
@@ -306,13 +310,14 @@ void Level::Update(const float deltaTime)
     // check the moment to awaken the enemies in sleep
     if (heartLeft <= 1 && !isEnemyAwake)
     {
+        cout << "awake" << endl;
         AwakenEnemy();
         isEnemyAwake = true;
     }
     
     for (int i = 0; i < enemies.size(); i++)
     {
-        enemies[i].Update(deltaTime, obstacles, collectables, movables, triggers, eggs, &player);
+        enemies[i].Update(deltaTime, obstacles, collectables, movables, triggers, eggs, &player, *this);
     }
     
     // update of obstacle ememies and static enemies

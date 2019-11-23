@@ -47,6 +47,7 @@ public:
     sf::Texture textureBG;
     sf::Texture textureBG2;
     sf::Texture textureClosedKeyBox;
+    sf::Texture textureMiKeyBox;
     sf::Texture textureOpenKeyBox;
     
     sf::Texture textureOuterWall;
@@ -84,7 +85,6 @@ public:
     Projectile playerProjectile;
     vector<coord> currentMap;
   
-    
     // 00: background_black
     // 11: background1      12: background2
     // 21: flower           22: outerwall        23: tree
@@ -106,7 +106,7 @@ public:
         {00,22,71,11, 11,11,21,21, 11,21,21,23, 31,22,00,00},
         {00,22,11,11, 11,11,11,11, 26,11,21,11, 11,22,00,00},
         {00,22,11,11, 11,11,11,11, 11,11,11,32, 11,22,00,00},
-        {00,22,11,23, 23,11,11,11, 11,23,23,51, 11,22,00,00},
+        {00,22,11,23, 23,11,11,11, 11,23,23,11, 11,22,00,00},
         {00,22,23,23, 23,23,11,11, 11,23,23,23, 11,22,00,00},
         {00,22,21,23, 23,21,62,11, 11,11,23,23, 11,22,00,00},
         {00,22,21,21, 21,21,21,21, 11,11,11,11, 11,22,00,00},

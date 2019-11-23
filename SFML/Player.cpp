@@ -103,11 +103,11 @@ void Player::UpdateVariable()
     }
 }
 
-void Player::Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs)
+void Player::Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs, Level & level)
 {
     UpdateVariable();
     
-    ScanAround(obstacles, movables, collectables, triggers, eggs, deltaTime);
+    ScanAround(obstacles, movables, collectables, triggers, eggs, deltaTime, level);
     
     Move(deltaTime);
 

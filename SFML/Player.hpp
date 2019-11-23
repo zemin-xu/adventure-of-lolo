@@ -29,7 +29,7 @@ public:
     
     void UpdateState();
     void UpdateVariable();
-    void Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs);
+    void Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs, Level & level);
     void Render(sf::RenderWindow &window);
     
     virtual void Fire(Level& level, Projectile& projectile);

@@ -36,11 +36,11 @@ public:
     
     int GetLifePoint() {return (lifePoint); }
     
-    virtual void ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables,vector<Trigger> &triggers, vector<MovableEnemy> &eggs, const float deltaTime);
+    virtual void ScanAround(vector<Element> &obstacles, vector<Movable> &movables, vector<Collectable> &collectables,vector<Trigger> &triggers, vector<MovableEnemy> &eggs, const float deltaTime, Level & level);
     
     
     void CollisionObstacle(Element *other);
-    void CollisionTrigger(Trigger* other);
+    void CollisionTrigger(Trigger* other, Level & level);
     void CollisionCollectable(Collectable *other);
     
     void CollisionMovable(Movable *movable, const float deltaTime);

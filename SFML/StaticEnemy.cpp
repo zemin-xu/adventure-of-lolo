@@ -24,18 +24,12 @@ StaticEnemy::StaticEnemy(int x, int y, int length, int height, sf::Texture *text
 void StaticEnemy::Update(Element *player, const float deltaTime, Level & level)
 {
     ObstacleEnemy::Update(player, deltaTime);
-    
-    
-    //if (time > fireDelay)
-    //{
+
         if (abs(player->centerX - centerX) < (LIB::LENGTH_UNIT / 2) ||
         abs(player->centerY - centerY) < (LIB::HEIGHT_UNIT / 2))
         {
             Fire(level);
-            //time = 0;
         }
-   // }
-    
 }
 
 void StaticEnemy::Fire(Level& level)
