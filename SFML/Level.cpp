@@ -6,10 +6,7 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 
 // Level state :
-// All the list of objects, textures as well as level maps will exist here.
-// All the corresponding initilization and update of list and objects will be here.
-// There are also the variables that are not supposed to be reinitialized like
-// the num of playerLife and that of playerProjectile, UI, etc.
+
 
 #include "LIB.hpp"
 
@@ -33,7 +30,6 @@ void Level::ReadTextureFile()
 {
     if (!font.loadFromFile("Sources/karma_future.ttf"))
         return ;
-    
     if (!texturePlayer.loadFromFile("Sources/player.png"))
         return ;
     if (!textureEnemyStaticSleep.loadFromFile("Sources/enemy_static_sleep.png"))
@@ -46,17 +42,16 @@ void Level::ReadTextureFile()
         return ;
     if (!textureChasingEnemy.loadFromFile("Sources/enemy.png"))
         return ;
-    
     if (!textureBackground.loadFromFile("Sources/background.png"))
-    return ;
+        return ;
     if (!textureBG2.loadFromFile("Sources/bridge.png"))
         return ;
     if (!textureClosedKeyBox.loadFromFile("Sources/keybox_closed.png"))
         return ;
     if (!textureMiKeyBox.loadFromFile("Sources/mi_keybox.png"))
-    return ;
+        return ;
     if (!textureOpenKeyBox.loadFromFile("Sources/fin_keybox.png"))
-    return ;
+        return ;
     if (!textureOuterWall.loadFromFile("Sources/wall.png"))
         return ;
     if (!textureClosedDoor.loadFromFile("Sources/door_closed.png"))
@@ -81,13 +76,12 @@ void Level::ReadTextureFile()
         return ;
     if (!textureLose.loadFromFile("Sources/lose_image.png"))
         return ;
-    
 }
 
+// 16 and 12 here is the length and height of map
 void Level::UpdateCurrentMap()
 {
     currentMap.clear();
-    heartLeft = 0;
     
     for (int i = 0; i < 12; i++)
     {
@@ -115,8 +109,7 @@ void Level::InitLevel(int level)
     UpdateCurrentMap();
     isEnemyAwake = false;
     
-    // the collectable vector and enemy vector should not be clear because it is cleaned already during running
-    
+    /* list clearing */
     if (eggs.size() > 0)
         eggs.clear();
     if (enemies.size() > 0)
@@ -148,17 +141,19 @@ void Level::InitLevel(int level)
     
     playerProjectile = Projectile(0,0, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureCollectable2, 1, 1, 32);
     
+    // we will create several projectiles for enemies which is invisible when not using
     for (int i = 0; i < LIB::ENEMY_PROJECTILE_NUM; i++)
     {
         Projectile enemyProjectile = Projectile(0,0, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureCollectable2, 1, 1, 33);
         enemyProjectiles.push_back(enemyProjectile);
     }
     
+    // The for-loop to create all the elements according to map
     for (int i = 0; i < 12; i++)
     {
         for (int j = 0; j < 16; j++)
         {
-            // background
+            // background, a bit different to others, because it is created based on the value of i and j, not the value of 'kind' of the map
             if(j >= 1 && j < 14)
             {
                 Element backgroundUnit;
@@ -172,7 +167,7 @@ void Level::InitLevel(int level)
                 }
             }
             
-            // obstacles
+            // obstacles, including walls, closed door, etc.
             if (currentMap[i * 16 + j].type / 10 == 2 || currentMap[i * 16 + j].type == 61)
             {
                 Element obstacleUnit;
@@ -185,7 +180,7 @@ void Level::InitLevel(int level)
                 else if (currentMap[i * 16 + j].type == 25)
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacle3, 3, 1, 25);
                 else if (currentMap[i * 16 + j].type == 26)
-                obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacleEnemy, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 26);
+                    obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureObstacleEnemy, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 26);
                 else if (currentMap[i * 16 + j].type == 27)
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEnemyStaticSleep , 1, 1, 27);
                 else if (currentMap[i * 16 + j].type == 61)
@@ -196,6 +191,7 @@ void Level::InitLevel(int level)
                 obstacles.push_back(obstacleUnit);
             }
             
+            // collectables : hearts and projectiles
             else if (currentMap[i * 16 + j].type / 10 == 3)
             {
                 Collectable collectableUnit;
@@ -211,7 +207,6 @@ void Level::InitLevel(int level)
                 collectables.push_back(collectableUnit);
             }
             
-            
             // movable
             else if(currentMap[i * 16 + j].type == 41)
             {
@@ -226,6 +221,7 @@ void Level::InitLevel(int level)
                 enemies.push_back(enemyUnit);
             }
             
+            // trigger, 61 for door, 62 for keybox
             if(currentMap[i * 16 + j].type / 10 == 6)
             {
                 Trigger triggerUnit;
@@ -241,6 +237,7 @@ void Level::InitLevel(int level)
                 triggers.push_back(triggerUnit);
             }
             
+            // player
             else if(currentMap[i * 16 + j].type == 71)
                 player = Player(j * LIB::LENGTH_UNIT, i * LIB::LENGTH_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &texturePlayer, LIB::ANIM_PLAYER_NUM_HORIZONTAL, LIB::ANIM_PLAYER_NUM_VERTICAL, 71);
         }
@@ -294,16 +291,17 @@ void Level::UpdatePlayerProjectileNum()
     playerProjectileNum++;
 }
 
-
 // when all the hearts are collected
 void Level::HeartCollected()
 {
     for(int i = 0; i < triggers.size(); i++)
+    {
         if (triggers[i].kind == 62)
         {
             triggers[i].shape.setTexture(&textureMiKeyBox);
             triggers[i].SetIsTriggerActive(true);
         }
+    }
 }
 
 void Level::CleanLevelEnemy()
@@ -329,7 +327,7 @@ void Level::Update(const float deltaTime)
     {
         enemyProjectiles[i].Update(deltaTime, obstacles, enemies, eggs, *this);
     }
-
+    
     // check the moment to awaken the enemies in sleep
     if (heartLeft <= 1 && !isEnemyAwake)
     {
@@ -337,6 +335,7 @@ void Level::Update(const float deltaTime)
         isEnemyAwake = true;
     }
     
+    // update of enemies
     for (int i = 0; i < enemies.size(); i++)
     {
         enemies[i].Update(deltaTime, obstacles, collectables, movables, triggers, eggs, enemies, &player, *this);
@@ -356,7 +355,6 @@ void Level::Update(const float deltaTime)
             p->Update(&player, deltaTime, *this);
         }
     }
-     
     
     /* equal to movable class's update function */
     for (int i = 0; i < movables.size(); i++)
@@ -393,10 +391,10 @@ void Level::Update(const float deltaTime)
                 obstacles.push_back(obstacleUnit);
             }
             else if (eggs[i].GetEnemyKind() == 27)
-                {
-                    Element obstacleUnit = Element(eggs[i].centerX - 0.5f * LIB::LENGTH_UNIT, eggs[i].centerY -  0.5f * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEnemyStaticSleep, 1, 1, eggs[i].GetEnemyKind());
-                    obstacles.push_back(obstacleUnit);
-                }
+            {
+                Element obstacleUnit = Element(eggs[i].centerX - 0.5f * LIB::LENGTH_UNIT, eggs[i].centerY -  0.5f * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEnemyStaticSleep, 1, 1, eggs[i].GetEnemyKind());
+                obstacles.push_back(obstacleUnit);
+            }
             else if (eggs[i].GetEnemyKind() == 28)
             {
                 StaticEnemy obstacleUnit = StaticEnemy(eggs[i].centerX - 0.5f * LIB::LENGTH_UNIT, eggs[i].centerY -  0.5f * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEnemyStaticAwake, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, eggs[i].GetEnemyKind());
@@ -408,82 +406,82 @@ void Level::Update(const float deltaTime)
                 Enemy enemyUnit = Enemy(eggs[i].centerX - 0.5f * LIB::LENGTH_UNIT, eggs[i].centerY -  0.5f * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureChasingEnemy, LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, eggs[i].GetEnemyKind());
                 enemies.push_back(enemyUnit);
             }
-                
             eggs.erase(eggs.begin() + i);
         }
-
-        /* eventual movable checking */
-        if (eggs[i].GetCurrentDir() != 0)
+        
+        /* Possible movable checking, it happens when we push the eggs and it will perhaps collide with other obstacles */
+             if (eggs[i].GetCurrentDir() != 0)
+             {
+                 for (int j = 0; j < obstacles.size(); j++)
+                     if (eggs[i].DetectCollision(&obstacles[j]))
+                         eggs[i].Collision(&obstacles[j]);
+                 for (int j = 0; j < eggs.size(); j++)
+                     if (eggs[i].DetectCollision(&eggs[j]) && j != i)
+                         eggs[i].Collision(&eggs[j]);
+                 for (int j = 0; j < collectables.size(); j++)
+                     if (eggs[i].DetectCollision(&collectables[j]))
+                         eggs[i].Collision(&collectables[j]);
+             }
+         }
+        
+        /* update for collectable class */
+        for (int i = 0; i < collectables.size(); i++)
         {
-            for (int j = 0; j < obstacles.size(); j++)
-                if (eggs[i].DetectCollision(&obstacles[j]))
-                    eggs[i].Collision(&obstacles[j]);
-            for (int j = 0; j < eggs.size(); j++)
-                if (eggs[i].DetectCollision(&eggs[j]) && j != i)
-                    eggs[i].Collision(&eggs[j]);
-            for (int j = 0; j < collectables.size(); j++)
-                if (eggs[i].DetectCollision(&collectables[j]))
-                    eggs[i].Collision(&collectables[j]);
-        }
-    }
-    
-    /* update for collectable class */
-    for (int i = 0; i < collectables.size(); i++)
-    {
-        if (collectables[i].GetIsCollided())
-        {
-            if (collectables[i].kind == 31)
+            if (collectables[i].GetIsCollided())
             {
-                UpdateHeartLeft();
-            }
-            else if (collectables[i].kind == 32)
-            {
-                UpdatePlayerProjectileNum();
-            }
-            collectables.erase(collectables.begin() + i);
-        }
-    }
-    
-    /* make door trigger active if the key is got */
-    for (int i = 0; i < triggers.size(); i++)
-    {
-        // keybox
-        if (triggers[i].GetTrigger() && triggers[i].kind == 62)
-        {
-            CleanLevelEnemy();
-            // erase closed door
-            for (int j = 0; j < obstacles.size(); j++)
-            {
-                if(obstacles[j].kind == 61)
-                    obstacles.erase(obstacles.begin() + j);
-            }
-            // show open door
-            for (int j = 0; j < triggers.size(); j++)
-            {
-                if(triggers[j].kind == 61)
+                if (collectables[i].kind == 31)
                 {
-                    triggers[j].SetIsTriggerActive(true);
+                    UpdateHeartLeft();
+                }
+                else if (collectables[i].kind == 32)
+                {
+                    UpdatePlayerProjectileNum();
+                }
+                collectables.erase(collectables.begin() + i);
+            }
+        }
+        
+        /* make door trigger active if the key is got */
+        for (int i = 0; i < triggers.size(); i++)
+        {
+            // keybox
+            if (triggers[i].GetTrigger() && triggers[i].kind == 62)
+            {
+                CleanLevelEnemy();
+                // erase closed door
+                for (int j = 0; j < obstacles.size(); j++)
+                {
+                    if(obstacles[j].kind == 61)
+                        obstacles.erase(obstacles.begin() + j);
+                }
+                // show open door
+                for (int j = 0; j < triggers.size(); j++)
+                {
+                    if(triggers[j].kind == 61)
+                    {
+                        triggers[j].SetIsTriggerActive(true);
+                    }
                 }
             }
-        }
-        // door
-        if (triggers[i].GetTrigger() && triggers[i].kind == 61)
-        {
-            if (currentLevel < MAX_LEVEL)
+            // door
+            if (triggers[i].GetTrigger() && triggers[i].kind == 61)
             {
-                currentLevel++;
-                InitLevel(currentLevel);
+                if (currentLevel < MAX_LEVEL)
+                {
+                    currentLevel++;
+                    InitLevel(currentLevel);
+                }
+                else
+                    GameWin();
             }
-            else
-                GameWin();
         }
-    }
-    
-    /* text update, will be placed in a condition when they change */
+        
+     
+
+    /* text update */
     textLife.setString(to_string(playerLife));
     textWeapon.setString(to_string(playerProjectileNum));
 }
-
 
 void Level::Render(sf::RenderWindow &window)
 {
@@ -512,7 +510,7 @@ void Level::Render(sf::RenderWindow &window)
     {
         eggs[i].Render(window);
     }
-     
+    
     for (int i = 0; i < triggers.size(); i++)
     {
         if (triggers[i].GetIsTriggerActive())

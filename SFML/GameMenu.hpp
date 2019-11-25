@@ -16,20 +16,20 @@ class GameController;
 class GameMenu
 {
 private:
+    // the number of options in menu
     static const int MAX_NUM_ITEMS_MENU = 3;
+    // currently selected index
     int selectedItemIndex;
+    // whether it is showing the option contents right now
+    bool inOptionState;
+    
     sf::Font font;
     sf::Text menu[MAX_NUM_ITEMS_MENU];
     sf::Texture textureIndication;
     sf::Texture bgTexture;
     sf::Sprite indication;
     sf::Sprite bg;
-    
-    bool inOptionState;
-    
-    
 
-    
 public:
     bool GetInOptionState() {return (inOptionState);};
     void SetInOptionState(bool b) {inOptionState = b;};
@@ -39,9 +39,8 @@ public:
     void Render(sf::RenderWindow &window);
     void MoveUp();
     void MoveDown();
+    // When 'enter' pressed, the item will be confirmed.
     int GetPressedItem();
-    
-    
 };
 
 

@@ -7,7 +7,14 @@
 //
 
 
-
+/*
+ 
+ All the list of objects, textures as well as level maps will exist here.
+ All the corresponding initilization and update of list and objects will be here.
+ There are also the variables that are not supposed to be reinitialized like
+ the num of playerLife and that of playerProjectile, UI, etc.
+ 
+ */
 #include "LIB.hpp"
 
 #ifndef Level_hpp
@@ -16,15 +23,21 @@
 class Level
 {
 private:
+    // index of current level
     int currentLevel;
+    // the heart Left in the map
     int heartLeft;
+    // the life that player has
     int playerLife;
+    // the number of projectile that player has
     int playerProjectileNum;
     
     bool isEnemyAwake;
     bool hasWin;
     bool hasLost;
     
+    // The structure of an elements in map which includes its coord index
+    // and the type of element it will take.
     struct coord
     {
         int x;
@@ -32,6 +45,7 @@ private:
         int type;
     };
     
+    // Max level number
     static const int MAX_LEVEL = 3;
 
 public:
@@ -46,20 +60,17 @@ public:
     sf::Texture textureClosedKeyBox;
     sf::Texture textureMiKeyBox;
     sf::Texture textureOpenKeyBox;
-    
+    sf::Texture textureBackground;
     sf::Texture textureOuterWall;
     sf::Texture textureOpenDoor;
     sf::Texture textureClosedDoor;
     sf::Texture textureObstacle1;
     sf::Texture textureObstacle2;
     sf::Texture textureObstacle3;
-    
     sf::Texture textureCollectable;
     sf::Texture textureCollectable2;
     sf::Texture textureMovable;
     sf::Texture textureUI;
-    
-    sf::Texture textureBackground;
     
     sf::Texture textureWin;
     sf::Texture textureLose;
@@ -73,6 +84,11 @@ public:
     sf::Sprite imageLose;
     sf::Sprite spriteIndication;
     
+    /*
+     The list of each kind of element.
+     There might be several kinds of elements in the same list.
+     For example, there will be obstacle enemy in list "obstacles".
+     */
     vector<Element> background;
     vector<Element> obstacles;
     vector<Collectable> collectables;
@@ -88,7 +104,7 @@ public:
     
     Projectile playerProjectile;
     vector<coord> currentMap;
-
+    
     // 00: background_black
     // 11: background1      12: background2
     // 21: flower           22: outerwall        23: tree
@@ -100,7 +116,6 @@ public:
     // 61: closed door      62: closed key box
     // 71: player
     // 81: playerProjectile 82: enemyProjectile
-    
     const int level1[12][16] =
     {
         {00,22,22,22, 22,22,22,22, 61,22,22,22, 22,22,00,00},
@@ -158,20 +173,36 @@ public:
     bool GetHasWin(){return (hasWin);};
     bool GetHasLost(){return (hasLost);};
     
+    // Import all texture files
     void ReadTextureFile();
+    
+    // Update the map index when player finish current one.
     void UpdateCurrentMap();
+    
+    // Initialize the indicated level, including clearing list, resetting the playerProjectileNum and heartLeft value. After that, the elements will be created according to the index of current map and will be push into list.
     void InitLevel(int level);
-
+    
+    // When player collects a heart(mushroom red), the index of heart left on map will be update.
     void UpdateHeartLeft();
+    
+    // When player get damaged by enemy.
     void LoseLife();
+    
     void GameOver();
     void GameWin();
+    
+    // If there is only one heart left on map, the static enemy will be awaked. The trick here is to erase the element of obstacle element and create static enemy
     void AwakenEnemy();
+    
     void UpdatePlayerProjectileNum();
     void HeartCollected();
+    
+    // When player reaches the key, all the enemies will disappear.
     void CleanLevelEnemy();
     
+    // All the collision detection will be happened here.
     void Update(const float deltaTime);
+    
     void Render(sf::RenderWindow &window);
 };
 
