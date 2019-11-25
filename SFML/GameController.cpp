@@ -7,7 +7,7 @@
 //
 #include "LIB.hpp"
 
-GameController::GameController() : window(sf::VideoMode(LENGTH, HEIGHT), "C++ Game"),  inputController(), menu(LENGTH, HEIGHT), music(), level(3)
+GameController::GameController() : window(sf::VideoMode(LENGTH, HEIGHT), "C++ Game"),  inputController(), menu(LENGTH, HEIGHT), music(), level(1)
 {
     window.setFramerateLimit(120);
     state = Menu;

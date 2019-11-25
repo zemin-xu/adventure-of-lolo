@@ -4,9 +4,6 @@
 //
 //  Created by ZEMIN on 14/10/2019.
 //  Copyright © 2019 ZEMIN. All rights reserved.
-//
-
-/* The base class of all existing sprite. */
 
 #include "LIB.hpp"
 
@@ -14,12 +11,6 @@ Element::Element()
 {
     isShowing = true;
 }
-
-// The standard constructor that will include the position and the dimension of
-// sprite, as well as how many sprites there are on the texture image.
-// The variable 'kind' here is important, which is the same as that in clas s Level.
-// It is useful because there maybe diffrent kinds of objects in a same list.
-// We can use it to do downcasting if needed.
 
 Element::Element(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind)
 {

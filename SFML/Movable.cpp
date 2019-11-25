@@ -19,10 +19,8 @@ Movable::Movable(int x, int y, int length, int height, sf::Texture *texture, int
     canMove = true;
 }
 
-
 void Movable::Collision(Element *other)
 {
-    
     if (GetCurrentDir() == 1)
     {
         if (((centerY + HEIGHT_UNIT / 2) > (other->centerY - HEIGHT_UNIT / 2)) &&

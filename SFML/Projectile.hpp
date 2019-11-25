@@ -12,17 +12,21 @@
 using namespace std;
 class Enemy;
 class Level;
+
+/* The projectile of player and enemy. */
 class Projectile : public Movable
 {
 private:
+    // Whether the projectile is using.
     bool isUsing;
     float speed;
 public:
-    
     Projectile();
     Projectile(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
     void SetIsUsing(bool b) {isUsing = b;};
     bool GetIsUsing() {return (isUsing);};
+    // If the projectile go out of the screen or collide something, Disappear()
+    // will make 'isUsing' false to make it invisible.
     void Disappear();
     
     void CollisionObstacle(Element *other);

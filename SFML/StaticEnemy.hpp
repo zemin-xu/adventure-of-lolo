@@ -14,6 +14,7 @@
 class Projectile;
 class Level;
 
+/* Static enemy is for those that will fire projectile towards player when they are alive, and they cannot move. */
 class StaticEnemy : public ObstacleEnemy
 {
 private:
@@ -22,6 +23,8 @@ private:
 public:
     StaticEnemy();
     StaticEnemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
+    
+    // To see weather player is in its horizontal or vertical array.
     void Update(Element *player, const float deltaTime, Level & level);
     void Fire(Level& level);
     

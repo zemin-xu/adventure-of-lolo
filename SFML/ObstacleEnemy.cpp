@@ -6,7 +6,6 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
-
 #include "LIB.hpp"
 
 ObstacleEnemy::ObstacleEnemy()
@@ -14,11 +13,10 @@ ObstacleEnemy::ObstacleEnemy()
 
 }
 
-ObstacleEnemy::ObstacleEnemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind) : Element(x, y, length, height, texture, numHorizontal, numVertical, _kind)
+ObstacleEnemy::ObstacleEnemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int kind) : Element(x, y, length, height, texture, numHorizontal, numVertical, kind)
 {
 
 }
-
 
 void ObstacleEnemy::TurnTowardsPlayer(Element *player)
 {
@@ -29,7 +27,6 @@ void ObstacleEnemy::TurnTowardsPlayer(Element *player)
     else if (centerX - player->centerX < 0)
         SetCurrentDir(4);
 }
-
 
 void ObstacleEnemy::Update(Element *player, const float deltaTime)
 {

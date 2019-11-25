@@ -11,23 +11,20 @@
 #ifndef Movable_hpp
 #define Movable_hpp
 
+/* Movable is for those element that player can move, like box and enemy egg. */
+
 class Movable : public Element
 {
 private:
-    // 0 : cannot move / stable
-    // 1 : moving down
-    // 2 : moving up
-    // 3 : moving left
-    // 4 : moving down
-    
-    
-    
 public:
+    // Weather the movable element has collided something.
     bool canMove;
     
     Movable();
     Movable(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
     
+    // When the box is pushed, check whether it has collision with obstacles.
+    // If so, 'canMove' will turn to be false.
     void Collision(Element *other);
 };
 
