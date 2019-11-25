@@ -11,7 +11,9 @@
 #ifndef GameController_hpp
 #define GameController_hpp
 
-class GameController{
+/* the general controller of game */
+class GameController
+{
 private:
     sf::RenderWindow window;
     sf::Clock deltaTimeClock;
@@ -27,7 +29,6 @@ private:
     InputController inputController;
         
 public:
-    
     static const int LENGTH = 768;
     static const int HEIGHT = 576;
     
@@ -36,14 +37,11 @@ public:
     GameController();
     
     void EndApplication();
-    
     void UpdateTime();
     void UpdateSFMLEvents();
     void Update();
     void Render();
     void Run();
-    
-    
 };
 
 #endif /* GameController_hpp */

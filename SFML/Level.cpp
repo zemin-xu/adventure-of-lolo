@@ -20,7 +20,7 @@ Level::Level(int _currentLevel)
     ReadTextureFile();
     InitLevel(_currentLevel);
     playerLife = 2;
-    playerProjectileNum = 3;
+    playerProjectileNum = 0;
     isEnemyAwake = false;
     hasWin = false;
     hasLost = false;
@@ -60,7 +60,7 @@ void Level::ReadTextureFile()
         return ;
     if (!textureObstacle1.loadFromFile("Sources/tree1.png"))
         return ;
-    if (!textureObstacle2.loadFromFile("Sources/tree2.png"))
+    if (!textureObstacle2.loadFromFile("Sources/bad_flower.png"))
         return ;
     if (!textureObstacle3.loadFromFile("Sources/head.png"))
         return ;
@@ -114,10 +114,13 @@ void Level::InitLevel(int level)
         eggs.clear();
     if (enemies.size() > 0)
         enemies.clear();
+    if (collectables.size() > 0)
+        collectables.clear();
     background.clear();
     obstacles.clear();
     movables.clear();
     triggers.clear();
+    
     
     /* text init */
     title.setFont(font);
@@ -144,7 +147,7 @@ void Level::InitLevel(int level)
     // we will create several projectiles for enemies which is invisible when not using
     for (int i = 0; i < LIB::ENEMY_PROJECTILE_NUM; i++)
     {
-        Projectile enemyProjectile = Projectile(0,0, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureCollectable2, 1, 1, 33);
+        Projectile enemyProjectile = Projectile(0,0, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEgg, 1, 1, 33);
         enemyProjectiles.push_back(enemyProjectile);
     }
     
@@ -260,7 +263,6 @@ void Level::LoseLife()
     }
     else
         GameOver();
-    
 }
 
 void Level::GameOver()
@@ -271,6 +273,18 @@ void Level::GameOver()
 void Level::GameWin()
 {
     hasWin = true;
+}
+
+void Level::RestartGame()
+{
+    if(!hasLost && playerLife >= 1)
+        playerLife--;
+    else
+    {
+        playerLife = 2;
+        hasLost = false;
+    }
+    InitLevel(currentLevel);
 }
 
 void Level::AwakenEnemy()
@@ -432,12 +446,14 @@ void Level::Update(const float deltaTime)
                 if (collectables[i].kind == 31)
                 {
                     UpdateHeartLeft();
+                    collectables.erase(collectables.begin() + i);
                 }
                 else if (collectables[i].kind == 32)
                 {
                     UpdatePlayerProjectileNum();
+                    collectables.erase(collectables.begin() + i);
                 }
-                collectables.erase(collectables.begin() + i);
+                
             }
         }
         
@@ -475,8 +491,6 @@ void Level::Update(const float deltaTime)
                     GameWin();
             }
         }
-        
-     
 
     /* text update */
     textLife.setString(to_string(playerLife));

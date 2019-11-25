@@ -10,6 +10,7 @@
 #ifndef MusicController_hpp
 #define MusicController_hpp
 
+/* control the music play in game and menu */
 class MusicController
 {
 private:
@@ -19,6 +20,7 @@ private:
     sf::Music loseMusic;
 public:
     MusicController();
+    
     void MenuMusicPlay();
     void InGameMusicPlay();
     void WinMusicPlay();
