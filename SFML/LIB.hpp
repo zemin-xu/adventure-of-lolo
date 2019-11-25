@@ -6,7 +6,7 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
-/* all the header files to include */
+/* All the header files to include. */
 
 #ifndef LIB_hpp
 #define LIB_hpp

@@ -87,6 +87,7 @@ public:
     
     void UpdatePosition();
     
+    // the functions in render will be update each frame of about 0.1s
     virtual void Render(sf::RenderWindow &window);
     
     // To know whether two elements intersect.
@@ -94,7 +95,7 @@ public:
     // It is different from other function of collision. The main function of it is to detect whether the shape of two elements intersects.
     int DetectCollision(Element *other);
     
-    // If the element has animation, this function will update it according to the number of sprite for each animation in a texture file
+    // If the element has animation, this function will update it according to the number of sprite for each animation in a texture file.
     void UpdateIdleAnimation(int forwardAnimRow, int forwardAnimCol, int backwardAnimRow, int backwardAnimCol, int leftwardAnimRow, int leftwardAnimCol, int rightwardAnimRow, int rightwardAnimCol);
     
 };

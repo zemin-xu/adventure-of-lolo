@@ -11,6 +11,7 @@
 #ifndef Collectable_hpp
 #define Collectable_hpp
 
+/* This class is for the collectables like the hearts and projectiles. */
 class Collectable: public Element
 {
 protected:
@@ -18,8 +19,6 @@ protected:
     bool isActive;
     
 public:
-    
-    
     Collectable();
     Collectable(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
     bool GetIsActive() { return (isActive);};
@@ -27,10 +26,6 @@ public:
     
     void SetIsCollided(bool _isCollided) {isCollided = _isCollided;};
     bool GetIsCollided() { return (isCollided);};
-    
-
-    
-    
 };
 
 

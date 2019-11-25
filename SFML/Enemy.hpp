@@ -31,9 +31,7 @@ public:
     
     void Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs, vector<Enemy> &enemies, Element* player,Level & level);
     
-  
     void Render(sf::RenderWindow &window);
-    
     virtual void Fire(Level& level, Projectile& projectile);
 };
 

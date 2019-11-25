@@ -6,7 +6,7 @@
 //  Copyright © 2019 ZEMIN. All rights reserved.
 //
 
-/* the function to start the game */
+/* The function to start the game. */
 
 #include "LIB.hpp"
 

@@ -18,15 +18,14 @@ public:
     sf::SoundBuffer bufferPlayerStep;
     sf::SoundBuffer bufferPlayerFire;
 protected:
-    
 public:
-    
     sf::Sound playerStep;
     sf::Sound playerFire;
     
     Player();
     Player(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind);
     
+    // The state will be updated from moving to the corresponding idle state.
     void UpdateState();
     void UpdateVariable();
     void Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs,vector<Enemy> &enemies, Level & level);
