@@ -18,13 +18,16 @@ void InputController::UpdateInput(Level &level)
 {
     if (!level.GetHasLost())
     {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
             level.player.state = Creature::Backward_M;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
             level.player.state = Creature::Forward_M;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
             level.player.state = Creature::Leftward_M;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
             level.player.state = Creature::Rightward_M;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F))
             level.player.Fire(level, level.playerProjectile);

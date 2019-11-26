@@ -100,6 +100,8 @@ void Level::UpdateCurrentMap()
                 a.type = level3[i][j];
             else if (currentLevel == 4)
             a.type = level4[i][j];
+            else if (currentLevel == 5)
+            a.type = level5[i][j];
             currentMap.push_back(a);
         }
     }

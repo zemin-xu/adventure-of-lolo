@@ -15,7 +15,7 @@ Projectile::Projectile()
 
 Projectile::Projectile(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind) : Movable(x, y, length, height, texture, numHorizontal, numVertical, _kind)
 {
-    speed = 150.0f;
+    speed = 200.0f;
     isUsing = false;
 }
 
