@@ -71,12 +71,12 @@ void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables,
 
 void Creature::CollisionEnemy(Enemy* other, Level & level)
 {
-        if (kind == 71)
-        {
-            if (abs(centerX - other->centerX) <= TRY_DISTANCE &&
-                abs(centerY - other->centerY) <= TRY_DISTANCE)
-                level.LoseLife();
-        }
+    if (kind == 71)
+    {
+        if (abs(centerX - other->centerX) <= TRY_DISTANCE &&
+            abs(centerY - other->centerY) <= TRY_DISTANCE)
+            level.LoseLife();
+    }
 }
 
 
@@ -112,56 +112,72 @@ void Creature::CollisionCollectable(Collectable *other)
 
 void Creature::CollisionMovable(Movable *other, const float deltaTime)
 {
-    if (kind == 71 && state == Forward_M)
+    if (state == Forward_M)
     {
         if (((centerY + HEIGHT_UNIT / 2) > (other->centerY - HEIGHT_UNIT / 2)) &&
             ((centerX - LENGTH_UNIT * FACTOR / 2) < (other->centerX + LENGTH_UNIT * FACTOR / 2)) &&
             ((centerX + LENGTH_UNIT * FACTOR / 2) > (other->centerX - LENGTH_UNIT * FACTOR / 2)) &&
             (centerY < other->centerY))
         {
-            if (!other->canMove)
-                canMove = false;
-            other->SetCurrentDir(state - 3);
-            if (other->canMove)
+            if (kind == 71)
             {
-                other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
-                other->UpdatePosition();
+                if (!other->canMove)
+                    canMove = false;
+                other->SetCurrentDir(state - 3);
+                if (other->canMove)
+                {
+                    other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+                    other->UpdatePosition();
+                }
             }
+            else
+                canMove = false;
         }
     }
-    else if (kind == 71 && state == Backward_M)
+    else if (state == Backward_M)
     {
         if (((centerY - HEIGHT_UNIT / 2) < (other->centerY + HEIGHT_UNIT / 2)) &&
             ((centerX - LENGTH_UNIT * FACTOR / 2) < (other->centerX + LENGTH_UNIT * FACTOR / 2)) &&
             ((centerX + LENGTH_UNIT * FACTOR / 2) > (other->centerX - LENGTH_UNIT * FACTOR / 2)) &&
             (centerY > other->centerY))
         {
-            if (!other->canMove)
-            canMove = false;
-            other->SetCurrentDir(state - 3);
-            if (other->canMove)
+            if (kind == 71)
             {
-                other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
-                other->UpdatePosition();
+                if (!other->canMove)
+                    canMove = false;
+                other->SetCurrentDir(state - 3);
+                if (other->canMove)
+                {
+                    other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+                    other->UpdatePosition();
+                }
             }
+            else
+                canMove = false;
         }
     }
-    else if (kind == 71 && state == Leftward_M)
+    else if (state == Leftward_M)
     {
         if (((centerX - LENGTH_UNIT / 2) < (other->centerX + LENGTH_UNIT / 2)) &&
             ((centerY - HEIGHT_UNIT * FACTOR / 2) < (other->centerY + HEIGHT_UNIT * FACTOR / 2)) &&
             ((centerY + HEIGHT_UNIT * FACTOR / 2) > (other->centerY - HEIGHT_UNIT * FACTOR / 2)) &&
             (centerX > other->centerX))
         {
-            if (!other->canMove)
-            canMove = false;
-            
-            other->SetCurrentDir(state - 3);
-            if (other->canMove)
+            if (kind == 71)
             {
-                other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
-                other->UpdatePosition();
+                if (!other->canMove)
+                    canMove = false;
+                
+                other->SetCurrentDir(state - 3);
+                if (other->canMove)
+                {
+                    other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+                    other->UpdatePosition();
+                }
             }
+            else
+                canMove = false;
+            
         }
     }
     else if (kind == 71 && state == Rightward_M)
@@ -171,15 +187,20 @@ void Creature::CollisionMovable(Movable *other, const float deltaTime)
             ((centerY + HEIGHT_UNIT * FACTOR / 2) > (other->centerY - HEIGHT_UNIT * FACTOR / 2)) &&
             (centerX < other->centerX))
         {
-            if (!other->canMove)
-            canMove = false;
-            
-            other->SetCurrentDir(state - 3);
-            if (other->canMove)
+            if (kind == 71)
             {
-                other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
-                other->UpdatePosition();
+                if (!other->canMove)
+                    canMove = false;
+                
+                other->SetCurrentDir(state - 3);
+                if (other->canMove)
+                {
+                    other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
+                    other->UpdatePosition();
+                }
             }
+            else
+                canMove = false;
         }
     }
     
@@ -326,7 +347,7 @@ void Creature::Move(const float deltaTime)
         real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
         UpdatePosition();
         
-            
+        
         
     }
 }
