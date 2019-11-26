@@ -12,6 +12,7 @@ using namespace std;
 #define Creature_hpp
 
 class Level;
+class SimpleEnemy;
 
 /* Base class of player and enemy that can move. */
 class Creature : public Element
@@ -42,6 +43,7 @@ public:
     
     // To check whether kind equals to 71, we want to know if it is a player. We always use player to check its collision with others.
     void CollisionEnemy(Enemy* other, Level & level);
+    void CollisionSimpleEnemy(SimpleEnemy* other, Level & level);
     void CollisionObstacle(Element *other);
     void CollisionTrigger(Trigger* other, Level & level);
     void CollisionCollectable(Collectable *other);

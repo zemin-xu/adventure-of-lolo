@@ -335,6 +335,7 @@ void Level::CleanLevelEnemy()
     enemies.clear();
     movables.clear();
     eggs.clear();
+    simpleEnemies.clear();
     for (int i = 0; i < obstacles.size(); i++)
     {
         if (obstacles[i].kind == 26 || obstacles[i].kind == 28)

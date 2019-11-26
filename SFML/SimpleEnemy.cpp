@@ -105,11 +105,13 @@ void SimpleEnemy::Update(const float deltaTime, vector<Element> &obstacles, vect
     UpdateVariable();
     UpdateMoveAnimation(1, 4, 4, 4, 2, 4, 3, 4);
     
+    /*
     if (timer > 2.0f)
     {
         timer = 0;
         ChangeDirection();
     }
+     */
     
     Move(deltaTime);
 }

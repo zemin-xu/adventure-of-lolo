@@ -67,9 +67,27 @@ void Creature::ScanAround(vector<Element> &obstacles, vector<Movable> &movables,
             CollisionEnemy(&enemies[i], level);
         }
     }
+    
+    for (int i = 0; i < level.simpleEnemies.size(); i++)
+    {
+        if (DetectCollision(&level.simpleEnemies[i]))
+        {
+            CollisionSimpleEnemy(&level.simpleEnemies[i], level);
+        }
+    }
 }
 
 void Creature::CollisionEnemy(Enemy* other, Level & level)
+{
+    if (kind == 71)
+    {
+        if (abs(centerX - other->centerX) <= TRY_DISTANCE &&
+            abs(centerY - other->centerY) <= TRY_DISTANCE)
+            level.LoseLife();
+    }
+}
+
+void Creature::CollisionSimpleEnemy(SimpleEnemy* other, Level & level)
 {
     if (kind == 71)
     {
@@ -180,7 +198,7 @@ void Creature::CollisionMovable(Movable *other, const float deltaTime)
             
         }
     }
-    else if (kind == 71 && state == Rightward_M)
+    else if (state == Rightward_M)
     {
         if (((centerX + LENGTH_UNIT / 2) > (other->centerX - LENGTH_UNIT / 2)) &&
             ((centerY - HEIGHT_UNIT * FACTOR / 2) < (other->centerY + HEIGHT_UNIT * FACTOR / 2)) &&
