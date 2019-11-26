@@ -32,6 +32,7 @@
 #include "Collectable.hpp"
 #include "Creature.hpp"
 #include "Enemy.hpp"
+#include "SimpleEnemy.hpp"
 #include "Player.hpp"
 #include "Level.hpp"
 #include "GameMenu.hpp"

@@ -144,8 +144,6 @@ void Creature::CollisionMovable(Movable *other, const float deltaTime)
                 other->real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
                 other->UpdatePosition();
             }
-            
-            
         }
     }
     else if (kind == 71 && state == Leftward_M)
@@ -184,6 +182,7 @@ void Creature::CollisionMovable(Movable *other, const float deltaTime)
             }
         }
     }
+    
 }
 
 void Creature::CollisionObstacle(Element *other)
@@ -326,5 +325,8 @@ void Creature::Move(const float deltaTime)
     {
         real.move(speed * dirHorizontal * deltaTime, speed * dirVertical * deltaTime);
         UpdatePosition();
+        
+            
+        
     }
 }

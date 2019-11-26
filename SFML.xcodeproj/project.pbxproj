@@ -13,6 +13,7 @@
 		7D0F974323588960001BCE97 /* Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F974123588960001BCE97 /* Enemy.cpp */; };
 		7D0F9746235893A4001BCE97 /* Collectable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F9744235893A4001BCE97 /* Collectable.cpp */; };
 		7D0F9749235893FC001BCE97 /* Movable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F9747235893FC001BCE97 /* Movable.cpp */; };
+		7D53F47B238D926D0083F37B /* SimpleEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D53F479238D926D0083F37B /* SimpleEnemy.cpp */; };
 		7D95926F234F1351000D086B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7D95926E234F1351000D086B /* main.cpp */; };
 		7D95927C234F13BA000D086B /* sfml-audio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D959276234F13BA000D086B /* sfml-audio.framework */; };
 		7D95927D234F13BA000D086B /* sfml-network.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D959277234F13BA000D086B /* sfml-network.framework */; };
@@ -58,6 +59,8 @@
 		7D0F9745235893A4001BCE97 /* Collectable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Collectable.hpp; sourceTree = "<group>"; };
 		7D0F9747235893FC001BCE97 /* Movable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Movable.cpp; sourceTree = "<group>"; };
 		7D0F9748235893FC001BCE97 /* Movable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Movable.hpp; sourceTree = "<group>"; };
+		7D53F479238D926D0083F37B /* SimpleEnemy.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleEnemy.cpp; sourceTree = "<group>"; };
+		7D53F47A238D926D0083F37B /* SimpleEnemy.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SimpleEnemy.hpp; sourceTree = "<group>"; };
 		7D95926B234F1351000D086B /* SFML */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SFML; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D95926E234F1351000D086B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		7D959276234F13BA000D086B /* sfml-audio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "sfml-audio.framework"; path = "SFML/Frameworks/sfml-audio.framework"; sourceTree = "<group>"; };
@@ -151,6 +154,8 @@
 				7D0F973C23588713001BCE97 /* Player.hpp */,
 				7D0F974123588960001BCE97 /* Enemy.cpp */,
 				7D0F974223588960001BCE97 /* Enemy.hpp */,
+				7D53F479238D926D0083F37B /* SimpleEnemy.cpp */,
+				7D53F47A238D926D0083F37B /* SimpleEnemy.hpp */,
 				7DE02B4223618E2100C59A7F /* Level.cpp */,
 				7DE02B4323618E2100C59A7F /* Level.hpp */,
 				7DA7B03123648C100057BCD1 /* GameMenu.cpp */,
@@ -235,6 +240,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D53F47B238D926D0083F37B /* SimpleEnemy.cpp in Sources */,
 				7D0F974323588960001BCE97 /* Enemy.cpp in Sources */,
 				7DA7B03323648C100057BCD1 /* GameMenu.cpp in Sources */,
 				7DC9DC032365F8D000682758 /* Projectile.cpp in Sources */,

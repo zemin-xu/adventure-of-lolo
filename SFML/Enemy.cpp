@@ -13,7 +13,7 @@ Enemy::Enemy()
     
 }
 
-Enemy::Enemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int _kind) : Creature(x, y, length, height, texture, numHorizontal, numVertical, _kind)
+Enemy::Enemy(int x, int y, int length, int height, sf::Texture *texture, int numHorizontal, int numVertical, int kind) : Creature(x, y, length, height, texture, numHorizontal, numVertical, kind)
 {
     speed = 70.0f;
     dirHorizontal = 1;
@@ -133,8 +133,6 @@ void Enemy::UpdateVariable()
         default:
             break;
     }
-    
-    
 }
 
 void Enemy::Update(const float deltaTime, vector<Element> &obstacles, vector<Collectable> &collectables, vector<Movable> &movables, vector<Trigger> &triggers, vector<MovableEnemy> &eggs, vector<Enemy> &enemies, Element* player, Level & level)
@@ -148,6 +146,7 @@ void Enemy::Update(const float deltaTime, vector<Element> &obstacles, vector<Col
         timer = 0.0f;
     }
     canMove = true;
+    
     ScanAround(obstacles, movables, collectables, triggers, eggs, enemies, deltaTime, level);
     UpdateVariable();
     UpdateMoveAnimation(1, 4, 4, 4, 2, 4, 3, 4);

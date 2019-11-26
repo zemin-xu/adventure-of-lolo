@@ -73,7 +73,6 @@ void Player::UpdateVariable()
             dirHorizontal = 0;
             dirVertical = 1;
             canMove = true;
-            
         }
             break;
         case Backward_M:

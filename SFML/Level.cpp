@@ -42,6 +42,8 @@ void Level::ReadTextureFile()
         return ;
     if (!textureChasingEnemy.loadFromFile("Sources/enemy.png"))
         return ;
+    if (!textureSimpleEnemy.loadFromFile("Sources/panda.png"))
+    return ;
     if (!textureBackground.loadFromFile("Sources/background.png"))
         return ;
     if (!textureBG2.loadFromFile("Sources/bridge.png"))
@@ -118,6 +120,8 @@ void Level::InitLevel(int level)
         enemies.clear();
     if (collectables.size() > 0)
         collectables.clear();
+    if (simpleEnemies.size()>0)
+        simpleEnemies.clear();
     background.clear();
     obstacles.clear();
     movables.clear();
@@ -189,9 +193,7 @@ void Level::InitLevel(int level)
                 else if (currentMap[i * 16 + j].type == 27)
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureEnemyStaticSleep , 1, 1, 27);
                 else if (currentMap[i * 16 + j].type == 61)
-                {
                     obstacleUnit = Element(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureClosedDoor, 1, 1, 61);
-                }
                 
                 obstacles.push_back(obstacleUnit);
             }
@@ -222,8 +224,16 @@ void Level::InitLevel(int level)
             // enemy
             else if(currentMap[i * 16 + j].type / 10 == 5)
             {
-                Enemy enemyUnit(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureChasingEnemy ,LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 51);
-                enemies.push_back(enemyUnit);
+                if (currentMap[i * 16 + j].type == 51)
+                {
+                    Enemy enemyUnit(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureChasingEnemy ,LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 51);
+                    enemies.push_back(enemyUnit);
+                }
+                else if (currentMap[i * 16 + j].type == 52)
+                {
+                    SimpleEnemy enemyUnit(j * LIB::LENGTH_UNIT, i * LIB::HEIGHT_UNIT, LIB::LENGTH_UNIT, LIB::HEIGHT_UNIT, &textureSimpleEnemy ,LIB::ANIM_ENEMY1_NUM_HORIZONTAL, LIB::ANIM_ENEMY1_NUM_VERTICAL, 52);
+                    simpleEnemies.push_back(enemyUnit);
+                }
             }
             
             // trigger, 61 for door, 62 for keybox
@@ -345,12 +355,19 @@ void Level::Update(const float deltaTime)
     }
     
     // check the moment to awaken the enemies in sleep
-    if (heartLeft <= 1 && !isEnemyAwake)
+    if (heartLeft <= 1)
     {
-        AwakenEnemy();
-        isEnemyAwake = true;
+        if (!isEnemyAwake)
+        {
+            AwakenEnemy();
+            isEnemyAwake = true;
+        }
+        for (int i = 0; i < simpleEnemies.size(); i++)
+        {
+            simpleEnemies[i].Update(deltaTime, obstacles, collectables, movables, triggers, eggs, enemies, &player, *this);
+        }
     }
-    
+
     // update of enemies
     for (int i = 0; i < enemies.size(); i++)
     {
@@ -455,7 +472,6 @@ void Level::Update(const float deltaTime)
                     UpdatePlayerProjectileNum();
                     collectables.erase(collectables.begin() + i);
                 }
-                
             }
         }
         
@@ -521,12 +537,15 @@ void Level::Render(sf::RenderWindow &window)
     {
         enemies[i].Render(window);
     }
+    for (int i = 0; i < simpleEnemies.size(); i++)
+    {
+        simpleEnemies[i].Render(window);
+    }
     
     for (int i = 0; i < eggs.size(); i++)
     {
         eggs[i].Render(window);
     }
-    
     for (int i = 0; i < triggers.size(); i++)
     {
         if (triggers[i].GetIsTriggerActive())
@@ -534,7 +553,6 @@ void Level::Render(sf::RenderWindow &window)
         if (triggers[i].kind == 62)
             triggers[i].Render(window);
     }
-    
     for(int i = 0; i < enemyProjectiles.size(); i++)
     {
         if (enemyProjectiles[i].GetIsUsing())

@@ -55,6 +55,7 @@ public:
     sf::Texture textureEgg;
     sf::Texture textureObstacleEnemy;
     sf::Texture textureChasingEnemy;
+    sf::Texture textureSimpleEnemy;
     sf::Texture textureBG;
     sf::Texture textureBG2;
     sf::Texture textureClosedKeyBox;
@@ -94,6 +95,7 @@ public:
     vector<Collectable> collectables;
     vector<Movable> movables;
     vector<Enemy> enemies;
+    vector<SimpleEnemy> simpleEnemies;
     vector<Trigger> triggers;
     vector<MovableEnemy> eggs;
     vector<Projectile> enemyProjectiles;
@@ -167,16 +169,16 @@ public:
     const int level4[12][16] =
     {
         {00,22,22,22, 22,22,22,61, 22,22,22,22, 22,22,00,00},
-        {00,22,11,11, 11,27,11,11, 11,11,11,11, 11,22,00,00},
+        {00,22,11,11, 11,52,11,11, 11,11,11,11, 11,22,00,00},
         {00,22,11,21, 21,21,21,21, 21,41,11,11, 11,22,00,00},
         {00,22,11,11, 41,11,11,11, 11,11,11,21, 11,22,00,00},
         {00,22,11,11, 25,25,25,11, 21,21,21,21, 11,22,00,00},
         {00,22,31,25, 25,25,25,11, 21,31,11,11, 11,22,00,00},
-        {00,22,32,25, 25,62,11,11, 21,31,27,11, 11,22,00,00},
+        {00,22,32,25, 25,62,11,11, 21,31,52,11, 11,22,00,00},
         {00,22,11,11, 25,25,25,11, 21,21,21,21, 11,22,00,00},
         {00,22,11,11, 41,11,11,11, 11,11,11,21, 11,22,00,00},
         {00,22,11,21, 21,21,21,21, 21,41,11,11, 11,22,00,00},
-        {00,22,11,11, 11,27,11,71, 11,11,11,11, 11,22,00,00},
+        {00,22,11,11, 11,52,51,71, 11,11,11,11, 11,22,00,00},
         {00,22,22,22, 22,22,22,22, 22,22,22,22, 22,22,00,00}
     };
     
