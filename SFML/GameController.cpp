@@ -7,7 +7,7 @@
 //
 #include "LIB.hpp"
 
-GameController::GameController() : window(sf::VideoMode(LENGTH, HEIGHT), "The Advanture of Lolo"),  inputController(), menu(LENGTH, HEIGHT), music(), level(1)
+GameController::GameController() : window(sf::VideoMode(LENGTH, HEIGHT), "The Advanture of Lolo"),  inputController(), menu(LENGTH, HEIGHT), music(), level(4)
 {
     window.setFramerateLimit(120);
     state = Menu;
