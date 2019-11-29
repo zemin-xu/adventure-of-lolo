@@ -25,17 +25,17 @@ GameMenu::GameMenu(int width, float height)
     inOptionState = false;
 
     menu[0].setFont(font);
-    menu[0].setColor(sf::Color::Red);
+    menu[0].setFillColor(sf::Color::Red);
     menu[0].setString("Start");
     menu[0].setPosition(width * 2 / 3, height / 2 + height / 3 / (MAX_NUM_ITEMS_MENU) * 1);
     
     menu[1].setFont(font);
-    menu[1].setColor(sf::Color::Black);
+    menu[1].setFillColor(sf::Color::Black);
     menu[1].setString("Option");
     menu[1].setPosition(width * 2 / 3, height / 2 + height / 3 / (MAX_NUM_ITEMS_MENU) * 2);
     
     menu[2].setFont(font);
-    menu[2].setColor(sf::Color::Black);
+    menu[2].setFillColor(sf::Color::Black);
     menu[2].setString("Exit");
     menu[2].setPosition(width * 2 / 3, height / 2 + height / 3 / (MAX_NUM_ITEMS_MENU) * 3);
     
@@ -57,9 +57,9 @@ void GameMenu::MoveUp()
 {
     if (selectedItemIndex - 1 >= 0)
     {
-        menu[selectedItemIndex].setColor(sf::Color::Black);
+        menu[selectedItemIndex].setFillColor(sf::Color::Black);
         selectedItemIndex--;
-        menu[selectedItemIndex].setColor(sf::Color::Red);
+        menu[selectedItemIndex].setFillColor(sf::Color::Red);
     }
 }
 
@@ -67,9 +67,9 @@ void GameMenu::MoveDown()
 {
     if (selectedItemIndex + 1 < MAX_NUM_ITEMS_MENU)
     {
-        menu[selectedItemIndex].setColor(sf::Color::Black);
+        menu[selectedItemIndex].setFillColor(sf::Color::Black);
         selectedItemIndex++;
-        menu[selectedItemIndex].setColor(sf::Color::Red);
+        menu[selectedItemIndex].setFillColor(sf::Color::Red);
     }
 }
 
